@@ -16,6 +16,11 @@ public class MonoSingleton<T> : MonoBehaviour where T:MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
 
-    //DontDestroy
+        T[] objs = FindObjectsOfType<T>();
+        if (objs.Length > 1) Destroy(gameObject);
+    }
 }
