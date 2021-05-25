@@ -1,12 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
 
 [Serializable]
 public class SaveData
 {
     public Option option = new Option();
+    public UserInfo userInfo = new UserInfo();
+}
+
+[Serializable]
+public class UserInfo
+{
+    public bool isClear = false;
+    public int bestTime;
 }
 
 [Serializable]
