@@ -16,12 +16,15 @@ public class GameManager : MonoSingleton<GameManager>
     private string filePath;
     private string savedJson;
 
+    public MainManager mainManager;
+
     private void Awake()
     {
         saveData = new SaveData();
         filePath = string.Concat(Application.persistentDataPath, "/", SaveFileName);
 
         Load();
+        Init();
     }
 
     void Save()
@@ -51,6 +54,11 @@ public class GameManager : MonoSingleton<GameManager>
     public void SetData()
     {
         Screen.SetResolution(1280, 720, saveData.option.isFullScr);
+    }
+
+    public void Init()
+    {
+
     }
 
     private void Update()

@@ -28,13 +28,12 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
-        
+        Jump();
     }
 
     private void FixedUpdate()
     {
         Move();
-        Jump();
         GroundCheck();
     }
 

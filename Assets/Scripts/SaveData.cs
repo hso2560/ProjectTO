@@ -10,8 +10,12 @@ public class SaveData
 [Serializable]
 public class UserInfo
 {
+    public bool isFirstStart = true;
     public bool isClear = false;
     public int bestTime;
+    public int killCnt;
+    public int playCnt;
+    public string nickName;
 }
 
 [Serializable]
