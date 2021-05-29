@@ -5,10 +5,11 @@ using DG.Tweening;
 
 public class TestScr : MonoBehaviour
 {
-    /* void Update()
+     void Update()
      {
+        if(id==4)
          transform.Rotate(new Vector3(0, 90, 0)*Time.deltaTime);
-     }*/
+     }
     public int id;
 
     private void Start()

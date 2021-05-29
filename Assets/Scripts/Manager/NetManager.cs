@@ -13,6 +13,7 @@ public class NetManager : MonoBehaviourPunCallbacks
     public int id;
     public Player p;
     private PlayerScript player;
+    private Message msgClass;
 
     public List<Player> diedUsers = new List<Player>();
     public Dictionary<int, Player> idToPlayer = new Dictionary<int, Player>();
@@ -34,6 +35,7 @@ public class NetManager : MonoBehaviourPunCallbacks
     }
     public override void OnConnectedToMaster()
     {
+        msgClass = new Message();
         PhotonNetwork.JoinLobby();
     }
     public override void OnJoinedLobby()
@@ -79,6 +81,26 @@ public class NetManager : MonoBehaviourPunCallbacks
         player.playerId = id;
         GameManager.Instance.mainManager.player = player;
         UIManager.Instance.LoadingFade();
+    }
+
+    public void HitPlayer(int myAct, int otherAct, int damage)
+    {
+        msgClass.myAct = myAct;
+        msgClass.otherAct = otherAct;
+        msgClass.iValue = damage;
+        PV.RPC("Damaged", idToPlayer[otherAct], JsonUtility.ToJson(msgClass));
+    }
+
+    [PunRPC]
+    void Damaged(string msg) => player.Damaged(msg);
+
+    public void DiedPlayer(string msg) => PV.RPC("RPCDied", RpcTarget.AllViaServer, msg);
+
+    [PunRPC]
+    private void RPCDied(string msg)
+    {
+        msgClass = JsonUtility.FromJson<Message>(msg);
+        diedUsers.Add(idToPlayer[msgClass.myAct]);
     }
 
     public void SendMsg()

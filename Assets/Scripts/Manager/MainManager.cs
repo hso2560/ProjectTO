@@ -47,3 +47,19 @@ public class MainManager : MonoBehaviour
         }
     }
 }
+
+[System.Serializable]
+public class Message
+{
+    public GameObject o;
+
+    public int myAct;
+    public int otherAct;
+
+    public int iValue;
+    public float fValue;
+    public bool bValue;
+    public string sValue;
+
+    public Vector3 v;
+}

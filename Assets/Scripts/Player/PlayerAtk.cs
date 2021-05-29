@@ -8,7 +8,7 @@ public class PlayerAtk : MonoBehaviour
     {
         if (other.CompareTag("Player")&&other.gameObject!=player.gameObject)
         {
-            player.HitPlayer(player.playerId,other.GetComponent<PlayerScript>().playerId, player.damage);
+            NetManager.instance.HitPlayer(player.playerId,other.GetComponent<PlayerScript>().playerId, player.damage);
         }
     }
 }

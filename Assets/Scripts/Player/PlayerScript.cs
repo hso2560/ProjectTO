@@ -23,6 +23,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     public int damage=50;
     public int playerId;
     public bool isDie;
+    public ParticleSystem bloodParticle;
 
     private GameObject playerModel, attackCol;
     [SerializeField] private int hp;
@@ -30,6 +31,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     private bool isInvinci=false; //무적인지?
     private MainManager mainManager;
     private Vector3 moveVec;
+    private Message messageClass;
 
     #region UI
     private Text rayText;  //레이에 맞아서 그 정보를 가져올 때의 텍스트
@@ -53,6 +55,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         playerModel = ani.gameObject;
         hp = maxHp;
         attackCol = transform.GetChild(2).gameObject;
+        messageClass = new Message();
     }
 
     void Init()
@@ -61,12 +64,13 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         mainManager = GameManager.Instance.mainManager;
         mainManager.cam.target = centerTr;
         mainManager.cam.rotTarget = transform;
+        mainManager.cam.player = this;
         rayText = UIManager.Instance.rayText;
     }
 
     private void Update()
     {
-        if (playerId == PhotonNetwork.LocalPlayer.ActorNumber)
+        if (playerId == PhotonNetwork.LocalPlayer.ActorNumber && !isDie)
         {
             Jump();
             Attack();
@@ -75,7 +79,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
 
     private void FixedUpdate()
     {
-        if (playerId == PhotonNetwork.LocalPlayer.ActorNumber)
+        if (playerId == PhotonNetwork.LocalPlayer.ActorNumber && !isDie)
         {
             Move();
             GroundCheck();
@@ -161,19 +165,36 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         }
     }
 
-    public void HitPlayer(int myAct,int otherAct, int damage)
-    {
-        photonView.RPC("Damaged", NetManager.instance.idToPlayer[otherAct], myAct, otherAct, damage);
-    }
-
-    [PunRPC]
-    private void Damaged(int otherAct, int myAct,int damage)
+    public void Damaged(string msg)
     {
         if(!isInvinci)
         {
-            hp -= damage;
+            messageClass = JsonUtility.FromJson<Message>(msg);
+            hp -= messageClass.iValue;
+            photonView.RPC("BloodEffect", RpcTarget.AllViaServer, messageClass.otherAct);
+
+            if(hp<=0)
+            {
+                hp = 0;
+                isDie = true;
+                ani.SetTrigger("death");
+                isInvinci = true;
+
+                messageClass.otherAct = messageClass.myAct;
+                messageClass.myAct = playerId;
+                NetManager.instance.DiedPlayer(JsonUtility.ToJson(messageClass));
+            }
         }
     }
+
+     [PunRPC]
+     private void BloodEffect(int act)
+     {
+        if(act==playerId)
+        {
+            bloodParticle.Play();
+        }
+     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
