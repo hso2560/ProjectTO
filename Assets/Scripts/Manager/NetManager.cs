@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class NetManager : MonoBehaviourPunCallbacks
@@ -15,6 +16,13 @@ public class NetManager : MonoBehaviourPunCallbacks
 
     public List<Player> diedUsers = new List<Player>();
     public Dictionary<int, Player> idToPlayer = new Dictionary<int, Player>();
+
+    #region UI
+    public InputField chatInput;
+    public GameObject chatPanel;
+    public Text chatText;
+    public Scrollbar chatScroll;
+    #endregion
 
     private void Awake()
     {
@@ -53,10 +61,7 @@ public class NetManager : MonoBehaviourPunCallbacks
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-       if(idToPlayer.ContainsKey(otherPlayer.ActorNumber))
-       {
-            idToPlayer.Remove(otherPlayer.ActorNumber);
-       }
+        idToPlayer.Remove(otherPlayer.ActorNumber);
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
@@ -74,6 +79,22 @@ public class NetManager : MonoBehaviourPunCallbacks
         player.playerId = id;
         GameManager.Instance.mainManager.player = player;
         UIManager.Instance.LoadingFade();
+    }
+
+    public void SendMsg()
+    {
+        if (chatInput.text.Trim() == "") return;
+
+        PV.RPC("Chatting", RpcTarget.AllViaServer,"<color=green>"+p.NickName+ "</color>: " +chatInput.text);
+        chatInput.text = "";
+    }
+
+    [PunRPC]
+    void Chatting(string msg)
+    {
+        msg.Replace("시발", "**").Replace("병신", "**").Replace("지랄", "**");
+        chatText.text += chatText.text != "" ? "\n" + msg : msg;
+        chatScroll.value = 0;
     }
 
     private void OnApplicationQuit()

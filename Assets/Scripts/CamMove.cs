@@ -6,7 +6,7 @@ public class CamMove : MonoBehaviour
 {
     public Transform target;
     public Transform rotTarget;
-    //public GlitchEffect camGlich;
+    public GlitchEffect camGlich;
 
     public float xSpeed = 220f, ySpeed = 100f;
     public float x, y;

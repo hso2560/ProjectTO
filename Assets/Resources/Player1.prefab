@@ -41,8 +41,8 @@ GameObject:
   - component: {fileID: 2540968525835326055}
   - component: {fileID: 2540968525835325976}
   - component: {fileID: 2540968525835325977}
-  - component: {fileID: 2540968525835325978}
   - component: {fileID: 8710397664974260104}
+  - component: {fileID: 2540968525835325978}
   - component: {fileID: 8954424846482769738}
   - component: {fileID: 2518292333816766168}
   m_Layer: 9
@@ -65,6 +65,7 @@ Transform:
   m_Children:
   - {fileID: 8455026036259059227}
   - {fileID: 2540968524612086324}
+  - {fileID: 3065069580655420569}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -98,35 +99,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 1
---- !u!114 &2540968525835325978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2540968525835326054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35d149bdc0267554fbc7ed8d739de035, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ani: {fileID: 8455026036251334733}
-  centerTr: {fileID: 2540968524612086324}
-  rigid: {fileID: 2540968525835325977}
-  runSpeed: 13
-  speed: 4.7
-  maxHp: 100
-  jumpPower: 9.8
-  groundRayDist: 1
-  gravity: 0.5
-  bodys:
-  - {fileID: 8455026036258761337}
-  - {fileID: 8455026036258761333}
-  weapons:
-  - {fileID: 8455026036258761335}
-  - {fileID: 8455026036258761329}
-  playerId: 0
-  isDie: 0
 --- !u!114 &8710397664974260104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,12 +118,47 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 2540968525835325978}
   - {fileID: 8954424846482769738}
   - {fileID: 2518292333816766168}
   - {fileID: 4635438639660194364}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &2540968525835325978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2540968525835326054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d149bdc0267554fbc7ed8d739de035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ani: {fileID: 8455026036251334733}
+  centerTr: {fileID: 2540968524612086324}
+  rigid: {fileID: 2540968525835325977}
+  runSpeed: 13
+  speed: 4.7
+  maxHp: 100
+  jumpPower: 9.8
+  groundRayDist: 0.9
+  rayDist: 2
+  gravity: 0.5
+  bodys:
+  - {fileID: 8455026036258761337}
+  - {fileID: 8455026036258761333}
+  weapons:
+  - {fileID: 8455026036258761335}
+  - {fileID: 8455026036258761329}
+  atkCool: 1.5
+  atkColTime: 0.7
+  damage: 50
+  playerId: 0
+  isDie: 0
+  hp: 0
 --- !u!114 &8954424846482769738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3654,3 +3661,61 @@ Transform:
   m_Father: {fileID: 8455026036259059637}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9184356171590478323
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3065069580655420569}
+  - component: {fileID: 5096451605491217329}
+  - component: {fileID: 8631261282596933010}
+  m_Layer: 0
+  m_Name: AtkCol
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &3065069580655420569
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9184356171590478323}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2540968525835326055}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5096451605491217329
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9184356171590478323}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.54177594, y: 0.91066146, z: 0.5747081}
+  m_Center: {x: -0.0036551952, y: 0.73477256, z: 0.31355852}
+--- !u!114 &8631261282596933010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9184356171590478323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3cdb06fbda5311428d939a8dce9695f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 2540968525835325978}
