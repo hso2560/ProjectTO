@@ -16,6 +16,7 @@ public class UserInfo
     public int killCnt;
     public int playCnt;
     public string nickName;
+    public string playerRosoName = "Player1";
 }
 
 [Serializable]

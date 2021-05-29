@@ -4,13 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class UIManager : MonoBehaviour
+public class UIManager : MonoSingleton<UIManager>
 {
-    public static UIManager instance;
     public GameObject LoadingPanel;
 
-    private void Awake()
+    public void LoadingFade(float r=0, float g=0, float b=0, float a=0,float t=1.3f ,bool active=false)
     {
-        instance = this;
+        LoadingPanel.GetComponent<Image>().DOColor(new Color(r, g, b, a), t);
+        StartCoroutine(ActiveCo(LoadingPanel, active, t+0.1f));
+    }
+
+    public IEnumerator ActiveCo(GameObject o,bool active, float time)
+    {
+        yield return new WaitForSeconds(time);
+        o.SetActive(active);
     }
 }

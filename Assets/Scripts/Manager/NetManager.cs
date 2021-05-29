@@ -9,6 +9,9 @@ public class NetManager : MonoBehaviourPunCallbacks
 {
     public static NetManager instance;
     private PhotonView PV;
+    public int id;
+    public Player p;
+    private PlayerScript player;
 
     public List<Player> diedUsers = new List<Player>();
     public Dictionary<int, Player> idToPlayer = new Dictionary<int, Player>();
@@ -38,23 +41,41 @@ public class NetManager : MonoBehaviourPunCallbacks
     }
     public override void OnJoinedRoom()
     {
+        p = PhotonNetwork.LocalPlayer;
+        id = p.ActorNumber;
+
         for(int i=0; i<PhotonNetwork.PlayerList.Length; i++)
         {
             idToPlayer.Add(PhotonNetwork.PlayerList[i].ActorNumber, PhotonNetwork.PlayerList[i]);
         }
+
+        SpawnPlayer();
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-       
+       if(idToPlayer.ContainsKey(otherPlayer.ActorNumber))
+       {
+            idToPlayer.Remove(otherPlayer.ActorNumber);
+       }
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        
+        idToPlayer.Add(newPlayer.ActorNumber, newPlayer);
     }
     public void CreateRoom()
     {
         PhotonNetwork.CreateRoom(Random.Range(0, 10000).ToString(), new RoomOptions { MaxPlayers = 18 });
     }
+
+    private void SpawnPlayer()
+    {
+        player = PhotonNetwork.Instantiate(GameManager.Instance.savedData.userInfo.playerRosoName,
+            GameManager.Instance.mainManager.startPos,Quaternion.identity).GetComponent<PlayerScript>();
+        player.playerId = id;
+        GameManager.Instance.mainManager.player = player;
+        UIManager.Instance.LoadingFade();
+    }
+
     private void OnApplicationQuit()
     {
         PhotonNetwork.Disconnect();

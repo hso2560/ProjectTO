@@ -5,9 +5,7 @@ using UnityEngine;
 public class MainManager : MonoBehaviour
 {
     public Camera mainCam;
-
-    private void Start()
-    {
-        GameManager.Instance.mainManager = this;
-    }
+    public CamMove cam;
+    public Vector3 startPos;
+    public PlayerScript player;
 }

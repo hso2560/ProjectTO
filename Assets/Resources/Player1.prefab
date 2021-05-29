@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2540968524612086324}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,6 +42,9 @@ GameObject:
   - component: {fileID: 2540968525835325976}
   - component: {fileID: 2540968525835325977}
   - component: {fileID: 2540968525835325978}
+  - component: {fileID: 8710397664974260104}
+  - component: {fileID: 8954424846482769738}
+  - component: {fileID: 2518292333816766168}
   m_Layer: 9
   m_Name: Player1
   m_TagString: Player
@@ -110,13 +113,77 @@ MonoBehaviour:
   ani: {fileID: 8455026036251334733}
   centerTr: {fileID: 2540968524612086324}
   rigid: {fileID: 2540968525835325977}
-  runSpeed: 23
-  speed: 8
+  runSpeed: 13
+  speed: 4.7
   maxHp: 100
-  jumpPower: 12
+  jumpPower: 9.8
   groundRayDist: 1
-  id: 0
+  gravity: 0.5
+  bodys:
+  - {fileID: 8455026036258761337}
+  - {fileID: 8455026036258761333}
+  weapons:
+  - {fileID: 8455026036258761335}
+  - {fileID: 8455026036258761329}
+  playerId: 0
   isDie: 0
+--- !u!114 &8710397664974260104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2540968525835326054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 8954424846482769738}
+  - {fileID: 2518292333816766168}
+  - {fileID: 4635438639660194364}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &8954424846482769738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2540968525835326054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &2518292333816766168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2540968525835326054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &8455026036258761217
 GameObject:
   m_ObjectHideFlags: 0
@@ -1950,6 +2017,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8455026036259059227}
   - component: {fileID: 8455026036251334733}
+  - component: {fileID: 4635438639660194364}
   m_Layer: 0
   m_Name: PlayerModel
   m_TagString: Untagged
@@ -1995,6 +2063,39 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4635438639660194364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8455026036258761339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 1
+    Name: walk
+  - Type: 4
+    SynchronizeType: 1
+    Name: run
+  - Type: 9
+    SynchronizeType: 1
+    Name: jump
+  - Type: 9
+    SynchronizeType: 1
+    Name: attack
+  - Type: 9
+    SynchronizeType: 1
+    Name: death
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
 --- !u!1 &8455026036258761341
 GameObject:
   m_ObjectHideFlags: 0

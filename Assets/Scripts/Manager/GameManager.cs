@@ -70,7 +70,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-
+            
         }
     }
 
