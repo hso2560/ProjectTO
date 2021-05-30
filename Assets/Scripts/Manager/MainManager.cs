@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class MainManager : MonoBehaviour
 {
     public Camera mainCam;
     public CamMove cam;
-    public Vector3 startPos;
     public PlayerScript player;
     public Text timeTxt;
+    public Color rayTxtColor;
+    public Text rayText;
 
     [SerializeField] private float playTime=0.0f;
     private int h, m, s;
@@ -45,6 +47,16 @@ public class MainManager : MonoBehaviour
             Cursor.lockState = !bCursor ? CursorLockMode.Confined : CursorLockMode.Locked;
             bCursor = !bCursor;
         }
+    }
+
+    public void TxtDOTw(string s)
+    {
+        rayText.text = s;
+        rayText.DOColor(rayTxtColor, 0.3f);
+    }
+    public void TxtOff()
+    {
+        rayText.DOColor(new Color(0, 0, 0, 0), 0.3f);
     }
 }
 

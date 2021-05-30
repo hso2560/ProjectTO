@@ -24,6 +24,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     public int playerId;
     public bool isDie;
     public ParticleSystem bloodParticle;
+    public GameObject scanObj;
 
     private GameObject playerModel, attackCol;
     [SerializeField] private int hp;
@@ -34,7 +35,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     private Message messageClass;
 
     #region UI
-    private Text rayText;  //레이에 맞아서 그 정보를 가져올 때의 텍스트
+    
     #endregion
 
     private void Start()
@@ -65,7 +66,6 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         mainManager.cam.target = centerTr;
         mainManager.cam.rotTarget = transform;
         mainManager.cam.player = this;
-        rayText = UIManager.Instance.rayText;
     }
 
     private void Update()
@@ -145,10 +145,12 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         //Debug.DrawRay(mainManager.cam.transform.position, mainManager.cam.transform.forward * rayDist, Color.red);
         if(Physics.Raycast(mainManager.cam.transform.position,mainManager.cam.transform.forward, out RaycastHit hit, rayDist, LayerMask.GetMask("Player","Item","Object")))
         {
-            rayText.gameObject.SetActive(true);
+            if (scanObj == hit.transform.gameObject) return;
+            scanObj = hit.transform.gameObject;
+
             if (hit.transform.CompareTag("Player"))
             {
-                rayText.text = hit.transform.GetComponent<PlayerScript>().playerId.ToString();
+                mainManager.TxtDOTw(NetManager.instance.idToPlayer[hit.transform.GetComponent<PlayerScript>().playerId].NickName);
             }
             else if(hit.transform.CompareTag("Item"))
             {
@@ -161,7 +163,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         }
         else
         {
-            rayText.gameObject.SetActive(false);
+            mainManager.TxtOff();
         }
     }
 

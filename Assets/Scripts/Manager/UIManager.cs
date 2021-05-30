@@ -7,7 +7,6 @@ using DG.Tweening;
 public class UIManager : MonoSingleton<UIManager>
 {
     public GameObject LoadingPanel;
-    public Text rayText;
 
     public void LoadingFade(float r=0, float g=0, float b=0, float a=0,float t=1.3f ,bool active=false)
     {

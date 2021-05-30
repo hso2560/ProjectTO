@@ -14,13 +14,16 @@ public class NetManager : MonoBehaviourPunCallbacks
     public Player p;
     private PlayerScript player;
     private Message msgClass;
+    private Vector3 firstPos;
 
     public List<Player> diedUsers = new List<Player>();
     public Dictionary<int, Player> idToPlayer = new Dictionary<int, Player>();
+    public Vector3 startPos;
+    public float spawnRandomRange;
 
     #region UI
     public InputField chatInput;
-    public GameObject chatPanel;
+    public GameObject chatPanel, chatPlus, chatMinus;
     public Text chatText;
     public Scrollbar chatScroll;
     #endregion
@@ -76,11 +79,50 @@ public class NetManager : MonoBehaviourPunCallbacks
 
     private void SpawnPlayer()
     {
+        Vector3 v = new Vector3(startPos.x + Random.Range(-spawnRandomRange, spawnRandomRange), 1, startPos.z + Random.Range(-spawnRandomRange, spawnRandomRange));
+        firstPos = v;
+
         player = PhotonNetwork.Instantiate(GameManager.Instance.savedData.userInfo.playerRosoName,
-            GameManager.Instance.mainManager.startPos,Quaternion.identity).GetComponent<PlayerScript>();
+            v,Quaternion.identity).GetComponent<PlayerScript>();
+
         player.playerId = id;
         GameManager.Instance.mainManager.player = player;
         UIManager.Instance.LoadingFade();
+    }
+
+    private void Update()
+    {
+        _Input();
+    }
+
+    private void _Input()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (!chatPanel.activeSelf)
+            {
+                ChatPanelOnOff(true);
+                //chatInput.MoveTextEnd(false);
+            }
+            else
+            {
+                SendMsg();
+            }
+        }
+        else if(Input.GetKeyDown(KeyCode.R))
+        {
+            //ÀÚ»ì
+            //test
+            player.transform.position = firstPos;
+        }
+    }
+
+    public void ChatPanelOnOff(bool isOn)
+    {
+        chatPanel.SetActive(isOn);
+        if (isOn) chatInput.ActivateInputField();
+        chatPlus.SetActive(!isOn);
+        chatMinus.SetActive(isOn);
     }
 
     public void HitPlayer(int myAct, int otherAct, int damage)
@@ -105,7 +147,14 @@ public class NetManager : MonoBehaviourPunCallbacks
 
     public void SendMsg()
     {
-        if (chatInput.text.Trim() == "") return;
+        if (chatInput.text.Trim() == "")
+        {
+            chatInput.Select();
+            chatPanel.SetActive(false);
+            chatPlus.SetActive(true);
+            chatMinus.SetActive(false);
+            return;
+        }
 
         PV.RPC("Chatting", RpcTarget.AllViaServer,"<color=green>"+p.NickName+ "</color>: " +chatInput.text);
         chatInput.text = "";
