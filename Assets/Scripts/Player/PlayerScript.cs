@@ -35,7 +35,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     private Message messageClass;
 
     #region UI
-    
+    private InputField chatInput;
     #endregion
 
     private void Start()
@@ -66,6 +66,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         mainManager.cam.target = centerTr;
         mainManager.cam.rotTarget = transform;
         mainManager.cam.player = this;
+        chatInput = NetManager.instance.chatInput;
     }
 
     private void Update()
@@ -86,6 +87,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             GroundCheck();
             RayHit();
         }
+        rigid.angularVelocity = Vector3.zero;
     }
     void _Input()
     {
@@ -96,14 +98,15 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     }
 
     private void Move()
-    {
+    { 
         if(!isJumping)
            moveVec = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
 
         Vector3 worldDir = transform.TransformDirection(moveVec);
         Vector3 veloc = worldDir * (Input.GetKey(KeyCode.LeftShift) ? runSpeed : speed);
         Vector3 force = new Vector3(veloc.x - rigid.velocity.x, -gravity, veloc.z - rigid.velocity.z);
-        rigid.AddForce(force, ForceMode.VelocityChange);
+        if(!chatInput.isFocused)
+           rigid.AddForce(force, ForceMode.VelocityChange);
 
         playerModel.transform.localRotation = Quaternion.Euler(0, transform.rotation.y, 0);
 
@@ -113,7 +116,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
 
     private void Jump()
     {
-        if (!isJumping && Input.GetKeyDown(KeyCode.Space))
+        if (!isJumping && Input.GetKeyDown(KeyCode.Space) && !chatInput.isFocused)
         {
             rigid.velocity = Vector3.up * jumpPower;
             ani.SetTrigger("jump");
@@ -226,6 +229,11 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             if (other.tag == "Water")
             {
                 Die("¿ÕªÁ");
+            }
+
+            else if(other.tag=="Goal")
+            {
+                //∞Ò
             }
         }
     }

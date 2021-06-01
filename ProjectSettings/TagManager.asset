@@ -9,6 +9,7 @@ TagManager:
   - Object
   - Water
   - Rock
+  - Goal
   layers:
   - Default
   - TransparentFX

@@ -5,9 +5,11 @@ using UnityEngine;
 public class ColState : CollisionEventSc
 {
     public bool bResetActive;
+    private string firTag;
 
     private void Start()
     {
+        firTag = o.tag;
         firPos = o.transform.position;
         firScl = o.transform.localScale;
     }
@@ -26,6 +28,7 @@ public class ColState : CollisionEventSc
 
         o.transform.position = firPos;
         o.transform.localScale = firScl;
+        o.tag = firTag;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -33,6 +36,15 @@ public class ColState : CollisionEventSc
         if (collision.transform.CompareTag("Player") && collision.gameObject == GameManager.Instance.mainManager.player.gameObject)
         {
             CollisionFunc();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.CompareTag("Player") && other.gameObject == GameManager.Instance.mainManager.player.gameObject)
+        {
+            CollisionFunc();
+            gameObject.SetActive(false);
         }
     }
 }

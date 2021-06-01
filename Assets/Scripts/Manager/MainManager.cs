@@ -15,6 +15,7 @@ public class MainManager : MonoBehaviour
     public ObjectManager objManager;
     public GameObject diePanel;
     public Color[] gameColors;
+    private bool isGoal = false;
 
     [SerializeField] private float playTime=0.0f;
     private int h, m, s;
@@ -36,11 +37,14 @@ public class MainManager : MonoBehaviour
     {
         if (loadingPanel.activeSelf) return;
 
-        playTime += Time.deltaTime;
-        h = (int)playTime / 3600;
-        m = ((int)playTime / 60)%60;
-        s = (int)playTime % 60;
-        timeTxt.text = string.Format("{0}:{1}:{2}", h, m, s);
+        if (!isGoal)
+        {
+            playTime += Time.deltaTime;
+            h = (int)playTime / 3600;
+            m = ((int)playTime / 60) % 60;
+            s = (int)playTime % 60;
+            timeTxt.text = string.Format("{0}:{1}:{2}", h, m, s);
+        }
     }
 
     void _Input()

@@ -4,6 +4,7 @@ using UnityEngine;
 public class ColTransform : CollisionEventSc
 {
     Sequence seq;
+    [SerializeField] Rigidbody rigid;
 
     private void Start()
     {
@@ -25,11 +26,15 @@ public class ColTransform : CollisionEventSc
         {
             o.SetActive(true);
         }
+
+        
     }
 
     public override void ObsReset()
     {
-        seq.Kill();
+        //seq.Kill();
+        DOTween.KillAll();
+        
         o.SetActive(true);
         
         if (id <=20)
@@ -37,6 +42,11 @@ public class ColTransform : CollisionEventSc
             o.transform.position = firPos;
             o.transform.localScale = firScl;
         }
+
+        /*if (rigid != null)
+        {
+            rigid.drag = 100;
+        }*/
     }
 
     private void OnTriggerEnter(Collider other)
