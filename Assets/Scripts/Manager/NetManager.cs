@@ -8,15 +8,17 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class NetManager : MonoBehaviourPunCallbacks
 {
+    [SerializeField] bool isDev = false; //테스트용 코드
+    public bool IsDev { get { return isDev; } }
     public static NetManager instance;
     private PhotonView PV;
     public int id;
     public Player p;
     private PlayerScript player;
     private Message msgClass;
-    private Vector3 firstPos;
+    public Vector3 firstPos;
 
-    public List<Player> diedUsers = new List<Player>();
+    //public List<Player> diedUsers = new List<Player>();
     public Dictionary<int, Player> idToPlayer = new Dictionary<int, Player>();
     public Vector3 startPos;
     public float spawnRandomRange;
@@ -63,10 +65,12 @@ public class NetManager : MonoBehaviourPunCallbacks
         }
 
         SpawnPlayer();
+        PV.RPC("Chatting", RpcTarget.AllViaServer, "<color=green>'" + p.NickName + "'</color>님이 참가하였습니다.");
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         idToPlayer.Remove(otherPlayer.ActorNumber);
+        PV.RPC("Chatting", RpcTarget.AllViaServer, "<color=purple>'" + p.NickName + "'</color>님이 탈주했습니다.");
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
@@ -111,9 +115,7 @@ public class NetManager : MonoBehaviourPunCallbacks
         }
         else if(Input.GetKeyDown(KeyCode.R))
         {
-            //자살
-            //test
-            player.transform.position = firstPos;
+            player.Die("자살");
         }
     }
 
@@ -142,7 +144,7 @@ public class NetManager : MonoBehaviourPunCallbacks
     private void RPCDied(string msg)
     {
         msgClass = JsonUtility.FromJson<Message>(msg);
-        diedUsers.Add(idToPlayer[msgClass.myAct]);
+        //diedUsers.Add(idToPlayer[msgClass.myAct]);
     }
 
     public void SendMsg()

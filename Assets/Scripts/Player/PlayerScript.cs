@@ -74,6 +74,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         {
             Jump();
             Attack();
+            _Input();
         }
     }
 
@@ -84,6 +85,13 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             Move();
             GroundCheck();
             RayHit();
+        }
+    }
+    void _Input()
+    {
+        if(Input.GetKeyDown(KeyCode.F)&&NetManager.instance.IsDev)
+        {
+            rigid.velocity = Vector3.up * jumpPower;
         }
     }
 
@@ -177,10 +185,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
 
             if(hp<=0)
             {
-                hp = 0;
-                isDie = true;
-                ani.SetTrigger("death");
-                isInvinci = true;
+                Die("살해 당함");
 
                 messageClass.otherAct = messageClass.myAct;
                 messageClass.myAct = playerId;
@@ -212,5 +217,48 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             hp = (int)stream.ReceiveNext();
             isDie = (bool)stream.ReceiveNext();
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (playerId == PhotonNetwork.LocalPlayer.ActorNumber)
+        {
+            if (other.tag == "Water")
+            {
+                Die("익사");
+            }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        rigid.velocity = Vector3.zero;
+        if (playerId == PhotonNetwork.LocalPlayer.ActorNumber)
+        {
+            if (collision.gameObject.tag == "Rock")
+            {
+                Die("압사");
+            }
+        }
+    }
+
+    public void Die(string cause)
+    {
+        if (isDie) return;
+
+        hp = 0;
+        isDie = true;
+        ani.SetTrigger("death");
+        isInvinci = true;
+        mainManager.Die(cause);
+    }
+
+    public void Respawn()
+    {
+        hp = 100;
+        isDie = false;
+        ani.Play("Idle");
+        isInvinci = false;
+        transform.position = NetManager.instance.firstPos;
     }
 }

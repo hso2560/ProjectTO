@@ -60,8 +60,8 @@ Shader "Custom/Water"
                 float3 scrPos = IN.screenPos.xyz / (IN.screenPos.w + 0.0000001);
                 float3 fGrab = tex2D(_GrabTexture, scrPos.xy + fNoise.r * 0.05);
 
-                o.Gloss = 1;
-                o.Specular = 1;
+                o.Gloss = 0.3f;
+                o.Specular = 0.3f;
                 o.Alpha = 1;
 
                 o.Emission = lerp(fGrab, fRefl, fRim);

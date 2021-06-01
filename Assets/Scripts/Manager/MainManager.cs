@@ -12,6 +12,9 @@ public class MainManager : MonoBehaviour
     public Text timeTxt;
     public Color rayTxtColor;
     public Text rayText;
+    public ObjectManager objManager;
+    public GameObject diePanel;
+    public Color[] gameColors;
 
     [SerializeField] private float playTime=0.0f;
     private int h, m, s;
@@ -57,6 +60,27 @@ public class MainManager : MonoBehaviour
     public void TxtOff()
     {
         rayText.DOColor(new Color(0, 0, 0, 0), 0.3f);
+    }
+
+    public void Die(string cause)
+    {
+        diePanel.SetActive(true);
+        diePanel.transform.GetChild(0).GetComponent<Text>().text = "ªÁ¿Œ: " + cause;
+        diePanel.GetComponent<Image>().DOColor(gameColors[0], 0.8f);
+        diePanel.transform.GetChild(0).GetComponent<Text>().DOColor(gameColors[1], 0.7f);
+        diePanel.transform.GetChild(1).DOScale(new Vector3(1, 1, 1), 1);
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    public void Respawn()
+    {
+        diePanel.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+        diePanel.transform.GetChild(0).GetComponent<Text>().color = new Color(0, 0, 0, 0);
+        diePanel.transform.GetChild(1).localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        Cursor.lockState = CursorLockMode.Locked;
+        diePanel.SetActive(false);
+        objManager.ObsReset();
+        player.Respawn();
     }
 }
 
