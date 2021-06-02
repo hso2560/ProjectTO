@@ -17,6 +17,7 @@ public class GameManager : MonoSingleton<GameManager>
     private string savedJson;
 
     public MainManager mainManager;
+    public LobbyManager lobbyManager;
 
     private void Awake()
     {

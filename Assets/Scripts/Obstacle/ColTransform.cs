@@ -22,9 +22,12 @@ public class ColTransform : CollisionEventSc
             seq.Append(o.transform.DOScale(new Vector3(scl.x, scl.y, scl.z), sclT));
             seq.Play();
         }
-        else if(id==15)
+        else if(id==30)
         {
-            o.SetActive(true);
+            seq.Append(o.transform.DOScale(new Vector3(scl.x, scl.y, scl.z), sclT));
+            seq.Append(o.transform.DOMove(new Vector3(pos.x, pos.y, pos.z), posT));
+            
+            seq.Play();
         }
 
         
@@ -37,7 +40,7 @@ public class ColTransform : CollisionEventSc
         
         o.SetActive(true);
         
-        if (id <=20)
+        if (id <=30)
         {
             o.transform.position = firPos;
             o.transform.localScale = firScl;
