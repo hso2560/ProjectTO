@@ -38,7 +38,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     private InputField chatInput;
     #endregion
 
-    private void Start()
+    private void Start()  //버그: 채팅 focus된 상태에서 움직이면 버그가 남.(높은 점프, 자동 이동 등)
     {
         if(playerId==PhotonNetwork.LocalPlayer.ActorNumber)
         {

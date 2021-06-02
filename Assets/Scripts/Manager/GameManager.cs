@@ -8,6 +8,12 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 
+public enum ScState 
+{
+    LOBBY=0,
+    MAIN=1
+}
+
 public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField] private SaveData saveData;
@@ -18,6 +24,13 @@ public class GameManager : MonoSingleton<GameManager>
 
     public MainManager mainManager;
     public LobbyManager lobbyManager;
+    public ScState scState;
+    public GameObject SystemPanel;
+    public Text SystemText;
+    public Color[] gameColors;
+
+    public GameObject[] mainObjs;
+    [SerializeField] List<GameObject> UIObjs;
 
     private void Awake()
     {
@@ -44,22 +57,29 @@ public class GameManager : MonoSingleton<GameManager>
             byte[] bytes = Convert.FromBase64String(code);
             savedJson = Encoding.UTF8.GetString(bytes);
             saveData = JsonUtility.FromJson<SaveData>(savedJson);
-            SetData();
         }
-        else
-        {
-            Screen.SetResolution(1280, 720, true);
-        }
+        SetData();
     }
 
     public void SetData()
     {
+        if(scState==ScState.LOBBY)
+        {
+            UIManager.Instance.nameInput.text = saveData.userInfo.nickName;
+        }
+        else
+        {
+
+        }
         Screen.SetResolution(1280, 720, saveData.option.isFullScr);
     }
 
     public void Init()
     {
-
+        if (scState == ScState.LOBBY)
+        {
+            UIManager.Instance.LoadingFade();
+        }
     }
 
     private void Update()
@@ -71,15 +91,57 @@ public class GameManager : MonoSingleton<GameManager>
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            
+            if(UIObjs.Count>0)
+            {
+                UIObjs[UIObjs.Count - 1].SetActive(false);
+                UIObjs.Remove(UIObjs[UIObjs.Count - 1]);
+            }
         }
     }
 
     public void SceneChange(string scName)
     {
+        if(scState==ScState.LOBBY)
+        {
+            if (UIManager.Instance.nameInput.text.Trim() == "")
+            {
+                PopupPanel("닉네임이 공백일 수 없습니다.");
+                return;
+            }
+        }
+
         Save();
         SceneManager.LoadScene(scName);
     }
+
+    public void BtnPanelOnOff(int idx)
+    {
+        if (!mainObjs[idx].activeSelf)
+        {
+            UIObjs.Add(mainObjs[idx]);
+            mainObjs[idx].transform.localScale = Vector3.zero;
+            mainObjs[idx].SetActive(true);
+            mainObjs[idx].transform.DOScale(new Vector3(1, 1, 1), 0.5f);
+        }
+        else
+        {
+            UIObjs.Remove(mainObjs[idx]);
+            mainObjs[idx].SetActive(false);
+        }
+    }
+    public void PopupPanel(string msg)
+    {
+        SystemPanel.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        UIObjs.Add(SystemPanel);
+        SystemPanel.SetActive(true);
+        SystemPanel.transform.DOScale(new Vector3(1, 1, 1), 0.3f);
+
+        SystemText.color = new Color(0, 0, 0, 0);
+        SystemText.text = msg;
+        SystemText.DOColor(gameColors[0], 0.6f);
+    }
+
+    public void GameQuit() => Application.Quit();
 
     private void OnApplicationQuit()
     {

@@ -397,6 +397,8 @@ MonoBehaviour:
   saveData:
     option:
       isFullScr: 1
+      soundEffect: 0.5
+      bgmSize: 0.5
     userInfo:
       isFirstStart: 1
       isClear: 0
@@ -406,6 +408,13 @@ MonoBehaviour:
       nickName: 
       playerRosoName: Player1
   mainManager: {fileID: 1522817335}
+  lobbyManager: {fileID: 0}
+  scState: 1
+  SystemPanel: {fileID: 0}
+  SystemText: {fileID: 0}
+  gameColors: []
+  mainObjs: []
+  UIObjs: []
 --- !u!1 &322533115
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,6 +823,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoadingPanel: {fileID: 1218595562}
+  lobbyTexts: []
+  nameInput: {fileID: 0}
 --- !u!1 &507775563
 GameObject:
   m_ObjectHideFlags: 0
@@ -1317,7 +1328,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -8.764869, y: 0}
-  m_SizeDelta: {x: -17.530264, y: -327}
+  m_SizeDelta: {x: -17.530264, y: -317}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &614968987
 MonoBehaviour:
@@ -1348,8 +1359,8 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Top: 5
+    m_Bottom: 5
   m_ChildAlignment: 0
   m_Spacing: 2
   m_ChildForceExpandWidth: 1
@@ -3371,6 +3382,7 @@ GameObject:
   - component: {fileID: 1218595563}
   - component: {fileID: 1218595565}
   - component: {fileID: 1218595564}
+  - component: {fileID: 1218595566}
   m_Layer: 5
   m_Name: LoadingPanel
   m_TagString: Untagged
@@ -3435,6 +3447,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1218595562}
   m_CullTransparentMesh: 1
+--- !u!114 &1218595566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218595562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c3f323cce8599a4bb99ae74d50b82ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1221771902
 GameObject:
   m_ObjectHideFlags: 0
@@ -4251,7 +4275,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 311.01, y: -16.5}
+  m_AnchoredPosition: {x: 311.01, y: -21.5}
   m_SizeDelta: {x: 622.02, y: 33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1579418247
