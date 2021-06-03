@@ -38,7 +38,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     private InputField chatInput;
     #endregion
 
-    private void Start()  //버그: 채팅 focus된 상태에서 움직이면 버그가 남.(높은 점프, 자동 이동 등)
+    private void Start()  
     {
         if(playerId==PhotonNetwork.LocalPlayer.ActorNumber)
         {
@@ -75,7 +75,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         {
             Jump();
             Attack();
-            _Input();
+            _Input();  //테스트모드 전용
         }
     }
 
@@ -169,12 +169,13 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             }
             else if(hit.transform.CompareTag("Object"))
             {
-
+                mainManager.TxtDOTw("테스트 텍스트입니다");
             }
         }
         else
         {
             mainManager.TxtOff();
+            scanObj = null;
         }
     }
 
@@ -186,7 +187,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             hp -= messageClass.iValue;
             photonView.RPC("BloodEffect", RpcTarget.AllViaServer, messageClass.otherAct);
 
-            if(hp<=0)
+            if(hp<=0&&playerId==PhotonNetwork.LocalPlayer.ActorNumber)
             {
                 Die("살해 당함");
 

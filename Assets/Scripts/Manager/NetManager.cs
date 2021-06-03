@@ -28,6 +28,7 @@ public class NetManager : MonoBehaviourPunCallbacks
     public GameObject chatPanel, chatPlus, chatMinus;
     public Text chatText;
     public Scrollbar chatScroll;
+    [SerializeField] private Text newMsgTxt;
     #endregion
 
     private void Awake()
@@ -106,6 +107,7 @@ public class NetManager : MonoBehaviourPunCallbacks
             if (!chatPanel.activeSelf)
             {
                 ChatPanelOnOff(true);
+                newMsgTxt.gameObject.SetActive(false);
                 //chatInput.MoveTextEnd(false);
             }
             else
@@ -125,6 +127,8 @@ public class NetManager : MonoBehaviourPunCallbacks
         if (isOn) chatInput.ActivateInputField();
         chatPlus.SetActive(!isOn);
         chatMinus.SetActive(isOn);
+
+        if (chatPanel.activeSelf) newMsgTxt.gameObject.SetActive(false);
     }
 
     public void HitPlayer(int myAct, int otherAct, int damage)
@@ -145,13 +149,17 @@ public class NetManager : MonoBehaviourPunCallbacks
     {
         msgClass = JsonUtility.FromJson<Message>(msg);
         //diedUsers.Add(idToPlayer[msgClass.myAct]);
+        string attacker = idToPlayer[msgClass.otherAct].NickName;
+        string victim = idToPlayer[msgClass.myAct].NickName;
+        
+        Chatting($"<color=blue>'{attacker}'</color>님이 '<color=red>{victim}</color>'님을 살해하였습니다.");
     }
 
     public void SendMsg()
     {
         if (chatInput.text.Trim() == "")
         {
-            chatInput.Select();
+            //chatInput.Select();
             chatPanel.SetActive(false);
             chatPlus.SetActive(true);
             chatMinus.SetActive(false);
@@ -165,6 +173,7 @@ public class NetManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void Chatting(string msg)
     {
+        if (!chatPanel.activeSelf) newMsgTxt.gameObject.SetActive(true);
         msg.Replace("시발", "**").Replace("병신", "**").Replace("지랄", "**");
         chatText.text += chatText.text != "" ? "\n" + msg : msg;
         chatScroll.value = 0;

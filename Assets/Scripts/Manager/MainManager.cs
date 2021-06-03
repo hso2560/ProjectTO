@@ -25,6 +25,7 @@ public class MainManager : MonoBehaviour
     private void Awake()
     {
         loadingPanel = UIManager.Instance.LoadingPanel;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
@@ -63,7 +64,8 @@ public class MainManager : MonoBehaviour
     }
     public void TxtOff()
     {
-        rayText.DOColor(new Color(0, 0, 0, 0), 0.3f);
+        if(rayText.color==rayTxtColor)
+           rayText.DOColor(new Color(0, 0, 0, 0), 0.3f);
     }
 
     public void Die(string cause)
