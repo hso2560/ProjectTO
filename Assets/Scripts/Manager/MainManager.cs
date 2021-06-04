@@ -14,6 +14,7 @@ public class MainManager : MonoBehaviour
     public Text rayText;
     public ObjectManager objManager;
     public GameObject diePanel;
+    public GameObject userListPanel;
     public Color[] gameColors;
     private bool isGoal = false;
 
@@ -55,6 +56,9 @@ public class MainManager : MonoBehaviour
             Cursor.lockState = !bCursor ? CursorLockMode.Confined : CursorLockMode.Locked;
             bCursor = !bCursor;
         }
+
+
+        userListPanel.SetActive(Input.GetKey(KeyCode.Tab));
     }
 
     public void TxtDOTw(string s)

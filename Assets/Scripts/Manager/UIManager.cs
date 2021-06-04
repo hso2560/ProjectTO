@@ -15,7 +15,11 @@ public class UIManager : MonoSingleton<UIManager>
     {
         LoadingPanel.GetComponent<Image>().DOColor(new Color(r, g, b, a), t);
         StartCoroutine(ActiveCo(LoadingPanel, active, t+0.1f));
-        loadingScr.FillImgFade();
+
+        if (loadingScr != null)
+        {
+            loadingScr.FillImgFade();
+        }
     }
 
     public IEnumerator ActiveCo(GameObject o,bool active, float time)

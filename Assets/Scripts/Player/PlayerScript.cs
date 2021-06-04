@@ -264,9 +264,9 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
 
     public void Respawn()
     {
+        ani.SetTrigger("jump");
         hp = 100;
         isDie = false;
-        ani.Play("Idle");
         isInvinci = false;
         transform.position = NetManager.instance.firstPos;
     }

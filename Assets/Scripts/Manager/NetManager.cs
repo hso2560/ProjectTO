@@ -16,6 +16,7 @@ public class NetManager : MonoBehaviourPunCallbacks
     public Player p;
     private PlayerScript player;
     private Message msgClass;
+    
     public Vector3 firstPos;
 
     //public List<Player> diedUsers = new List<Player>();
@@ -29,6 +30,7 @@ public class NetManager : MonoBehaviourPunCallbacks
     public Text chatText;
     public Scrollbar chatScroll;
     [SerializeField] private Text newMsgTxt;
+    [SerializeField] private Button[] userBtns;
     #endregion
 
     private void Awake()
@@ -42,6 +44,7 @@ public class NetManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         msgClass = new Message();
+        
         PhotonNetwork.JoinLobby();
     }
     public override void OnJoinedLobby()
@@ -67,15 +70,18 @@ public class NetManager : MonoBehaviourPunCallbacks
 
         SpawnPlayer();
         PV.RPC("Chatting", RpcTarget.AllViaServer, "<color=green>'" + p.NickName + "'</color>님이 참가하였습니다.");
+        RenewalMainUserList();
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         idToPlayer.Remove(otherPlayer.ActorNumber);
         PV.RPC("Chatting", RpcTarget.AllViaServer, "<color=purple>'" + p.NickName + "'</color>님이 탈주했습니다.");
+        RenewalMainUserList();
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         idToPlayer.Add(newPlayer.ActorNumber, newPlayer);
+        RenewalMainUserList();
     }
     public void CreateRoom()
     {
@@ -93,6 +99,20 @@ public class NetManager : MonoBehaviourPunCallbacks
         player.playerId = id;
         GameManager.Instance.mainManager.player = player;
         UIManager.Instance.LoadingFade();
+    }
+
+    private void RenewalMainUserList()
+    {
+        int idx = PhotonNetwork.PlayerList.Length;
+        for(int i=0; i<idx; i++)
+        {
+            userBtns[i].gameObject.SetActive(true);
+            userBtns[i].transform.GetChild(0).GetComponent<Text>().text = PhotonNetwork.PlayerList[i].NickName;
+        }
+        for(int i=idx; i<userBtns.Length; ++i)
+        {
+            userBtns[i].gameObject.SetActive(false);
+        }
     }
 
     private void Update()
@@ -174,8 +194,8 @@ public class NetManager : MonoBehaviourPunCallbacks
     void Chatting(string msg)
     {
         if (!chatPanel.activeSelf) newMsgTxt.gameObject.SetActive(true);
-        msg.Replace("시발", "**").Replace("병신", "**").Replace("지랄", "**");
-        chatText.text += chatText.text != "" ? "\n" + msg : msg;
+        string ms=msg.Replace("시발", "**").Replace("병신", "**").Replace("지랄", "**");
+        chatText.text += chatText.text != "" ? "\n" + ms : ms;
         chatScroll.value = 0;
     }
 

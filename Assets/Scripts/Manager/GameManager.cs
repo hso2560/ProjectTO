@@ -28,6 +28,7 @@ public class GameManager : MonoSingleton<GameManager>
     public GameObject SystemPanel;
     public Text SystemText;
     public Color[] gameColors;
+    public Toggle[] gameToggles;  //0: 전체화면
 
     public GameObject[] mainObjs;
     [SerializeField] List<GameObject> UIObjs;
@@ -66,11 +67,18 @@ public class GameManager : MonoSingleton<GameManager>
         if(scState==ScState.LOBBY)
         {
             UIManager.Instance.nameInput.text = saveData.userInfo.nickName;
+            if (saveData.userInfo.isFirstStart)
+            {
+                saveData.userInfo.isFirstStart = false;
+                PopupPanel("닉네임을 설정해주세요.");
+            }
         }
         else
         {
 
         }
+
+        gameToggles[0].isOn = saveData.option.isFullScr;
         Screen.SetResolution(1280, 720, saveData.option.isFullScr);
     }
 
@@ -139,6 +147,15 @@ public class GameManager : MonoSingleton<GameManager>
         SystemText.color = new Color(0, 0, 0, 0);
         SystemText.text = msg;
         SystemText.DOColor(gameColors[0], 0.6f);
+    }
+
+    public void ToggleClick(int num)
+    {
+        if(num==0)
+        {
+            saveData.option.isFullScr = gameToggles[num].isOn;
+            Screen.fullScreen = saveData.option.isFullScr;
+        }
     }
 
     public void GameQuit() => Application.Quit();
