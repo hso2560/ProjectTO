@@ -20,6 +20,10 @@ public class ColState : CollisionEventSc
         {
             o.SetActive(true);
         }
+        else if(id==20)
+        {
+            Invoke("InvokeFunc", posT);
+        }
     }
 
     public override void ObsReset()
@@ -29,6 +33,19 @@ public class ColState : CollisionEventSc
         o.transform.position = firPos;
         o.transform.localScale = firScl;
         o.tag = firTag;
+
+        if (id == 20)
+        {
+            CancelInvoke("InvokeFunc");
+            o.GetComponent<Rigidbody>().isKinematic = true;
+            o.GetComponent<Rigidbody>().useGravity = false;
+        }
+    }
+
+    private void InvokeFunc()
+    {
+        o.GetComponent<Rigidbody>().isKinematic = false;
+        o.GetComponent<Rigidbody>().useGravity = true;
     }
 
     private void OnCollisionEnter(Collision collision)

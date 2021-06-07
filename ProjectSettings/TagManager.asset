@@ -10,6 +10,9 @@ TagManager:
   - Water
   - Rock
   - Goal
+  - Save
+  - Obstacle
+  - Glich
   layers:
   - Default
   - TransparentFX

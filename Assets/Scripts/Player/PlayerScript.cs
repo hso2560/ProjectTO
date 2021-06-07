@@ -159,7 +159,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             if (scanObj == hit.transform.gameObject) return;
             scanObj = hit.transform.gameObject;
 
-            if (hit.transform.CompareTag("Player"))
+            if (hit.transform.CompareTag("Player") && hit.transform.gameObject!=gameObject)
             {
                 mainManager.TxtDOTw(NetManager.instance.idToPlayer[hit.transform.GetComponent<PlayerScript>().playerId].NickName);
             }
@@ -169,7 +169,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             }
             else if(hit.transform.CompareTag("Object"))
             {
-                mainManager.TxtDOTw("테스트 텍스트입니다");
+                
             }
         }
         else
@@ -236,17 +236,41 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             {
                 //골
             }
+            else if(other.tag=="Save" && !isDie)
+            {
+                NetManager.instance.firstPos = transform.position;
+                mainManager.PlayerTfSave(other.gameObject);
+            }
+            else if (other.tag == "Glich")
+            {
+                mainManager.cam.camGlich.enabled = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (playerId == PhotonNetwork.LocalPlayer.ActorNumber)
+        {
+            if (other.tag == "Glich")
+            {
+                mainManager.cam.camGlich.enabled = false;
+            }
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        rigid.velocity = Vector3.zero;
         if (playerId == PhotonNetwork.LocalPlayer.ActorNumber)
         {
             if (collision.gameObject.tag == "Rock")
             {
                 Die("압사");
+            }
+            else if (collision.transform.CompareTag("Obstacle"))
+            {
+                string cause = collision.transform.parent.GetComponent<SelfMoveObs>().deathCause;
+                Die(cause);
             }
         }
     }

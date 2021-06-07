@@ -9,7 +9,7 @@ public class MainManager : MonoBehaviour
     public Camera mainCam;
     public CamMove cam;
     public PlayerScript player;
-    public Text timeTxt;
+    public Text timeTxt, deathTxt;
     public Color rayTxtColor;
     public Text rayText;
     public ObjectManager objManager;
@@ -18,15 +18,22 @@ public class MainManager : MonoBehaviour
     public Color[] gameColors;
     private bool isGoal = false;
 
+    [SerializeField] private GameObject saveObj;
     [SerializeField] private float playTime=0.0f;
+    private int deathCount = 0;
     private int h, m, s;
     private GameObject loadingPanel;
     private bool bCursor = false;
+
+    public short saveCnt = 0;
+    public short maxSaveCnt = 3;
+    public bool isSave = false;
 
     private void Awake()
     {
         loadingPanel = UIManager.Instance.LoadingPanel;
         Cursor.lockState = CursorLockMode.Locked;
+        deathTxt.text = string.Format("»ç¸Á: <color=#962323>{0}</color>È¸", deathCount);
     }
 
     private void Update()
@@ -80,6 +87,14 @@ public class MainManager : MonoBehaviour
         diePanel.transform.GetChild(0).GetComponent<Text>().DOColor(gameColors[1], 0.7f);
         diePanel.transform.GetChild(1).DOScale(new Vector3(1, 1, 1), 1);
         Cursor.lockState = CursorLockMode.Confined;
+        deathCount++;
+        deathTxt.text = string.Format("»ç¸Á: <color=#962323>{0}</color>È¸", deathCount);
+        if (isSave && saveCnt == 0)
+        {
+            isSave = false;
+            NetManager.instance.firstPos = NetManager.instance.v;
+            saveObj.SetActive(true);
+        }
     }
 
     public void Respawn()
@@ -91,6 +106,20 @@ public class MainManager : MonoBehaviour
         diePanel.SetActive(false);
         objManager.ObsReset();
         player.Respawn();
+        if(isSave)
+        {
+            saveCnt--;
+        }
+    }
+
+    public void PlayerTfSave(GameObject so)
+    {
+        if (saveObj != null) saveObj.SetActive(true);
+
+        saveObj = so;
+        so.gameObject.SetActive(false);
+        isSave = true;
+        saveCnt = maxSaveCnt;
     }
 }
 

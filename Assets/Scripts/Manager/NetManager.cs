@@ -17,7 +17,7 @@ public class NetManager : MonoBehaviourPunCallbacks
     private PlayerScript player;
     private Message msgClass;
     
-    public Vector3 firstPos;
+    public Vector3 firstPos,v;
 
     //public List<Player> diedUsers = new List<Player>();
     public Dictionary<int, Player> idToPlayer = new Dictionary<int, Player>();
@@ -90,7 +90,7 @@ public class NetManager : MonoBehaviourPunCallbacks
 
     private void SpawnPlayer()
     {
-        Vector3 v = new Vector3(startPos.x + Random.Range(-spawnRandomRange, spawnRandomRange), 1, startPos.z + Random.Range(-spawnRandomRange, spawnRandomRange));
+        v = new Vector3(startPos.x + Random.Range(-spawnRandomRange, spawnRandomRange), 1, startPos.z + Random.Range(-spawnRandomRange, spawnRandomRange));
         firstPos = v;
 
         player = PhotonNetwork.Instantiate(GameManager.Instance.savedData.userInfo.playerRosoName,
