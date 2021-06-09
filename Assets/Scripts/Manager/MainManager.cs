@@ -29,6 +29,8 @@ public class MainManager : MonoBehaviour
     public short maxSaveCnt = 3;
     public bool isSave = false;
 
+    Sequence seq1;
+
     private void Awake()
     {
         loadingPanel = UIManager.Instance.LoadingPanel;
@@ -70,13 +72,26 @@ public class MainManager : MonoBehaviour
 
     public void TxtDOTw(string s)
     {
+        if (rayText.text == s) return;
+
         rayText.text = s;
+        rayText.gameObject.SetActive(true);
         rayText.DOColor(rayTxtColor, 0.3f);
     }
     public void TxtOff()
     {
-        if(rayText.color==rayTxtColor)
-           rayText.DOColor(new Color(0, 0, 0, 0), 0.3f);
+        //rayText.DOColor(new Color(0, 0, 0, 0), 0.3f);
+        if (player.scanObj != null)
+        {
+            seq1 = DOTween.Sequence()
+                .Append(rayText.DOColor(new Color(0, 0, 0, 0), 0.3f))
+                .AppendCallback(() =>
+                {
+                    rayText.text = "";
+                    rayText.gameObject.SetActive(false);
+                });
+        }
+        seq1.Play();
     }
 
     public void Die(string cause)
@@ -86,9 +101,12 @@ public class MainManager : MonoBehaviour
         diePanel.GetComponent<Image>().DOColor(gameColors[0], 0.8f);
         diePanel.transform.GetChild(0).GetComponent<Text>().DOColor(gameColors[1], 0.7f);
         diePanel.transform.GetChild(1).DOScale(new Vector3(1, 1, 1), 1);
+
         Cursor.lockState = CursorLockMode.Confined;
+
         deathCount++;
         deathTxt.text = string.Format("사망: <color=#962323>{0}</color>회", deathCount);
+
         if (isSave && saveCnt == 0)
         {
             isSave = false;
@@ -102,10 +120,14 @@ public class MainManager : MonoBehaviour
         diePanel.GetComponent<Image>().color = new Color(0, 0, 0, 0);
         diePanel.transform.GetChild(0).GetComponent<Text>().color = new Color(0, 0, 0, 0);
         diePanel.transform.GetChild(1).localScale = new Vector3(0.1f, 0.1f, 0.1f);
+
+        //DOTween.KillAll();  모든 다트윈 실행을 끔.
         Cursor.lockState = CursorLockMode.Locked;
+
         diePanel.SetActive(false);
         objManager.ObsReset();
         player.Respawn();
+
         if(isSave)
         {
             saveCnt--;

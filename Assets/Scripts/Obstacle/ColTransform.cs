@@ -14,7 +14,7 @@ public class ColTransform : CollisionEventSc
 
     public override void CollisionFunc()
     {
-        seq = DOTween.Sequence();
+        seq = DOTween.Sequence().SetId(DOTIdStr);
         
         if(id==10)
         {
@@ -36,7 +36,8 @@ public class ColTransform : CollisionEventSc
     public override void ObsReset()
     {
         //seq.Kill();
-        DOTween.KillAll();
+        //DOTween.KillAll();
+        DOTween.Kill(DOTIdStr);
         
         o.SetActive(true);
         

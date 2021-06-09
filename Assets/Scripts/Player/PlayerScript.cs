@@ -165,7 +165,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             }
             else if(hit.transform.CompareTag("Item"))
             {
-
+                
             }
             else if(hit.transform.CompareTag("Object"))
             {

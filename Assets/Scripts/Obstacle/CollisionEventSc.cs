@@ -7,6 +7,8 @@ public abstract class CollisionEventSc : MonoBehaviour
     public GameObject o;  
     public Vector3 pos, scl;  
     public float posT, sclT;
+
+    protected string DOTIdStr = "LI";
     #endregion
 
     protected Vector3 firScl, firPos;

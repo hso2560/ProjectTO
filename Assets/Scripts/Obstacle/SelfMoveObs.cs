@@ -2,14 +2,16 @@ using DG.Tweening;
 using UnityEngine;
 
 
-public class SelfMoveObs : MonoBehaviour
+public class SelfMoveObs : MonoBehaviour //CollisionEventSc 상속받아서 해도 되겠지만 이미 해버렸으니 귀찮으니 걍 이대로
 {
     public string deathCause="칼빵";
 
+    #region 조심히 건들
     [SerializeField] int id;
     [SerializeField] float rotSpeed, t;
     [SerializeField] Vector3 vec;
     [SerializeField] Ease[] _ease;
+    #endregion 
     private Sequence seq;
 
     private void Start()
@@ -30,4 +32,6 @@ public class SelfMoveObs : MonoBehaviour
             transform.Rotate(vec * rotSpeed * Time.deltaTime);
         }
     }
+
+    
 }

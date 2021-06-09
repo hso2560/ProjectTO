@@ -27,7 +27,7 @@ public class NetManager : MonoBehaviourPunCallbacks
     #region UI
     public InputField chatInput;
     public GameObject chatPanel, chatPlus, chatMinus;
-    public Text chatText;
+    public Text chatText, TestInformTxt;
     public Scrollbar chatScroll;
     [SerializeField] private Text newMsgTxt;
     [SerializeField] private Button[] userBtns;
@@ -40,6 +40,8 @@ public class NetManager : MonoBehaviourPunCallbacks
         PhotonNetwork.SendRate = 60;
         PhotonNetwork.SerializationRate = 30;
         PhotonNetwork.ConnectUsingSettings();
+
+        TestInformTxt.gameObject.SetActive(isDev);
     }
     public override void OnConnectedToMaster()
     {

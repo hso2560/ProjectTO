@@ -9,6 +9,10 @@ public class TestScr : MonoBehaviour
      {
         if(id==4)
          transform.Rotate(new Vector3(0, 90, 0)*Time.deltaTime);
+        else if(id==5)
+        {
+            transform.Translate(Vector3.right * Mathf.Sin(Time.time) * 5 * Time.deltaTime);
+        }
      }
     public int id;
 
