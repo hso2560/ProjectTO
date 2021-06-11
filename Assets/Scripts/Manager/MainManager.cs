@@ -17,6 +17,7 @@ public class MainManager : MonoBehaviour
     public GameObject userListPanel;
     public Color[] gameColors;
     private bool isGoal = false;
+    public GameObject soundPrefab;
 
     [SerializeField] private GameObject saveObj;
     [SerializeField] private float playTime=0.0f;
@@ -36,6 +37,12 @@ public class MainManager : MonoBehaviour
         loadingPanel = UIManager.Instance.LoadingPanel;
         Cursor.lockState = CursorLockMode.Locked;
         deathTxt.text = string.Format("»ç¸Á: <color=#962323>{0}</color>È¸", deathCount);
+        CreatePool();
+    }
+
+    private void CreatePool()
+    {
+        PoolManager.CreatePool<SoundPrefab>(soundPrefab, GameManager.Instance.soundPoolParent, 10);
     }
 
     private void Update()

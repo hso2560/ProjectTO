@@ -32,6 +32,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     private bool isInvinci=false; //무적인지?
     private MainManager mainManager;
     private Vector3 moveVec;
+    public Vector3 MoveVec { get { return moveVec; } }
     private Message messageClass;
 
     #region UI
@@ -107,7 +108,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         Vector3 force = new Vector3(veloc.x - rigid.velocity.x, -gravity, veloc.z - rigid.velocity.z);
         if(!chatInput.isFocused)
            rigid.AddForce(force, ForceMode.VelocityChange);
-
+        
         playerModel.transform.localRotation = Quaternion.Euler(0, transform.rotation.y, 0);
 
         ani.SetBool("walk", moveVec != Vector3.zero);
@@ -240,10 +241,12 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             {
                 NetManager.instance.firstPos = transform.position;
                 mainManager.PlayerTfSave(other.gameObject);
+                UIManager.Instance.ShowSystemMsg("세이브 포인트 - 사망시 해당 위치에서 부활합니다(최대 3번)");
             }
             else if (other.tag == "Glich")
             {
                 mainManager.cam.camGlich.enabled = true;
+                SoundManager.Instance.PlaySoundEffect(0, GameManager.Instance.savedData.option.soundEffect);
             }
         }
     }

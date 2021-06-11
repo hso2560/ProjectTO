@@ -25,6 +25,7 @@ public class GameManager : MonoSingleton<GameManager>
     public MainManager mainManager;
     public LobbyManager lobbyManager;
     public ScState scState;
+
     public GameObject SystemPanel;
     public Text SystemText;
     public Color[] gameColors;
@@ -32,6 +33,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public GameObject[] mainObjs;
     [SerializeField] List<GameObject> UIObjs;
+    public Transform soundPoolParent;
 
     private void Awake()
     {

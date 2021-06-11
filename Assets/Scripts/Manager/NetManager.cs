@@ -124,7 +124,7 @@ public class NetManager : MonoBehaviourPunCallbacks
 
     private void _Input()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) && player.MoveVec==Vector3.zero)
         {
             if (!chatPanel.activeSelf)
             {
@@ -137,7 +137,7 @@ public class NetManager : MonoBehaviourPunCallbacks
                 SendMsg();
             }
         }
-        else if(Input.GetKeyDown(KeyCode.R))
+        else if(Input.GetKeyDown(KeyCode.R) && !chatInput.isFocused)
         {
             player.Die("ÀÚ»ì");
         }
@@ -158,11 +158,16 @@ public class NetManager : MonoBehaviourPunCallbacks
         msgClass.myAct = myAct;
         msgClass.otherAct = otherAct;
         msgClass.iValue = damage;
+        SoundManager.Instance.PlaySoundEffect(2, GameManager.Instance.savedData.option.soundEffect);
         PV.RPC("Damaged", idToPlayer[otherAct], JsonUtility.ToJson(msgClass));
     }
 
     [PunRPC]
-    void Damaged(string msg) => player.Damaged(msg);
+    void Damaged(string msg)
+    {
+        SoundManager.Instance.PlaySoundEffect(2, GameManager.Instance.savedData.option.soundEffect);
+        player.Damaged(msg);
+    }
 
     public void DiedPlayer(string msg) => PV.RPC("RPCDied", RpcTarget.AllViaServer, msg);
 

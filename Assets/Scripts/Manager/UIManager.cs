@@ -11,6 +11,15 @@ public class UIManager : MonoSingleton<UIManager>
     public InputField nameInput;
     public LoadingScript loadingScr;
 
+    public Text systemTxt;
+    public Color[] gameColors;
+    private Color noColor;
+
+    private void Awake()
+    {
+        noColor = new Color(0, 0, 0, 0);
+    }
+
     public void LoadingFade(float r=0, float g=0, float b=0, float a=0,float t=1.8f ,bool active=false)
     {
         LoadingPanel.GetComponent<Image>().DOColor(new Color(r, g, b, a), t);
@@ -40,5 +49,22 @@ public class UIManager : MonoSingleton<UIManager>
     public void EndEditNameInput()
     {
         GameManager.Instance.savedData.userInfo.nickName = nameInput.text;
+    }
+
+    public void ShowSystemMsg(string msg,float fadeInTime=0.7f, float time=2.5f, float fadeOutTime=0.5f ,int index=0)
+    {
+        systemTxt.color = noColor;
+        systemTxt.text = msg;
+        systemTxt.gameObject.SetActive(true);
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(systemTxt.DOColor(gameColors[index], fadeInTime));
+        seq.AppendInterval(time);
+        seq.Append(systemTxt.DOColor(noColor, fadeOutTime));
+        seq.AppendCallback(() =>
+        {
+            systemTxt.gameObject.SetActive(false);
+        });
+        seq.Play();
     }
 }
