@@ -73,7 +73,6 @@ public class MainManager : MonoBehaviour
             bCursor = !bCursor;
         }
 
-
         userListPanel.SetActive(Input.GetKey(KeyCode.Tab));
     }
 

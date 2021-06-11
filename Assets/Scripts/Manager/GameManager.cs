@@ -30,10 +30,12 @@ public class GameManager : MonoSingleton<GameManager>
     public Text SystemText;
     public Color[] gameColors;
     public Toggle[] gameToggles;  //0: 전체화면
+    public Slider[] gameSliders;  //0: BGM,  1: 효과음
 
     public GameObject[] mainObjs;
     [SerializeField] List<GameObject> UIObjs;
     public Transform soundPoolParent;
+    public AudioSource bgmAudio;
 
     private void Awake()
     {
@@ -81,6 +83,8 @@ public class GameManager : MonoSingleton<GameManager>
         }
 
         gameToggles[0].isOn = saveData.option.isFullScr;
+        gameSliders[0].value = saveData.option.bgmSize;
+        gameSliders[1].value = saveData.option.soundEffect;
         Screen.SetResolution(1280, 720, saveData.option.isFullScr);
     }
 
@@ -120,6 +124,7 @@ public class GameManager : MonoSingleton<GameManager>
             }
         }
 
+        PoolManager.ClearItem<SoundPrefab>();
         Save();
         SceneManager.LoadScene(scName);
     }
@@ -157,6 +162,21 @@ public class GameManager : MonoSingleton<GameManager>
         {
             saveData.option.isFullScr = gameToggles[num].isOn;
             Screen.fullScreen = saveData.option.isFullScr;
+        }
+    }
+    public void ChangeSliderValue(int num)
+    {
+        if (num == 0)
+        {
+            saveData.option.bgmSize = gameSliders[num].value;
+            bgmAudio.volume= gameSliders[num].value;
+
+            if (bgmAudio.volume == 0) bgmAudio.Stop();
+            else if (bgmAudio.volume > 0 && !bgmAudio.isPlaying) bgmAudio.Play();
+        }
+        else if(num==1)
+        {
+            saveData.option.soundEffect = gameSliders[num].value;
         }
     }
 

@@ -11,7 +11,9 @@ public class PoolManager
     {
         Type t = typeof(T);
         ObjPool<T> pool = new ObjPool<T>(prefab, parent, count);
-        poolDic.Add(t.ToString(), pool);
+
+        if(!poolDic.ContainsKey(t.ToString()))
+            poolDic.Add(t.ToString(), pool);
     }
 
     public static T GetItem<T>() where T : MonoBehaviour
@@ -19,5 +21,13 @@ public class PoolManager
         Type t = typeof(T);
         ObjPool<T> pool = (ObjPool<T>)poolDic[t.ToString()];
         return pool.GetOrCreate();
+    }
+
+    public static void ClearItem<T>() where T : MonoBehaviour
+    {
+        Type t = typeof(T);
+        ObjPool<T> p=(ObjPool<T>)poolDic[t.ToString()];
+        p.ClearItem();
+        poolDic.Remove(t.ToString());
     }
 }

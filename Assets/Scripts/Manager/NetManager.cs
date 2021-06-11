@@ -26,9 +26,10 @@ public class NetManager : MonoBehaviourPunCallbacks
 
     #region UI
     public InputField chatInput;
-    public GameObject chatPanel, chatPlus, chatMinus;
+    public GameObject chatPanel, chatPlus, chatMinus, mouseCursorTxt;
     public Text chatText, TestInformTxt;
     public Scrollbar chatScroll;
+    public Button sendBtn;
     [SerializeField] private Text newMsgTxt;
     [SerializeField] private Button[] userBtns;
     #endregion
@@ -124,7 +125,7 @@ public class NetManager : MonoBehaviourPunCallbacks
 
     private void _Input()
     {
-        if (Input.GetKeyDown(KeyCode.Return) && player.MoveVec==Vector3.zero)
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             if (!chatPanel.activeSelf)
             {
@@ -149,6 +150,10 @@ public class NetManager : MonoBehaviourPunCallbacks
         if (isOn) chatInput.ActivateInputField();
         chatPlus.SetActive(!isOn);
         chatMinus.SetActive(isOn);
+
+        chatInput.interactable = isOn;
+        sendBtn.interactable = isOn;
+        mouseCursorTxt.SetActive(!isOn);
 
         if (chatPanel.activeSelf) newMsgTxt.gameObject.SetActive(false);
     }
@@ -187,9 +192,8 @@ public class NetManager : MonoBehaviourPunCallbacks
         if (chatInput.text.Trim() == "")
         {
             //chatInput.Select();
-            chatPanel.SetActive(false);
-            chatPlus.SetActive(true);
-            chatMinus.SetActive(false);
+            ChatPanelOnOff(false);
+            
             return;
         }
 

@@ -10,11 +10,10 @@ public class LobbyManager : MonoBehaviour
     public TextMeshProUGUI titleTxt;
 
     public GameObject soundPref;
-    public Transform soundTfmPar;
 
     private void Awake()
     {
-        PoolManager.CreatePool<SoundPrefab>(soundPref, soundTfmPar, 6);
+        PoolManager.CreatePool<SoundPrefab>(soundPref, GameManager.Instance.soundPoolParent, 6);
     }
     private void Start()
     {

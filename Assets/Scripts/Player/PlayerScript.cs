@@ -106,8 +106,8 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         Vector3 worldDir = transform.TransformDirection(moveVec);
         Vector3 veloc = worldDir * (Input.GetKey(KeyCode.LeftShift) ? runSpeed : speed);
         Vector3 force = new Vector3(veloc.x - rigid.velocity.x, -gravity, veloc.z - rigid.velocity.z);
-        if(!chatInput.isFocused)
-           rigid.AddForce(force, ForceMode.VelocityChange);
+        if(!chatInput.isFocused)  
+           rigid.AddForce(force, ForceMode.VelocityChange); 
         
         playerModel.transform.localRotation = Quaternion.Euler(0, transform.rotation.y, 0);
 
@@ -117,7 +117,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
 
     private void Jump()
     {
-        if (!isJumping && Input.GetKeyDown(KeyCode.Space) && !chatInput.isFocused)
+        if (!isJumping && Input.GetKeyDown(KeyCode.Space) && !chatInput.isFocused) 
         {
             rigid.velocity = Vector3.up * jumpPower;
             ani.SetTrigger("jump");
@@ -126,7 +126,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
 
     private void Attack()
     {
-        if(Input.GetMouseButtonDown(0) && !isAtk)
+        if(Input.GetMouseButtonDown(0) && !isAtk && !chatInput.isFocused)
         {
             ani.SetTrigger("attack");
             isAtk = true;

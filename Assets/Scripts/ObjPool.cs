@@ -39,4 +39,9 @@ public class ObjPool<T>: IPool where T: MonoBehaviour
         queue.Enqueue(t);
         return t;
     }
+
+    public void ClearItem()
+    {
+        queue.Clear();
+    }
 }
