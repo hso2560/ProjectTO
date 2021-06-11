@@ -158,14 +158,14 @@ public class NetManager : MonoBehaviourPunCallbacks
         msgClass.myAct = myAct;
         msgClass.otherAct = otherAct;
         msgClass.iValue = damage;
-        SoundManager.Instance.PlaySoundEffect(2, GameManager.Instance.savedData.option.soundEffect);
+        SoundManager.Instance.PlaySoundEffect(2);
         PV.RPC("Damaged", idToPlayer[otherAct], JsonUtility.ToJson(msgClass));
     }
 
     [PunRPC]
     void Damaged(string msg)
     {
-        SoundManager.Instance.PlaySoundEffect(2, GameManager.Instance.savedData.option.soundEffect);
+        SoundManager.Instance.PlaySoundEffect(2);
         player.Damaged(msg);
     }
 

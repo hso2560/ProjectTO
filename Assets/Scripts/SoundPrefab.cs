@@ -7,10 +7,10 @@ public class SoundPrefab : MonoBehaviour
     [SerializeField] AudioSource _audio;
     private bool soundStart;
 
-    public void SoundPlay(AudioClip clip, float volume)
+    public void SoundPlay(AudioClip clip)
     {   
         _audio.clip = clip;
-        _audio.volume = volume;
+        _audio.volume = GameManager.Instance.savedData.option.soundEffect;
         _audio.Play();
         soundStart = true;
     }

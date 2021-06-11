@@ -20,9 +20,4 @@ public class LobbyManager : MonoBehaviour
     {
         titleTxt.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 2).SetLoops(-1, LoopType.Yoyo);
     }
-
-    public void BtnMouseUp(int index)
-    {
-
-    }
 }

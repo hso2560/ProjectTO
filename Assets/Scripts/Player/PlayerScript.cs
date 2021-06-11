@@ -246,7 +246,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             else if (other.tag == "Glich")
             {
                 mainManager.cam.camGlich.enabled = true;
-                SoundManager.Instance.PlaySoundEffect(0, GameManager.Instance.savedData.option.soundEffect);
+                SoundManager.Instance.PlaySoundEffect(0);
             }
         }
     }

@@ -5,12 +5,18 @@ using UnityEngine;
 public class SoundManager : MonoSingleton<SoundManager>
 {
     public AudioClip[] gameSoundEffects;
+    private GameManager manager;
 
-    public void PlaySoundEffect(int idx, float volume)
+    private void Start()
     {
-        if (volume <= 0) return;
+        manager = GameManager.Instance;
+    }
+
+    public void PlaySoundEffect(int idx)
+    {
+        if (manager.savedData.option.soundEffect <= 0) return;
 
         SoundPrefab sound = PoolManager.GetItem<SoundPrefab>();
-        sound.SoundPlay(gameSoundEffects[idx], volume);
+        sound.SoundPlay(gameSoundEffects[idx]);
     }
 }
