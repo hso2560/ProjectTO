@@ -36,6 +36,8 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] List<GameObject> UIObjs;
     public Transform soundPoolParent;
     public AudioSource bgmAudio;
+    //public GameObject settingsPanel;
+    [SerializeField] private int uiSoundIdx;
 
     private void Awake()
     {
@@ -77,15 +79,13 @@ public class GameManager : MonoSingleton<GameManager>
                 PopupPanel("닉네임을 설정해주세요.");
             }
         }
-        else
-        {
-
-        }
 
         gameToggles[0].isOn = saveData.option.isFullScr;
         gameSliders[0].value = saveData.option.bgmSize;
         gameSliders[1].value = saveData.option.soundEffect;
         Screen.SetResolution(1280, 720, saveData.option.isFullScr);
+
+        bgmAudio.volume = saveData.option.bgmSize;
     }
 
     public void Init()
@@ -109,9 +109,47 @@ public class GameManager : MonoSingleton<GameManager>
             {
                 UIObjs[UIObjs.Count - 1].SetActive(false);
                 UIObjs.Remove(UIObjs[UIObjs.Count - 1]);
+                if (UIObjs.Count == 0 && mainManager!=null) Cursor.lockState = CursorLockMode.Locked;
+                SoundManager.Instance.PlaySoundEffect(uiSoundIdx);
+            }
+            else
+            {
+                if(scState==ScState.MAIN)
+                {
+                    BtnPanelOnOff(0);
+                    Cursor.lockState = CursorLockMode.Confined;
+                }
+                else if (scState == ScState.LOBBY)
+                {
+                    BtnPanelOnOff(2);
+                }
+                SoundManager.Instance.PlaySoundEffect(uiSoundIdx);
             }
         }
     }
+
+    /*public void FadePanel()
+    {
+        Sequence seq = DOTween.Sequence();
+        bool isActive = !settingsPanel.activeSelf;
+        
+        if(isActive)
+        {
+            settingsPanel.SetActive(isActive);
+        }
+
+        seq.Append(settingsPanel.GetComponent<CanvasGroup>().DOFade(isActive?1:0, 0.4f));
+        seq.AppendCallback(() =>
+        {
+            settingsPanel.GetComponent<CanvasGroup>().blocksRaycasts = isActive;
+            settingsPanel.GetComponent<CanvasGroup>().interactable = isActive;
+            if(!isActive)
+            {
+                settingsPanel.SetActive(isActive);
+            }
+        });
+        seq.Play();
+    }*/
 
     public void SceneChange(string scName)
     {
@@ -143,6 +181,7 @@ public class GameManager : MonoSingleton<GameManager>
             UIObjs.Remove(mainObjs[idx]);
             mainObjs[idx].SetActive(false);
         }
+        SoundManager.Instance.PlaySoundEffect(uiSoundIdx);
     }
     public void PopupPanel(string msg)
     {
@@ -169,10 +208,10 @@ public class GameManager : MonoSingleton<GameManager>
         if (num == 0)
         {
             saveData.option.bgmSize = gameSliders[num].value;
-            bgmAudio.volume= gameSliders[num].value;
+            bgmAudio.volume = saveData.option.bgmSize;
 
-            if (bgmAudio.volume == 0) bgmAudio.Stop();
-            else if (bgmAudio.volume > 0 && !bgmAudio.isPlaying) bgmAudio.Play();
+            //if (bgmAudio.volume == 0) bgmAudio.Stop();
+            //else if (bgmAudio.volume > 0 && !bgmAudio.isPlaying) bgmAudio.Play();
         }
         else if(num==1)
         {

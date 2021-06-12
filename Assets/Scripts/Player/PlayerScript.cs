@@ -133,11 +133,13 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             attackCol.SetActive(true);
             Invoke("ResetAtkCol", atkColTime);
             Invoke("ResetAtkCool", atkCool);
+            Invoke("AtkSoundDelay", 0.3f);
         }
     }
 
     private void ResetAtkCol() => attackCol.SetActive(false);
     private void ResetAtkCool() => isAtk = false;
+    private void AtkSoundDelay() => SoundManager.Instance.PlaySoundEffect(1); //안좋긴한데 일단 이렇게
 
     private void GroundCheck()
     {

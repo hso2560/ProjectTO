@@ -210,6 +210,12 @@ public class NetManager : MonoBehaviourPunCallbacks
         chatScroll.value = 0;
     }
 
+    public void Disconnect()
+    {
+        PhotonNetwork.Disconnect();
+        GameManager.Instance.SceneChange("Lobby");
+    }
+
     private void OnApplicationQuit()
     {
         PhotonNetwork.Disconnect();
