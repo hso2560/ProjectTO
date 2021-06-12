@@ -25,6 +25,7 @@ public class MainManager : MonoBehaviour
     private int h, m, s;
     private GameObject loadingPanel;
     private bool bCursor = false;
+    private Color noColor;
 
     public short saveCnt = 0;
     public short maxSaveCnt = 3;
@@ -34,6 +35,7 @@ public class MainManager : MonoBehaviour
 
     private void Awake()
     {
+        noColor = new Color(0, 0, 0, 0);
         loadingPanel = UIManager.Instance.LoadingPanel;
         Cursor.lockState = CursorLockMode.Locked;
         deathTxt.text = string.Format("사망: <color=#962323>{0}</color>회", deathCount);
@@ -107,6 +109,7 @@ public class MainManager : MonoBehaviour
         diePanel.GetComponent<Image>().DOColor(gameColors[0], 0.8f);
         diePanel.transform.GetChild(0).GetComponent<Text>().DOColor(gameColors[1], 0.7f);
         diePanel.transform.GetChild(1).DOScale(new Vector3(1, 1, 1), 1);
+        diePanel.transform.GetChild(2).GetComponent<Text>().DOColor(gameColors[1], 0.6f);
 
         Cursor.lockState = CursorLockMode.Confined;
 
@@ -123,9 +126,10 @@ public class MainManager : MonoBehaviour
 
     public void Respawn()
     {
-        diePanel.GetComponent<Image>().color = new Color(0, 0, 0, 0);
-        diePanel.transform.GetChild(0).GetComponent<Text>().color = new Color(0, 0, 0, 0);
+        diePanel.GetComponent<Image>().color = noColor;
+        diePanel.transform.GetChild(0).GetComponent<Text>().color = noColor;
         diePanel.transform.GetChild(1).localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        diePanel.transform.GetChild(2).GetComponent<Text>().color = noColor;
 
         //DOTween.KillAll();  모든 다트윈 실행을 끔.
         Cursor.lockState = CursorLockMode.Locked;

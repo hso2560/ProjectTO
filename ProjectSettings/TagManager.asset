@@ -13,6 +13,7 @@ TagManager:
   - Save
   - Obstacle
   - Glich
+  - Death
   layers:
   - Default
   - TransparentFX

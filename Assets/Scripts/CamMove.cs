@@ -38,7 +38,7 @@ public class CamMove : MonoBehaviour
     void Update()
     {
         if (target != null)
-            if(!player.isDie)
+            if(!player.isDie && !player.bCompulsoryIdle)
                 Move();
     }
 

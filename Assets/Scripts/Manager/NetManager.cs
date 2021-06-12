@@ -101,6 +101,7 @@ public class NetManager : MonoBehaviourPunCallbacks
 
         player.playerId = id;
         GameManager.Instance.mainManager.player = player;
+        GameManager.Instance.player = player;
         UIManager.Instance.LoadingFade();
     }
 
@@ -125,6 +126,8 @@ public class NetManager : MonoBehaviourPunCallbacks
 
     private void _Input()
     {
+        if (player.bCompulsoryIdle) return;
+
         if (Input.GetKeyDown(KeyCode.Return))
         {
             if (!chatPanel.activeSelf)

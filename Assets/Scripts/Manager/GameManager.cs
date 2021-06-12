@@ -14,6 +14,11 @@ public enum ScState
     MAIN=1
 }
 
+public enum ExceptionType
+{
+    MENU
+}
+
 public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField] private SaveData saveData;
@@ -22,6 +27,7 @@ public class GameManager : MonoSingleton<GameManager>
     private string filePath;
     private string savedJson;
 
+    public PlayerScript player=null;
     public MainManager mainManager;
     public LobbyManager lobbyManager;
     public ScState scState;
@@ -109,7 +115,11 @@ public class GameManager : MonoSingleton<GameManager>
             {
                 UIObjs[UIObjs.Count - 1].SetActive(false);
                 UIObjs.Remove(UIObjs[UIObjs.Count - 1]);
-                if (UIObjs.Count == 0 && mainManager!=null) Cursor.lockState = CursorLockMode.Locked;
+                if (UIObjs.Count == 0 && mainManager != null)
+                {
+                    Cursor.lockState = CursorLockMode.Locked;
+                    player.bCompulsoryIdle = false;
+                }
                 SoundManager.Instance.PlaySoundEffect(uiSoundIdx);
             }
             else
@@ -123,7 +133,6 @@ public class GameManager : MonoSingleton<GameManager>
                 {
                     BtnPanelOnOff(2);
                 }
-                SoundManager.Instance.PlaySoundEffect(uiSoundIdx);
             }
         }
     }
@@ -169,6 +178,11 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void BtnPanelOnOff(int idx)
     {
+        if(ExceptionHandling(ExceptionType.MENU,idx))
+        {
+            return;
+        }
+
         if (!mainObjs[idx].activeSelf)
         {
             UIObjs.Add(mainObjs[idx]);
@@ -193,6 +207,25 @@ public class GameManager : MonoSingleton<GameManager>
         SystemText.color = new Color(0, 0, 0, 0);
         SystemText.text = msg;
         SystemText.DOColor(gameColors[0], 0.6f);
+    }
+
+    private bool ExceptionHandling(ExceptionType et, int intValue=-1000)
+    {
+        if (et == ExceptionType.MENU)
+        {
+            if(scState==ScState.MAIN)
+            {
+                if(intValue==0 && !mainObjs[0].activeSelf)
+                {
+                    bool b = player.IsJumping || player.MoveVec != Vector3.zero;
+                    player.bCompulsoryIdle = !b;
+                    return b;
+                }
+                return false;
+            }
+            return false;
+        }
+        return false;
     }
 
     public void ToggleClick(int num)

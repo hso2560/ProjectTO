@@ -50,7 +50,7 @@ public class ColState : CollisionEventSc
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.CompareTag("Player") && collision.gameObject == GameManager.Instance.mainManager.player.gameObject)
+        if (collision.gameObject == GameManager.Instance.player.gameObject)
         {
             CollisionFunc();
         }
@@ -58,7 +58,7 @@ public class ColState : CollisionEventSc
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.CompareTag("Player") && other.gameObject == GameManager.Instance.mainManager.player.gameObject)
+        if (other.gameObject == GameManager.Instance.player.gameObject)
         {
             CollisionFunc();
             gameObject.SetActive(false);

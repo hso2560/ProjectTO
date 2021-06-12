@@ -161,6 +161,7 @@ MonoBehaviour:
   isDie: 0
   bloodParticle: {fileID: 4430603002356206827}
   scanObj: {fileID: 0}
+  bCompulsoryIdle: 0
   hp: 0
 --- !u!114 &8954424846482769738
 MonoBehaviour:

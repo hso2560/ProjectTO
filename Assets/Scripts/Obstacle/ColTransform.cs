@@ -55,7 +55,7 @@ public class ColTransform : CollisionEventSc
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && other.gameObject==GameManager.Instance.mainManager.player.gameObject)
+        if (other.gameObject==GameManager.Instance.player.gameObject)
         {
             CollisionFunc();
 
@@ -65,7 +65,7 @@ public class ColTransform : CollisionEventSc
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.CompareTag("Player") && collision.gameObject == GameManager.Instance.mainManager.player.gameObject)
+        if (collision.gameObject == GameManager.Instance.player.gameObject)
         {
             CollisionFunc();
         }

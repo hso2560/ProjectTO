@@ -25,6 +25,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     public bool isDie;
     public ParticleSystem bloodParticle;
     public GameObject scanObj;
+    public bool bCompulsoryIdle = false;
 
     private GameObject playerModel, attackCol;
     [SerializeField] private int hp;
@@ -33,6 +34,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     private MainManager mainManager;
     private Vector3 moveVec;
     public Vector3 MoveVec { get { return moveVec; } }
+    public bool IsJumping { get { return isJumping; } }
     private Message messageClass;
 
     #region UI
@@ -72,7 +74,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
 
     private void Update()
     {
-        if (playerId == PhotonNetwork.LocalPlayer.ActorNumber && !isDie)
+        if (playerId == PhotonNetwork.LocalPlayer.ActorNumber && !isDie && !bCompulsoryIdle)
         {
             Jump();
             Attack();
@@ -106,7 +108,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         Vector3 worldDir = transform.TransformDirection(moveVec);
         Vector3 veloc = worldDir * (Input.GetKey(KeyCode.LeftShift) ? runSpeed : speed);
         Vector3 force = new Vector3(veloc.x - rigid.velocity.x, -gravity, veloc.z - rigid.velocity.z);
-        if(!chatInput.isFocused)  
+        if(!chatInput.isFocused && !bCompulsoryIdle)  
            rigid.AddForce(force, ForceMode.VelocityChange); 
         
         playerModel.transform.localRotation = Quaternion.Euler(0, transform.rotation.y, 0);
