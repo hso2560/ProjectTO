@@ -276,6 +276,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             }
             else if (collision.transform.CompareTag("Obstacle"))
             {
+                //SelfMoveObj스크립트가 달려있어도 Obstacle태그가 없으면 안죽음.
                 string cause = collision.transform.parent.GetComponent<SelfMoveObs>().deathCause;
                 Die(cause);
             }
