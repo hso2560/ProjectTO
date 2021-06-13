@@ -36,6 +36,8 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     public Vector3 MoveVec { get { return moveVec; } }
     public bool IsJumping { get { return isJumping; } }
     private Message messageClass;
+    private Transform JoinedTr;
+    //private FixedJoint FixedObj;
 
     #region UI
     private InputField chatInput;
@@ -108,8 +110,10 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         Vector3 worldDir = transform.TransformDirection(moveVec);
         Vector3 veloc = worldDir * (Input.GetKey(KeyCode.LeftShift) ? runSpeed : speed);
         Vector3 force = new Vector3(veloc.x - rigid.velocity.x, -gravity, veloc.z - rigid.velocity.z);
-        if(!chatInput.isFocused && !bCompulsoryIdle)  
-           rigid.AddForce(force, ForceMode.VelocityChange); 
+        if (!chatInput.isFocused && !bCompulsoryIdle)
+        {
+            rigid.AddForce(force, ForceMode.VelocityChange);
+        }
         
         playerModel.transform.localRotation = Quaternion.Euler(0, transform.rotation.y, 0);
 
@@ -146,20 +150,35 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     private void GroundCheck()
     {
         //Debug.DrawRay(centerTr.position, Vector3.down * groundRayDist);
-        if(Physics.Raycast(centerTr.position,Vector3.down,groundRayDist,LayerMask.GetMask("Ground","Wall","Object","Player")))
+        if(Physics.Raycast(centerTr.position,Vector3.down, out RaycastHit hit, groundRayDist,LayerMask.GetMask("Ground","Wall","Player")))
         {
             isJumping = false;
+            if (hit.transform.CompareTag("JoinObj"))
+            {
+                JoinedTr = hit.transform;
+                transform.parent = JoinedTr;
+            }
+            else
+            {
+                if (JoinedTr != null) transform.parent = null;
+            }
+            /*if (hit.transform.GetComponent<FixedJoint>() != null)
+            {
+                hit.transform.GetComponent<FixedJoint>().connectedBody = rigid;
+                FixedObj = hit.transform.GetComponent<FixedJoint>();
+            }*/
         }
         else
         {
             isJumping = true;
+            if (JoinedTr != null) transform.parent = null;
         }
     }
 
     private void RayHit()
     {
         //Debug.DrawRay(mainManager.cam.transform.position, mainManager.cam.transform.forward * rayDist, Color.red);
-        if(Physics.Raycast(mainManager.cam.transform.position,mainManager.cam.transform.forward, out RaycastHit hit, rayDist, LayerMask.GetMask("Player","Item","Object")))
+        if(Physics.Raycast(mainManager.cam.transform.position,mainManager.cam.transform.forward, out RaycastHit hit, rayDist, LayerMask.GetMask("Player")))
         {
             if (scanObj == hit.transform.gameObject) return;
             scanObj = hit.transform.gameObject;
@@ -167,14 +186,6 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             if (hit.transform.CompareTag("Player") && hit.transform.gameObject!=gameObject)
             {
                 mainManager.TxtDOTw(NetManager.instance.idToPlayer[hit.transform.GetComponent<PlayerScript>().playerId].NickName);
-            }
-            else if(hit.transform.CompareTag("Item"))
-            {
-                
-            }
-            else if(hit.transform.CompareTag("Object"))
-            {
-                
             }
         }
         else
@@ -292,6 +303,9 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         ani.SetTrigger("death");
         isInvinci = true;
         mainManager.Die(cause);
+
+        if(JoinedTr!=null) transform.parent = null;
+        //if(FixedObj!=null) FixedObj.connectedBody = null;
     }
 
     public void Respawn()
