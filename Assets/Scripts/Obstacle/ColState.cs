@@ -24,11 +24,16 @@ public class ColState : CollisionEventSc
         {
             Invoke("InvokeFunc", posT);
         }
+        else if (id == 30)
+        {
+            o.transform.position = pos;
+        }
     }
 
     public override void ObsReset()
     {
-        o.SetActive(bResetActive);
+        if(id!=30)
+           o.SetActive(bResetActive);
 
         o.transform.position = firPos;
         o.transform.localScale = firScl;
