@@ -8,7 +8,7 @@ using TMPro;
 public class LobbyManager : MonoBehaviour
 {
     public TextMeshProUGUI titleTxt;
-
+    public Text bestTxt;
     public GameObject soundPref;
 
     private void Awake()
@@ -18,5 +18,13 @@ public class LobbyManager : MonoBehaviour
     private void Start()
     {
         titleTxt.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 2).SetLoops(-1, LoopType.Yoyo);
+    }
+
+    public void SetBestScore(bool isClear, float bestTime)
+    {
+        if (isClear)
+            bestTxt.text = string.Format("최고기록: {0}시간 {1}분 {2}초", (int)bestTime / 3600, ((int)bestTime / 60) % 60, (int)bestTime % 60);
+        else
+            bestTxt.text = "최고기록: 클리어 기록 없음";
     }
 }

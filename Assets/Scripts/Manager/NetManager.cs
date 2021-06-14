@@ -126,6 +126,8 @@ public class NetManager : MonoBehaviourPunCallbacks
 
     private void _Input()
     {
+        if (player == null) return;
+
         if (player.bCompulsoryIdle) return;
 
         if (Input.GetKeyDown(KeyCode.Return))
@@ -159,6 +161,7 @@ public class NetManager : MonoBehaviourPunCallbacks
         mouseCursorTxt.SetActive(!isOn);
 
         if (chatPanel.activeSelf) newMsgTxt.gameObject.SetActive(false);
+        //if (!chatInput.interactable && chatInput.isFocused) chatInput.Select();
     }
 
     public void HitPlayer(int myAct, int otherAct, int damage)

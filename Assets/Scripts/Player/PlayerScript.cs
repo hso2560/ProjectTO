@@ -110,9 +110,10 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         Vector3 worldDir = transform.TransformDirection(moveVec);
         Vector3 veloc = worldDir * (Input.GetKey(KeyCode.LeftShift) ? runSpeed : speed);
         Vector3 force = new Vector3(veloc.x - rigid.velocity.x, -gravity, veloc.z - rigid.velocity.z);
-        if (!chatInput.isFocused && !bCompulsoryIdle)
+        if (!bCompulsoryIdle)
         {
-            rigid.AddForce(force, ForceMode.VelocityChange);
+            if (!chatInput.isFocused || !chatInput.interactable) 
+                rigid.AddForce(force, ForceMode.VelocityChange);
         }
         
         playerModel.transform.localRotation = Quaternion.Euler(0, transform.rotation.y, 0);

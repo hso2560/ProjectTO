@@ -84,6 +84,7 @@ public class GameManager : MonoSingleton<GameManager>
                 saveData.userInfo.isFirstStart = false;
                 PopupPanel("닉네임을 설정해주세요.");
             }
+            lobbyManager.SetBestScore(saveData.userInfo.isClear, saveData.userInfo.bestTime);
         }
 
         gameToggles[0].isOn = saveData.option.isFullScr;
@@ -209,17 +210,25 @@ public class GameManager : MonoSingleton<GameManager>
         SystemText.DOColor(gameColors[0], 0.6f);
     }
 
-    private bool ExceptionHandling(ExceptionType et, int intValue=-1000)
+    private bool ExceptionHandling(ExceptionType et, int intValue=-1001)
     {
         if (et == ExceptionType.MENU)
         {
             if(scState==ScState.MAIN)
             {
-                if(intValue==0 && !mainObjs[0].activeSelf)
+                if(intValue==0)
                 {
-                    bool b = player.IsJumping || player.MoveVec != Vector3.zero;
-                    player.bCompulsoryIdle = !b;
-                    return b;
+                    if (!mainObjs[0].activeSelf)
+                    {
+                        bool b = player.IsJumping || player.MoveVec != Vector3.zero;
+                        player.bCompulsoryIdle = !b;
+                        return b;
+                    }
+                    else
+                    {
+                        player.bCompulsoryIdle = false;
+                        return false;
+                    }
                 }
                 return false;
             }
