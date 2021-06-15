@@ -110,10 +110,9 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         Vector3 worldDir = transform.TransformDirection(moveVec);
         Vector3 veloc = worldDir * (Input.GetKey(KeyCode.LeftShift) ? runSpeed : speed);
         Vector3 force = new Vector3(veloc.x - rigid.velocity.x, -gravity, veloc.z - rigid.velocity.z);
-        if (!bCompulsoryIdle)
+        if (!bCompulsoryIdle && !chatInput.isFocused)
         {
-            if (!chatInput.isFocused || !chatInput.interactable) 
-                rigid.AddForce(force, ForceMode.VelocityChange);
+            rigid.AddForce(force, ForceMode.VelocityChange);
         }
         
         playerModel.transform.localRotation = Quaternion.Euler(0, transform.rotation.y, 0);
@@ -312,7 +311,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     public void Respawn()
     {
         ani.SetTrigger("jump");
-        hp = 100;
+        hp = maxHp;
         isDie = false;
         isInvinci = false;
         transform.position = NetManager.instance.firstPos;

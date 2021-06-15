@@ -134,6 +134,8 @@ public class NetManager : MonoBehaviourPunCallbacks
         {
             if (!chatPanel.activeSelf)
             {
+                if (player.IsJumping || player.MoveVec != Vector3.zero) return;
+
                 ChatPanelOnOff(true);
                 newMsgTxt.gameObject.SetActive(false);
                 //chatInput.MoveTextEnd(false);
@@ -152,15 +154,21 @@ public class NetManager : MonoBehaviourPunCallbacks
     public void ChatPanelOnOff(bool isOn)
     {
         chatPanel.SetActive(isOn);
-        if (isOn) chatInput.ActivateInputField();
+        chatInput.gameObject.SetActive(isOn);
+      
         chatPlus.SetActive(!isOn);
         chatMinus.SetActive(isOn);
 
-        chatInput.interactable = isOn;
-        sendBtn.interactable = isOn;
-        mouseCursorTxt.SetActive(!isOn);
+        if (isOn)
+        {
+            newMsgTxt.gameObject.SetActive(false);
+            chatInput.ActivateInputField();
+        }
 
-        if (chatPanel.activeSelf) newMsgTxt.gameObject.SetActive(false);
+        //chatInput.interactable = isOn;
+        //sendBtn.interactable = isOn;
+        //mouseCursorTxt.SetActive(!isOn);
+
         //if (!chatInput.interactable && chatInput.isFocused) chatInput.Select();
     }
 
