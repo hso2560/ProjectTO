@@ -10,5 +10,11 @@ public class PlayerAtk : MonoBehaviour
         {
             NetManager.instance.HitPlayer(player.playerId,other.GetComponent<PlayerScript>().playerId, player.damage);
         }
+
+        IDamageable dobj = other.GetComponent<IDamageable>();
+        if (dobj != null)
+        {
+            dobj.Damaged(player.damage, other.transform.position, -player.transform.forward);
+        }
     }
 }

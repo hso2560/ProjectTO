@@ -15,6 +15,7 @@ TagManager:
   - Glich
   - Death
   - JoinObj
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - Object
   - Player
   - Item
-  - 
+  - Enemy
   - 
   - 
   - 

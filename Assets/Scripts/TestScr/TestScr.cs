@@ -13,6 +13,14 @@ public class TestScr : MonoBehaviour
         {
             transform.Translate(Vector3.right * Mathf.Sin(Time.time) * 5 * Time.deltaTime);
         }
+        else if(id==100)
+        {
+            if(Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                Enemy1 e = PoolManager.GetItem<Enemy1>();
+                e.InitData(GameManager.Instance.player.transform.position + Vector3.forward * 3);
+            }
+        }
      }
     public int id;
 
@@ -32,5 +40,7 @@ public class TestScr : MonoBehaviour
             transform.DOScale(new Vector3(1, 1, 1), 3f);
             transform.DOMove(Vector3.forward * 2f, 2f);
         }
+
+        
     }
 }

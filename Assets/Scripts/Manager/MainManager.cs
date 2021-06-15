@@ -17,7 +17,7 @@ public class MainManager : MonoBehaviour
     public GameObject userListPanel;
     public Color[] gameColors;
     private bool isGoal = false;
-    public GameObject soundPrefab;
+    public GameObject soundPrefab, enemyPrefab;
 
     [SerializeField] private GameObject saveObj;
     [SerializeField] private float playTime=0.0f;
@@ -45,6 +45,7 @@ public class MainManager : MonoBehaviour
     private void CreatePool()
     {
         PoolManager.CreatePool<SoundPrefab>(soundPrefab, GameManager.Instance.soundPoolParent, 10);
+        PoolManager.CreatePool<Enemy1>(enemyPrefab, GameManager.Instance.enemyPoolParent, 15);
     }
 
     private void Update()

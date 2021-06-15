@@ -12,4 +12,12 @@ public class DeathCol : MonoBehaviour
             other.GetComponent<PlayerScript>().Die(deathCause);
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject == GameManager.Instance.player.gameObject)
+        {
+            collision.transform.GetComponent<PlayerScript>().Die(deathCause);
+        }
+    }
 }

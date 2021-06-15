@@ -40,7 +40,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public GameObject[] mainObjs;
     [SerializeField] List<GameObject> UIObjs;
-    public Transform soundPoolParent;
+    public Transform soundPoolParent, enemyPoolParent;
     public AudioSource bgmAudio;
     //public GameObject settingsPanel;
     [SerializeField] private int uiSoundIdx;
