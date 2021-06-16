@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class TestScr : MonoBehaviour
+public class TestScr : MonoBehaviour  //테스트용 코드
 {
      void Update()
      {

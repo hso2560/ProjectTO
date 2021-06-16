@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class Enemy1 : MonoBehaviour, IDamageable
 {
+    public bool isActive;
+
     public float patrolDist;
     public Animator ani;
 
@@ -24,6 +26,7 @@ public class Enemy1 : MonoBehaviour, IDamageable
     [SerializeField] float speed, traceSpeed, _angle, dist;
     [SerializeField] GameObject bloodPrefab;
     [SerializeField] LayerMask pLayer;
+    [SerializeField] float atkRange;
 
     private float angle;
     private Vector3 dir;
@@ -106,29 +109,22 @@ public class Enemy1 : MonoBehaviour, IDamageable
             dir = (tr.position - transform.position).normalized;
             angle = Vector3.Angle(dir, transform.forward);
 
-            if(angle<_angle*0.5f)
+            if(angle<=_angle*0.5f)
             {
-                if(Physics.Raycast(transform.forward,dir,out RaycastHit hit, dist))
+                if (Physics.Raycast(transform.position,dir,out RaycastHit hit, dist))
                 {
-                    if(hit.transform.gameObject==GameManager.Instance.player)
+                    if(hit.transform==null||hit.transform.gameObject==GameManager.Instance.player.gameObject)
                     {
                         bSetTarget = true;
                         agent.speed = traceSpeed;
                         agent.SetDestination(player.transform.position);
-                    }
-                    else
-                    {
-                        bSetTarget = false;
+
+                        if (Vector3.Distance(transform.position, player.transform.position) <= atkRange)
+                        {
+                            Attack();
+                        }
                     }
                 }
-                else
-                {
-                    bSetTarget = false;
-                }
-            }
-            else
-            {
-                bSetTarget = false;
             }
         }
         else
@@ -173,6 +169,19 @@ public class Enemy1 : MonoBehaviour, IDamageable
         target = transform.position;
         isMoveStart = false;
         Invoke("IvkActive",3);
+    }
+
+    public void ResetData()
+    {
+        CancelInvoke("IvkInvc");
+        CancelInvoke("IvkActive");
+        ani.SetTrigger("atk");
+        hp = maxHp;
+        isMoveStart = false;
+        target = transform.position;
+        bSetTarget = false;
+
+        gameObject.SetActive(isActive);
     }
 
     private void IvkInvc() => isInvinci = false;

@@ -1,9 +1,10 @@
-
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectManager : MonoBehaviour
 {
     public CollisionEventSc[] colEvents;
+    public List<Enemy1> enemys = new List<Enemy1>();
     //public SelfMoveObs[] selfObs;
 
     public void ObsReset()
@@ -16,6 +17,10 @@ public class ObjectManager : MonoBehaviour
             colEvents[i].ObsReset();
         }
 
-       
+        for(i=0; i<enemys.Count; i++)
+        {
+            enemys[i].gameObject.SetActive(true);
+            enemys[i].ResetData();
+        }
     }
 }

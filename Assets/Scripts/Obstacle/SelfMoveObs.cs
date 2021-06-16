@@ -44,6 +44,11 @@ public class SelfMoveObs : MonoBehaviour //CollisionEventSc 상속받아서 해도 되겠
             
             seq.Play().SetLoops(-1, LoopType.Yoyo);
         }
+
+        else if(id==200)
+        {
+            transform.DOScale(vec, t).SetLoops(-1, LoopType.Yoyo);
+        }
         //seq.SetLoops(-1, LoopType.Yoyo);
         //seq.AppendInterval
     }
@@ -57,6 +62,20 @@ public class SelfMoveObs : MonoBehaviour //CollisionEventSc 상속받아서 해도 되겠
         else if (id == 50)
         {
             col.enabled = mat.color.a > 0.1f;
+        }
+        else if(id==100)
+        {
+            transform.Translate(vec * Mathf.Sin(Time.time) * t * Time.deltaTime);
+        }
+        else if(id==120)
+        {
+            transform.Translate(vec * Mathf.Cos(Time.time) * t * Time.deltaTime);
+        }
+        else if(id==150)
+        {
+            float x = Mathf.Cos(Time.time) * t;
+            float z = Mathf.Sin(Time.time) * t;
+            transform.localPosition = new Vector3(x+vec.x, vec.y, z+vec.z)*rotSpeed*Time.deltaTime;
         }
     }
 

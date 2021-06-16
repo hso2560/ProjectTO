@@ -3398,12 +3398,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca7f61ac36c1f2248809b8ccd34db7eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive: 0
   patrolDist: 17.5
   ani: {fileID: 2253029427782280095}
   rigid: {fileID: 6658772176623387276}
   agent: {fileID: 6658772176623387264}
   maxHp: 100
-  dForce: 10
+  dForce: 100
   speed: 3
   traceSpeed: 7
   _angle: 90
@@ -3412,6 +3413,7 @@ MonoBehaviour:
   pLayer:
     serializedVersion: 2
     m_Bits: 512
+  atkRange: 1.5
 --- !u!195 &6658772176623387264
 NavMeshAgent:
   m_ObjectHideFlags: 0

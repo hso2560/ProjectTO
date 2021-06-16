@@ -23,7 +23,6 @@ public class UserInfo
 public class Option
 {
     public bool isFullScr = true;
-    //소리 구하면
     public float soundEffect = 0.5f;
     public float bgmSize = 0.5f;
 }

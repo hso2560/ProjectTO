@@ -21,6 +21,7 @@ public class MainManager : MonoBehaviour
 
     [SerializeField] private GameObject saveObj;
     [SerializeField] private float playTime=0.0f;
+    [SerializeField] private int enemySpawnCount = 30;
     private int deathCount = 0;
     private int h, m, s;
     private GameObject loadingPanel;
@@ -31,6 +32,8 @@ public class MainManager : MonoBehaviour
     public short maxSaveCnt = 3;
     public bool isSave = false;
 
+    public Vector3 devVec;
+
     Sequence seq1;
 
     private void Awake()
@@ -40,12 +43,22 @@ public class MainManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         deathTxt.text = string.Format("»ç¸Á: <color=#962323>{0}</color>È¸", deathCount);
         CreatePool();
+        InitData();
     }
 
     private void CreatePool()
     {
         PoolManager.CreatePool<SoundPrefab>(soundPrefab, GameManager.Instance.soundPoolParent, 10);
-        PoolManager.CreatePool<Enemy1>(enemyPrefab, GameManager.Instance.enemyPoolParent, 15);
+        PoolManager.CreatePool<Enemy1>(enemyPrefab, GameManager.Instance.enemyPoolParent, enemySpawnCount);
+    }
+
+    private void InitData()
+    {
+        Transform tr = GameManager.Instance.enemyPoolParent;
+        for(int i=0; i<enemySpawnCount; i++)
+        {
+            objManager.enemys.Add(tr.GetChild(i).GetComponent<Enemy1>());
+        }
     }
 
     private void Update()

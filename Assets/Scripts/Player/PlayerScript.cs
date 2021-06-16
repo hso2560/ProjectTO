@@ -100,6 +100,10 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         {
             rigid.velocity = Vector3.up * jumpPower;
         }
+        else if(Input.GetKeyDown(KeyCode.V)&&NetManager.instance.IsDev)
+        {
+            transform.position = mainManager.devVec;
+        }
     }
 
     private void Move()
