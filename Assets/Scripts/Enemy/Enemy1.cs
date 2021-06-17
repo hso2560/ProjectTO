@@ -39,12 +39,13 @@ public class Enemy1 : MonoBehaviour, IDamageable
         hp = maxHp;
     }
 
-    public void InitData(Vector3 spawnPos)
+    public void InitData(Vector3 spawnPos, bool isActive)
     {
         transform.position = spawnPos;
         target = transform.position;
         isInvinci = false;
         isMoveStart = true;
+        this.isActive = isActive;
     }
 
     private void OnEnable()

@@ -18,7 +18,7 @@ public class TestScr : MonoBehaviour  //테스트용 코드
             if(Input.GetKeyDown(KeyCode.Alpha3))
             {
                 Enemy1 e = PoolManager.GetItem<Enemy1>();
-                e.InitData(GameManager.Instance.player.transform.position + Vector3.forward * 3);
+                e.InitData(GameManager.Instance.player.transform.position + Vector3.forward * 3, false);
             }
         }
      }
