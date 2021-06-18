@@ -32,6 +32,9 @@ public class NetManager : MonoBehaviourPunCallbacks
     public Button sendBtn;
     [SerializeField] private Text newMsgTxt;
     [SerializeField] private Button[] userBtns;
+
+    [SerializeField] GameObject DevPanel;
+    [SerializeField] InputField DevChatInput;
     #endregion
 
     private void Awake()
@@ -43,6 +46,7 @@ public class NetManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
 
         TestInformTxt.gameObject.SetActive(isDev);
+        DevPanel.SetActive(false);
     }
     public override void OnConnectedToMaster()
     {
@@ -233,5 +237,38 @@ public class NetManager : MonoBehaviourPunCallbacks
     private void OnApplicationQuit()
     {
         PhotonNetwork.Disconnect();
+    }
+
+
+
+
+    public void DeportBtn()
+        => PV.RPC("UserDeport", RpcTarget.AllViaServer, id);
+    
+    public void SpeakerBtn()
+    {
+        PV.RPC("DevAllChat", RpcTarget.AllViaServer, DevChatInput.text);
+        DevChatInput.text = "";
+    }
+
+    [PunRPC]
+    void DevAllChat(string s)
+    {
+        string[] sa = s.Split('|');
+        if (sa.Length != 5)
+        {
+            UIManager.Instance.ShowSystemMsg(s, 3f, 3f, 2f, 1);
+            return;
+        }
+
+        UIManager.Instance.ShowSystemMsg(sa[0],float.Parse(sa[1]), float.Parse(sa[2]), float.Parse(sa[3]),int.Parse(sa[4]));
+    }
+
+    [PunRPC] void UserDeport(int act)
+    {
+        if(act!=id)
+        {
+            Disconnect();
+        }
     }
 }

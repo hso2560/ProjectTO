@@ -9,10 +9,15 @@ public class LobbyManager : MonoBehaviour
 {
     public TextMeshProUGUI titleTxt;
     public Text bestTxt;
+    [SerializeField] Text testText;
     public GameObject soundPref;
+
+    [SerializeField] private bool isTestMode;
 
     private void Awake()
     {
+        testText.gameObject.SetActive(isTestMode);
+        Cursor.lockState = CursorLockMode.None;
         PoolManager.CreatePool<SoundPrefab>(soundPref, GameManager.Instance.soundPoolParent, 6);
     }
     private void Start()
