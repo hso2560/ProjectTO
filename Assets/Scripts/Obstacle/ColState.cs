@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class ColState : CollisionEventSc
@@ -63,6 +62,8 @@ public class ColState : CollisionEventSc
 
     private void OnTriggerEnter(Collider other)
     {
+        if (GameManager.Instance.player == null) return;
+
         if (other.gameObject == GameManager.Instance.player.gameObject)
         {
             CollisionFunc();

@@ -20,7 +20,7 @@ public class Enemy1 : MonoBehaviour, IDamageable
     private bool bSetTarget=false;
     private bool isMoveStart = false;
     
-    private PlayerScript player;
+    private Transform playerTr;
     private Vector3 target;
 
     [SerializeField] float speed, traceSpeed, _angle, dist;
@@ -41,19 +41,30 @@ public class Enemy1 : MonoBehaviour, IDamageable
 
     public void InitData(Vector3 spawnPos, bool isActive)
     {
+        agent.enabled = false;
+
         transform.position = spawnPos;
         target = transform.position;
+
         isInvinci = false;
         isMoveStart = true;
+       
         this.isActive = isActive;
+
+        agent.enabled = true;
     }
 
     private void OnEnable()
     {
-        if (player == null)
+        if (playerTr == null)
         {
-            player = GameManager.Instance.player;
+            try
+            {
+                playerTr = GameManager.Instance.player.transform;
+            }
+            catch { }
         }
+
         nextPatrolTime = 1;
         lastPatrolTime = Time.time;
     }
@@ -64,8 +75,10 @@ public class Enemy1 : MonoBehaviour, IDamageable
         {
             Patrol();
             Sight();
+            agent.destination = bSetTarget ? playerTr.position : target;
             ani.SetBool("walk", target != transform.position);
         }
+        
     }
 
     private void Patrol()
@@ -78,10 +91,10 @@ public class Enemy1 : MonoBehaviour, IDamageable
             {
                 NextPatrolAction();
             }
-            else
+            /*else
             {
                 agent.SetDestination(target);
-            }
+            }*/
         }
     }
     private void NextPatrolAction()
@@ -94,7 +107,9 @@ public class Enemy1 : MonoBehaviour, IDamageable
         }
         else
         {
-            target = new Vector3(Random.Range(-patrolDist, patrolDist), transform.position.y, Random.Range(-patrolDist, patrolDist));
+            float x = transform.position.x;
+            float z = transform.position.z;
+            target = new Vector3(Random.Range(x-patrolDist, x+patrolDist), transform.position.y, Random.Range(z-patrolDist, z+patrolDist));
         }
 
         nextPatrolTime = Random.Range(2f, 4.5f);
@@ -104,33 +119,42 @@ public class Enemy1 : MonoBehaviour, IDamageable
     {
         Collider[] cols = Physics.OverlapSphere(transform.position, dist, pLayer);
 
-        if(cols.Length>0)
+        for(int i=0; i<cols.Length; i++)
         {
-            tr = cols[0].transform;
-            dir = (tr.position - transform.position).normalized;
-            angle = Vector3.Angle(dir, transform.forward);
-
-            if(angle<=_angle*0.5f)
+            if(cols[i].gameObject==playerTr.gameObject)
             {
-                if (Physics.Raycast(transform.position,dir,out RaycastHit hit, dist))
-                {
-                    if(hit.transform==null||hit.transform.gameObject==GameManager.Instance.player.gameObject)
-                    {
-                        bSetTarget = true;
-                        agent.speed = traceSpeed;
-                        agent.SetDestination(player.transform.position);
+                tr = cols[i].transform;
+                dir = (tr.position - transform.position).normalized;
+                angle = Vector3.Angle(dir, transform.forward);
 
-                        if (Vector3.Distance(transform.position, player.transform.position) <= atkRange)
-                        {
-                            Attack();
-                        }
+                if (angle <= _angle * 0.5f)
+                {
+                    bSetTarget = true;
+                    agent.speed = traceSpeed;
+                    //agent.SetDestination(playerTr.position);
+
+                    if (Vector3.Distance(transform.position, playerTr.position) <= atkRange)
+                    {
+                        Attack();
                     }
+                    #region ÁÖ¼®
+                    /* if (Physics.Raycast(transform.position, dir, out RaycastHit hit, dist))
+                     {
+                         if (hit.transform.gameObject == player.gameObject)
+                         {
+
+
+                         }
+                     }*/
+                    #endregion
                 }
             }
         }
-        else
+
+        if(bSetTarget)
         {
-            bSetTarget = false;
+            dir = playerTr.position - transform.position;
+            bSetTarget = !(dir.sqrMagnitude > dist * dist);
         }
     }
 

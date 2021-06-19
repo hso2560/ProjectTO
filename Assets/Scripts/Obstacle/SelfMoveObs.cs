@@ -75,7 +75,7 @@ public class SelfMoveObs : MonoBehaviour //CollisionEventSc 상속받아서 해도 되겠
         {
             float x = Mathf.Cos(Time.time) * t;
             float z = Mathf.Sin(Time.time) * t;
-            transform.localPosition = new Vector3(x+vec.x, vec.y, z+vec.z)*rotSpeed*Time.deltaTime;
+            transform.localPosition = (new Vector3(x, 0, z)+vec)*rotSpeed*Time.deltaTime;
         }
     }
 

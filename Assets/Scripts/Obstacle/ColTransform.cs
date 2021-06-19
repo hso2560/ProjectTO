@@ -4,12 +4,32 @@ using UnityEngine;
 public class ColTransform : CollisionEventSc
 {
     Sequence seq;
+    #region Á¶½É
     [SerializeField] Rigidbody rigid;
+
+    [SerializeField] bool isParentValue;
+    [SerializeField] Vector3[] aVec;
+    [SerializeField] float[] aPosTime;
+    [SerializeField] GameObject[] objs;
+    private Vector3[] firVecs;
+    #endregion
 
     private void Start()
     {
-        firPos = o.transform.position;
-        firScl = o.transform.localScale;
+        if (!isParentValue)
+        {
+            firPos = o.transform.position;
+            firScl = o.transform.localScale;
+        }
+        else
+        {
+            firVecs = new Vector3[aVec.Length];
+
+            for(int i=0; i<firVecs.Length; i++)
+            {
+                firVecs[i] = objs[i].transform.position;
+            }
+        }
     }
 
     public override void CollisionFunc()
@@ -29,8 +49,25 @@ public class ColTransform : CollisionEventSc
             
             seq.Play();
         }
+        else if(id==50)
+        {
+            for(int i=0; i<aVec.Length; i++)
+            {
+                seq.AppendInterval(aPosTime[i]);
+                //seq.AppendCallback(() => { objs[i].SetActive(true); });
+                objs[i].SetActive(true);
+                seq.Append(objs[i].transform.DOMove(new Vector3(aVec[i].x, aVec[i].y, aVec[i].z), posT));
+            }
 
-        
+            seq.Play();
+        }
+        else if(id==100)
+        {
+            for(int i=0; i<aVec.Length; i++)
+            {
+                objs[i].transform.DOMove(new Vector3(aVec[i].x, aVec[i].y, aVec[i].z), aPosTime[i]).SetId("NoSeqDOT");
+            }
+        }    
     }
 
     public override void ObsReset()
@@ -39,6 +76,22 @@ public class ColTransform : CollisionEventSc
         //DOTween.KillAll();
         DOTween.Kill(DOTIdStr);
         
+        if(isParentValue)
+        {
+            for(int i=0; i<objs.Length; i++)
+            {
+                objs[i].transform.position = firVecs[i];
+                objs[i].SetActive(id!=50);
+            }
+
+            if(id==100)
+            {
+                DOTween.Kill("NoSeqDOT");
+            }
+
+            return;
+        }
+
         o.SetActive(true);
         
         if (id <=30)

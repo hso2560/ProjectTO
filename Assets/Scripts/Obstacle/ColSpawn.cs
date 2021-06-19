@@ -14,7 +14,7 @@ public class ColSpawn : CollisionEventSc
             for(int i=0; i<spawnTr.Length; i++)
             {
                 Enemy1 e1 = PoolManager.GetItem<Enemy1>();  
-                e1.InitData(spawnTr[i].position,bs[0]);  //소환이 이상한 곳에서 되는 버그 있음
+                e1.InitData(spawnTr[i].position,bs[0]);  
             }
         }
         else if(id==10)
