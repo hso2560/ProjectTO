@@ -189,6 +189,7 @@ public class NetManager : MonoBehaviourPunCallbacks
     void Damaged(string msg)
     {
         SoundManager.Instance.PlaySoundEffect(2);
+        UIManager.Instance.DamageEffect();
         player.Damaged(msg);
     }
 

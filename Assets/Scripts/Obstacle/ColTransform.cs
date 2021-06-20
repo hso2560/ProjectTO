@@ -100,6 +100,8 @@ public class ColTransform : CollisionEventSc
             o.transform.localScale = firScl;
         }
 
+        gameObject.SetActive(firstActive);
+
         /*if (rigid != null)
         {
             rigid.drag = 100;

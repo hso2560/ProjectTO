@@ -12,8 +12,8 @@ public class ObjectManager : MonoBehaviour
         int i;
 
         for(i=0; i<colEvents.Length; i++)
-        {
-            colEvents[i].gameObject.SetActive(colEvents[i].firstActive);
+        { 
+            colEvents[i].gameObject.SetActive(true);
             colEvents[i].ObsReset();
         }
 

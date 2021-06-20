@@ -6,6 +6,8 @@ public class ColState : CollisionEventSc
     public bool bResetActive;
     private string firTag;
 
+    [SerializeField] bool temporaryExcHdl;
+
     private void Start()
     {
         firTag = o.tag;
@@ -34,16 +36,22 @@ public class ColState : CollisionEventSc
         if(id!=30)
            o.SetActive(bResetActive);
 
-        o.transform.position = firPos;
-        o.transform.localScale = firScl;
-        o.tag = firTag;
+        if (!temporaryExcHdl)
+        {
+            o.transform.position = firPos;
+            o.transform.localScale = firScl;
 
+            o.tag = firTag;
+        }
+        
         if (id == 20)
         {
             CancelInvoke("InvokeFunc");
             o.GetComponent<Rigidbody>().isKinematic = true;
             o.GetComponent<Rigidbody>().useGravity = false;
         }
+
+        gameObject.SetActive(firstActive);
     }
 
     private void InvokeFunc()

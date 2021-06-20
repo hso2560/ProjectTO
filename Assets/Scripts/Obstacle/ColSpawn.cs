@@ -29,6 +29,8 @@ public class ColSpawn : CollisionEventSc
         {
             CancelInvoke("InvokeFunc");
         }
+
+        gameObject.SetActive(firstActive);
     }
 
     private void InvokeFunc()

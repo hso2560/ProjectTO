@@ -69,14 +69,14 @@ public class SelfMoveObs : MonoBehaviour //CollisionEventSc 상속받아서 해도 되겠
         }
 
         //Sin, Cos 이용해서 움직이니까 에디터에서 실행했을 때와 빌드 후 실행했을 때의 움직이는 게 다름.
-        else if(id==100)
+        /*else if(id==100)
         {
             transform.Translate(vec * Mathf.Sin(Time.time) * t * Time.deltaTime);
         }
         else if(id==120)
         {
             transform.Translate(vec * Mathf.Cos(Time.time) * t * Time.deltaTime);
-        }
+        }*/
         else if(id==150)
         {
             float x = Mathf.Cos(Time.time) * t;

@@ -7,6 +7,7 @@ using DG.Tweening;
 public class UIManager : MonoSingleton<UIManager>
 {
     public GameObject LoadingPanel;
+    public Image RedPanel;
     public Text[] lobbyTexts;
     public InputField nameInput;
     public LoadingScript loadingScr;
@@ -65,6 +66,19 @@ public class UIManager : MonoSingleton<UIManager>
         {
             systemTxt.gameObject.SetActive(false);
         });
+        seq.Play();
+    }
+
+    public void DamageEffect()
+    {
+        RedPanel.color = noColor;
+        RedPanel.gameObject.SetActive(true);
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(RedPanel.DOColor(gameColors[2], 0.4f));
+        seq.Append(RedPanel.DOColor(noColor, 0.3f));
+        seq.AppendCallback(() => { RedPanel.gameObject.SetActive(false); });
+
         seq.Play();
     }
 }
