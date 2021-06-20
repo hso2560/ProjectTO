@@ -175,6 +175,7 @@ public class Enemy1 : MonoBehaviour, IDamageable
         isInvinci = true;
         Invoke("IvkInvc", 0.5f);
         hp -= damage;
+        SoundManager.Instance.PlaySoundEffect(2);
         GameObject blood = Instantiate(bloodPrefab, hitPos, Quaternion.LookRotation(hitNormal));
         rigid.AddForce(hitNormal.normalized * dForce);
         Destroy(blood, 0.6f);

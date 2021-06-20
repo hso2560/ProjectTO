@@ -63,6 +63,12 @@ public class SelfMoveObs : MonoBehaviour //CollisionEventSc 상속받아서 해도 되겠
         {
             col.enabled = mat.color.a > 0.1f;
         }
+        else if(id==70)
+        {
+            transform.RotateAround(vec, Vector3.up, t);
+        }
+
+        //Sin, Cos 이용해서 움직이니까 에디터에서 실행했을 때와 빌드 후 실행했을 때의 움직이는 게 다름.
         else if(id==100)
         {
             transform.Translate(vec * Mathf.Sin(Time.time) * t * Time.deltaTime);

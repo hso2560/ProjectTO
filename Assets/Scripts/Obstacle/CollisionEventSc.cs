@@ -7,6 +7,7 @@ public abstract class CollisionEventSc : MonoBehaviour
     public GameObject o;  
     public Vector3 pos, scl;  
     public float posT, sclT;
+    public bool firstActive=true;
 
     protected string DOTIdStr = "LI";
     #endregion
