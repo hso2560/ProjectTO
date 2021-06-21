@@ -19,6 +19,7 @@ public class MainManager : MonoBehaviour
     private bool isGoal = false;
     public GameObject soundPrefab, enemyPrefab;
 
+    [SerializeField] private GameObject lastSaveObj;
     [SerializeField] private GameObject saveObj;
     [SerializeField] private float playTime=0.0f;
     [SerializeField] private int enemySpawnCount = 30;
@@ -32,7 +33,8 @@ public class MainManager : MonoBehaviour
     public short maxSaveCnt = 3;
     public bool isSave = false;
 
-    [SerializeField] private GameObject FogPile;
+    public GameObject ExhaustPile;
+    public bool isLast = false;
     [SerializeField] private Text lastTxt;
 
     public Vector3 devVec;
@@ -136,6 +138,7 @@ public class MainManager : MonoBehaviour
         if (isSave && saveCnt == 0)
         {
             isSave = false;
+            isLast = false;
             NetManager.instance.firstPos = NetManager.instance.v;
             saveObj.SetActive(true);
         }
@@ -169,6 +172,11 @@ public class MainManager : MonoBehaviour
         so.gameObject.SetActive(false);
         isSave = true;
         saveCnt = maxSaveCnt;
+
+        if(saveObj==lastSaveObj)
+        {
+            isLast = true;
+        }    
     }
 
     public void LastStage(bool isReset)

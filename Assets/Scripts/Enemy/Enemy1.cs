@@ -177,7 +177,7 @@ public class Enemy1 : MonoBehaviour, IDamageable
         hp -= damage;
         SoundManager.Instance.PlaySoundEffect(2);
         GameObject blood = Instantiate(bloodPrefab, hitPos, Quaternion.LookRotation(hitNormal));
-        rigid.AddForce(hitNormal.normalized * dForce);
+        rigid.AddForce(hitNormal.normalized * dForce, ForceMode.Impulse);
         Destroy(blood, 0.6f);
         if(hp<=0)
         {

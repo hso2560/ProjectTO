@@ -3404,7 +3404,7 @@ MonoBehaviour:
   rigid: {fileID: 6658772176623387276}
   agent: {fileID: 6658772176623387264}
   maxHp: 100
-  dForce: 100
+  dForce: 5
   speed: 3
   traceSpeed: 7
   _angle: 90

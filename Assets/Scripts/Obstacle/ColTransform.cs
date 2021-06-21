@@ -34,7 +34,7 @@ public class ColTransform : CollisionEventSc
 
     public override void CollisionFunc()
     {
-        seq = DOTween.Sequence().SetId(DOTIdStr);
+        seq = DOTween.Sequence().SetId(DOTIdStr); 
         
         if(id==10)
         {
@@ -71,10 +71,14 @@ public class ColTransform : CollisionEventSc
 
         else if(id==200)
         {
+            if (GameManager.Instance.mainManager.isLast) return;
+
             rigid.isKinematic = false;
             rigid.useGravity = true;
-            rigid.AddForce(pos * posT, ForceMode.Impulse);
+            //rigid.AddForce(pos * posT, ForceMode.Impulse);
+            rigid.velocity = pos * posT;
             o.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
+            Invoke("InvokeFunc", 0.8f);
         }
     }
 
@@ -82,9 +86,9 @@ public class ColTransform : CollisionEventSc
     {
         //seq.Kill();
         //DOTween.KillAll();
-        DOTween.Kill(DOTIdStr);
-        
-        if(isParentValue)
+        DOTween.Kill(DOTIdStr);  //한 번만 호출해도 될듯
+
+        if (isParentValue)
         {
             for(int i=0; i<objs.Length; i++)
             {
@@ -109,11 +113,15 @@ public class ColTransform : CollisionEventSc
         }
         else if (id == 200)
         {
+            if (GameManager.Instance.mainManager.isLast) return;
+            //rigid.AddForce(Vector3.zero, ForceMode.Impulse);
+            rigid.velocity = Vector3.zero;
+            rigid.angularVelocity = Vector3.zero;
             rigid.isKinematic = true;
             rigid.useGravity = false;
-            o.transform.position = firPos;
+            o.transform.localPosition = aVec[0];
             o.transform.GetChild(0).GetComponent<ParticleSystem>().Stop();
-            rigid.AddForce(Vector3.zero, ForceMode.Impulse);
+            GameManager.Instance.mainManager.ExhaustPile.SetActive(true);
         }
 
         gameObject.SetActive(firstActive);
@@ -122,6 +130,14 @@ public class ColTransform : CollisionEventSc
         {
             rigid.drag = 100;
         }*/
+    }
+
+    void InvokeFunc()
+    {
+        if(id==200)
+        {
+            GameManager.Instance.mainManager.ExhaustPile.SetActive(false);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
