@@ -67,7 +67,15 @@ public class ColTransform : CollisionEventSc
             {
                 objs[i].transform.DOMove(new Vector3(aVec[i].x, aVec[i].y, aVec[i].z), aPosTime[i]).SetId("NoSeqDOT");
             }
-        }    
+        }  
+
+        else if(id==200)
+        {
+            rigid.isKinematic = false;
+            rigid.useGravity = true;
+            rigid.AddForce(pos * posT, ForceMode.Impulse);
+            o.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
+        }
     }
 
     public override void ObsReset()
@@ -98,6 +106,14 @@ public class ColTransform : CollisionEventSc
         {
             o.transform.position = firPos;
             o.transform.localScale = firScl;
+        }
+        else if (id == 200)
+        {
+            rigid.isKinematic = true;
+            rigid.useGravity = false;
+            o.transform.position = firPos;
+            o.transform.GetChild(0).GetComponent<ParticleSystem>().Stop();
+            rigid.AddForce(Vector3.zero, ForceMode.Impulse);
         }
 
         gameObject.SetActive(firstActive);

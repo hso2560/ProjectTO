@@ -32,6 +32,9 @@ public class MainManager : MonoBehaviour
     public short maxSaveCnt = 3;
     public bool isSave = false;
 
+    [SerializeField] private GameObject FogPile;
+    [SerializeField] private Text lastTxt;
+
     public Vector3 devVec;
 
     Sequence seq1;
@@ -166,6 +169,11 @@ public class MainManager : MonoBehaviour
         so.gameObject.SetActive(false);
         isSave = true;
         saveCnt = maxSaveCnt;
+    }
+
+    public void LastStage(bool isReset)
+    {
+        lastTxt.text = !isReset ? "?????" : "±æ ¾øÀ½";
     }
 }
 

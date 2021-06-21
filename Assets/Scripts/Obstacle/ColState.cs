@@ -29,6 +29,11 @@ public class ColState : CollisionEventSc
         {
             o.transform.position = pos;
         }
+        else if(id==200)
+        {
+            GameManager.Instance.mainManager.LastStage(false);
+            o.SetActive(true);
+        }
     }
 
     public override void ObsReset()
@@ -49,6 +54,10 @@ public class ColState : CollisionEventSc
             CancelInvoke("InvokeFunc");
             o.GetComponent<Rigidbody>().isKinematic = true;
             o.GetComponent<Rigidbody>().useGravity = false;
+        }
+        else if (id == 200)
+        {
+            GameManager.Instance.mainManager.LastStage(true);
         }
 
         gameObject.SetActive(firstActive);
