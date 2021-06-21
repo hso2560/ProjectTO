@@ -30,6 +30,8 @@ public class ColTransform : CollisionEventSc
                 firVecs[i] = objs[i].transform.position;
             }
         }
+
+        gameObject.SetActive(firstActive);
     }
 
     public override void CollisionFunc()

@@ -18,6 +18,7 @@ public class MainManager : MonoBehaviour
     public Color[] gameColors;
     private bool isGoal = false;
     public GameObject soundPrefab, enemyPrefab;
+    public Light mainLight;
 
     [SerializeField] private GameObject lastSaveObj;
     [SerializeField] private GameObject saveObj;
@@ -138,9 +139,13 @@ public class MainManager : MonoBehaviour
         if (isSave && saveCnt == 0)
         {
             isSave = false;
-            isLast = false;
             NetManager.instance.firstPos = NetManager.instance.v;
             saveObj.SetActive(true);
+            if(isLast)
+            {
+                isLast = false;
+                LastEffect(false);
+            }
         }
     }
 
@@ -176,12 +181,39 @@ public class MainManager : MonoBehaviour
         if(saveObj==lastSaveObj)
         {
             isLast = true;
+            LastEffect(true);
         }    
     }
 
     public void LastStage(bool isReset)
     {
+        if (isLast) return;
         lastTxt.text = !isReset ? "?????" : "±æ ¾øÀ½";
+    }
+
+    public void LastEffect(bool b)
+    {
+        if (b)
+        {
+            GameManager.Instance.bgmAudio.DOPitch(-1.3f, 3); 
+            mainCam.DOShakePosition(0.5f, 2);
+            mainLight.DOIntensity(0.2f, 3);  
+            mainLight.DOColor(gameColors[2], 0.5f);
+            SoundManager.Instance.PlaySoundEffect(0);
+            cam.camGlich.enabled = true;
+            Invoke("OffGlich", 0.4f);
+        }
+        else
+        {
+            GameManager.Instance.bgmAudio.pitch=1;
+            mainLight.intensity = 0.8f;
+            mainLight.color = gameColors[3];
+        }
+    }
+
+    void OffGlich()
+    {
+        cam.camGlich.enabled = false;
     }
 }
 

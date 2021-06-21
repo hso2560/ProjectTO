@@ -7203,10 +7203,10 @@ GameObject:
   m_Component:
   - component: {fileID: 163859998}
   - component: {fileID: 163860003}
-  - component: {fileID: 163860002}
   - component: {fileID: 163860001}
   - component: {fileID: 163860000}
   - component: {fileID: 163859999}
+  - component: {fileID: 163860002}
   m_Layer: 6
   m_Name: Rock_02 (1)
   m_TagString: Untagged
@@ -7280,8 +7280,8 @@ MonoBehaviour:
   firstActive: 1
   bResetActive: 1
   temporaryExcHdl: 0
---- !u!64 &163860002
-MeshCollider:
+--- !u!65 &163860002
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -7290,10 +7290,9 @@ MeshCollider:
   m_Material: {fileID: 13400000, guid: 3700355d11ede7249bb3c70123c7524e, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300006, guid: 05e04fedc78047c48af519e94c595e13, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 3.4737294, y: 2.607503, z: 2.4772673}
+  m_Center: {x: -0.056640502, y: -0.16150713, z: -0.06630849}
 --- !u!205 &163860003
 LODGroup:
   m_ObjectHideFlags: 0
@@ -8681,7 +8680,7 @@ MonoBehaviour:
   sclT: 0
   firstActive: 1
   bResetActive: 0
-  temporaryExcHdl: 0
+  temporaryExcHdl: 1
 --- !u!136 &219046576
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -49720,7 +49719,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1053969594
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -73956,7 +73955,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1464071312
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -74330,7 +74329,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1480986339
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -75549,8 +75548,11 @@ MonoBehaviour:
   gameColors:
   - {r: 0.8117647, g: 0.14901961, b: 0.14901961, a: 0.50980395}
   - {r: 0.11372549, g: 0.11372549, b: 0.11372549, a: 1}
+  - {r: 0.8980392, g: 0, b: 0.043137256, a: 1}
+  - {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   soundPrefab: {fileID: 74366833669634868, guid: d97c18c1767ea794990b3c7f039d1a19, type: 3}
   enemyPrefab: {fileID: 6658772176623387277, guid: 69484ae073325ce4e91596d6b4ff167f, type: 3}
+  mainLight: {fileID: 705507994}
   lastSaveObj: {fileID: 878669601}
   saveObj: {fileID: 0}
   playTime: 0
@@ -97876,7 +97878,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2091100783
 Transform:
   m_ObjectHideFlags: 0
@@ -104423,10 +104425,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8842752723076244975}
   - component: {fileID: 8674424715684829963}
-  - component: {fileID: 8843517965410912077}
   - component: {fileID: 8843517965410912076}
   - component: {fileID: 8843517965410912075}
   - component: {fileID: 8843517965410912074}
+  - component: {fileID: 8843517965410912077}
   m_Layer: 6
   m_Name: Rock_02
   m_TagString: Untagged
@@ -104483,8 +104485,8 @@ MonoBehaviour:
   firstActive: 1
   bResetActive: 1
   temporaryExcHdl: 0
---- !u!64 &8843517965410912077
-MeshCollider:
+--- !u!65 &8843517965410912077
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -104493,10 +104495,9 @@ MeshCollider:
   m_Material: {fileID: 13400000, guid: 3700355d11ede7249bb3c70123c7524e, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300006, guid: 05e04fedc78047c48af519e94c595e13, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 3.1479187, y: 1.6642466, z: 2.6827087}
+  m_Center: {x: 0.09577942, y: 0.33212328, z: -0.08582306}
 --- !u!1 &8843517967697440179
 GameObject:
   m_ObjectHideFlags: 0
@@ -104766,7 +104767,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &8875849532877530369
 MonoBehaviour:
   m_ObjectHideFlags: 0

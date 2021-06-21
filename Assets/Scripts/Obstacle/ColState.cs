@@ -13,6 +13,7 @@ public class ColState : CollisionEventSc
         firTag = o.tag;
         firPos = o.transform.position;
         firScl = o.transform.localScale;
+        gameObject.SetActive(firstActive);
     }
 
     public override void CollisionFunc()
