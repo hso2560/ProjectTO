@@ -37,6 +37,7 @@ public class MainManager : MonoBehaviour
     public GameObject ExhaustPile;
     public bool isLast = false;
     [SerializeField] private Text lastTxt;
+    [SerializeField] private GameObject lastStageMap;
 
     public Vector3 devVec;
 
@@ -60,6 +61,7 @@ public class MainManager : MonoBehaviour
 
     private void InitData()
     {
+        lastStageMap.SetActive(false);
         Transform tr = GameManager.Instance.enemyPoolParent;
         for(int i=0; i<enemySpawnCount; i++)
         {
@@ -145,6 +147,7 @@ public class MainManager : MonoBehaviour
             {
                 isLast = false;
                 LastEffect(false);
+                lastStageMap.SetActive(false);
             }
         }
     }
@@ -182,6 +185,7 @@ public class MainManager : MonoBehaviour
         {
             isLast = true;
             LastEffect(true);
+            lastStageMap.SetActive(true);
         }    
     }
 
