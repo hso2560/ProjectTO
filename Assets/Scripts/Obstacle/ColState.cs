@@ -23,7 +23,7 @@ public class ColState : CollisionEventSc
 
     public override void CollisionFunc()
     {
-        isWork = true;
+        
 
         if (id == 10)
         {
@@ -42,11 +42,13 @@ public class ColState : CollisionEventSc
             GameManager.Instance.mainManager.LastStage(false);
             o.SetActive(true);
         }
+
+        isWork = true;
     }
 
     public override void ObsReset()
     {
-        isWork = false;
+       
 
         if(id!=30)
            o.SetActive(bResetActive);
@@ -69,8 +71,8 @@ public class ColState : CollisionEventSc
         {
             GameManager.Instance.mainManager.LastStage(true);
         }
-
-        gameObject.SetActive(firstActive);
+        isWork = false;
+        //gameObject.SetActive(firstActive);
     }
 
     private void InvokeFunc()

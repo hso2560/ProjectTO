@@ -15,12 +15,14 @@ public class ObjectManager : MonoBehaviour
 
         for(i=0; i<colEvents.Length; i++)
         { 
-            colEvents[i].gameObject.SetActive(true);
-
             if (colEvents[i].isWork)
+            {
+                colEvents[i].gameObject.SetActive(true);
                 colEvents[i].ObsReset();        //오브젝트 꺼져있어도 변수, 함수 접근이 됨(start,update는 안됨). 근데 혹시 모르니 걍 이렇게
 
-            colEvents[i].gameObject.SetActive(false);
+                colEvents[i].gameObject.SetActive(colEvents[i].firstActive);
+            }
+            //colEvents[i].gameObject.SetActive(false);
         }
 
         for(i=0; i<enemys.Count; i++)

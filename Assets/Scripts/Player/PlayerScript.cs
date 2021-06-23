@@ -181,6 +181,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
 
     private void RayHit()
     {
+        
         //Debug.DrawRay(mainManager.cam.transform.position, mainManager.cam.transform.forward * rayDist, Color.red);
         if(Physics.Raycast(mainManager.cam.transform.position,mainManager.cam.transform.forward, out RaycastHit hit, rayDist, LayerMask.GetMask("Player")))
         {

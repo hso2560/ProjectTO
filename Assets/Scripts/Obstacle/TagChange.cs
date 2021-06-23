@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TagChange : MonoBehaviour
 {
-    public int id;
+    public short id;
     [SerializeField] string targetTag;
 
     private void OnCollisionEnter(Collision collision)

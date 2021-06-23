@@ -12,7 +12,7 @@ public class ColSpawn : CollisionEventSc
 
     public override void CollisionFunc()  
     {
-        isWork = true;
+       
 
         if(id==0)
         {
@@ -26,18 +26,19 @@ public class ColSpawn : CollisionEventSc
         {
             Invoke("InvokeFunc", posT);
         }
+        isWork = true;
     }
 
     public override void ObsReset()
     {
-        isWork = false;
+       
 
         if(id==10)
         {
             CancelInvoke("InvokeFunc");
         }
-
-        gameObject.SetActive(firstActive);
+        isWork = false;
+        //gameObject.SetActive(firstActive);
     }
 
     private void InvokeFunc()

@@ -40,7 +40,7 @@ public class ColTransform : CollisionEventSc
 
     public override void CollisionFunc()
     {
-        isWork = true;
+        
         seq = DOTween.Sequence().SetId(DOTIdStr); 
         
         if(id==10)
@@ -87,13 +87,15 @@ public class ColTransform : CollisionEventSc
             o.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
             Invoke("InvokeFunc", 0.8f);
         }
+
+        isWork = true;
     }
 
     public override void ObsReset()
     {
         //seq.Kill();
         //DOTween.KillAll();
-        isWork = false;
+        
         DOTween.Kill(DOTIdStr);  //한 번만 호출해도 될듯
 
         if (isParentValue)
@@ -132,7 +134,8 @@ public class ColTransform : CollisionEventSc
             GameManager.Instance.mainManager.ExhaustPile.SetActive(true);
         }
 
-        gameObject.SetActive(firstActive);
+        isWork = false;
+        //gameObject.SetActive(firstActive);
 
         /*if (rigid != null)
         {
