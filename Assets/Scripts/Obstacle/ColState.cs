@@ -10,14 +10,21 @@ public class ColState : CollisionEventSc
 
     private void Start()
     {
-        firTag = o.tag;
-        firPos = o.transform.position;
-        firScl = o.transform.localScale;
+        if (o != null)
+        {
+            firTag = o.tag;
+            firPos = o.transform.position;
+            firScl = o.transform.localScale;
+        }
+
+        bInitSet = true;
         gameObject.SetActive(firstActive);
     }
 
     public override void CollisionFunc()
     {
+        isWork = true;
+
         if (id == 10)
         {
             o.SetActive(true);
@@ -39,6 +46,8 @@ public class ColState : CollisionEventSc
 
     public override void ObsReset()
     {
+        isWork = false;
+
         if(id!=30)
            o.SetActive(bResetActive);
 

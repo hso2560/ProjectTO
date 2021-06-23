@@ -8,10 +8,11 @@ public class LoadingScript : MonoBehaviour
 {
     public Image fillBack, fillImg, fillBlack;
     public Color fillBackColor, fillImgColor;
-    private Color tc;
+    private Color tc, noColor;
 
     private void Awake()
     {
+        noColor = new Color(0, 0, 0, 0);
         StartCoroutine(LoadingFill());
     }
 
@@ -33,8 +34,8 @@ public class LoadingScript : MonoBehaviour
 
     public void FillImgFade()
     {
-        fillBlack.DOColor(new Color(0, 0, 0, 0), 0.5f);
-        fillBack.DOColor(new Color(0, 0, 0, 0), 0.5f);
-        fillImg.DOColor(new Color(0, 0, 0, 0), 0.5f);
+        fillBlack.DOColor(noColor, 0.5f);
+        fillBack.DOColor(noColor, 0.5f);
+        fillImg.DOColor(noColor, 0.5f);
     }
 }

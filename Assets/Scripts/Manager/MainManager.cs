@@ -50,7 +50,13 @@ public class MainManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         deathTxt.text = string.Format("»ç¸Á: <color=#962323>{0}</color>È¸", deathCount);
         CreatePool();
+    }
+
+    private IEnumerator Start()
+    {
+        yield return objManager.ObjInitData();
         InitData();
+        UIManager.Instance.LoadingFade();
     }
 
     private void CreatePool()
@@ -62,6 +68,7 @@ public class MainManager : MonoBehaviour
     private void InitData()
     {
         lastStageMap.SetActive(false);
+
         Transform tr = GameManager.Instance.enemyPoolParent;
         for(int i=0; i<enemySpawnCount; i++)
         {

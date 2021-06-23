@@ -7,8 +7,13 @@ public class ColSpawn : CollisionEventSc
     public Transform[] spawnTr;
     public bool[] bs;
 
+    private void Start()=>bInitSet = true;
+    
+
     public override void CollisionFunc()  
     {
+        isWork = true;
+
         if(id==0)
         {
             for(int i=0; i<spawnTr.Length; i++)
@@ -25,6 +30,8 @@ public class ColSpawn : CollisionEventSc
 
     public override void ObsReset()
     {
+        isWork = false;
+
         if(id==10)
         {
             CancelInvoke("InvokeFunc");

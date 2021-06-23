@@ -61,10 +61,10 @@ public class NetManager : MonoBehaviourPunCallbacks
     }
     public override void OnJoinRandomFailed(short returnCode, string message) => CreateRoom();
     public override void OnCreateRoomFailed(short returnCode, string message) => CreateRoom();
-    public override void OnDisconnected(DisconnectCause cause)
+    /*public override void OnDisconnected(DisconnectCause cause)
     {
 
-    }
+    }*/
     public override void OnJoinedRoom()
     {
         p = PhotonNetwork.LocalPlayer;
@@ -106,7 +106,7 @@ public class NetManager : MonoBehaviourPunCallbacks
         player.playerId = id;
         GameManager.Instance.mainManager.player = player;
         GameManager.Instance.player = player;
-        UIManager.Instance.LoadingFade();
+        GameManager.Instance.mainManager.objManager.playerLoad = true;
     }
 
     private void RenewalMainUserList()

@@ -18,8 +18,11 @@ public class ColTransform : CollisionEventSc
     {
         if (!isParentValue)
         {
-            firPos = o.transform.position;
-            firScl = o.transform.localScale;
+            if (o != null)
+            {
+                firPos = o.transform.position;
+                firScl = o.transform.localScale;
+            }
         }
         else
         {
@@ -31,11 +34,13 @@ public class ColTransform : CollisionEventSc
             }
         }
 
+        bInitSet = true;
         gameObject.SetActive(firstActive);
     }
 
     public override void CollisionFunc()
     {
+        isWork = true;
         seq = DOTween.Sequence().SetId(DOTIdStr); 
         
         if(id==10)
@@ -88,6 +93,7 @@ public class ColTransform : CollisionEventSc
     {
         //seq.Kill();
         //DOTween.KillAll();
+        isWork = false;
         DOTween.Kill(DOTIdStr);  //한 번만 호출해도 될듯
 
         if (isParentValue)

@@ -255,6 +255,8 @@ MonoBehaviour:
   posT: 0.5
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   rigid: {fileID: 0}
   isParentValue: 0
   aVec: []
@@ -488,6 +490,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!75 &20702825
@@ -7359,6 +7363,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!65 &163860002
@@ -8760,6 +8766,8 @@ MonoBehaviour:
   posT: 0
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 0
   temporaryExcHdl: 1
 --- !u!136 &219046576
@@ -9054,6 +9062,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!75 &232188534
@@ -9458,6 +9468,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!65 &255749476
@@ -9991,6 +10003,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!65 &279705226
@@ -13642,6 +13656,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!75 &414637684
@@ -15230,6 +15246,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!75 &502325510
@@ -15627,6 +15645,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!54 &509138692
@@ -15793,6 +15813,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!75 &510767699
@@ -17166,6 +17188,8 @@ MonoBehaviour:
   posT: 0.5
   sclT: 0.5
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   rigid: {fileID: 0}
   isParentValue: 0
   aVec: []
@@ -18065,6 +18089,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!75 &564849459
@@ -18257,6 +18283,8 @@ MonoBehaviour:
   posT: 0
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 0
   temporaryExcHdl: 0
 --- !u!65 &566435836
@@ -18927,6 +18955,8 @@ MonoBehaviour:
   posT: 0
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   rigid: {fileID: 594624831}
   isParentValue: 0
   aVec: []
@@ -20593,6 +20623,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!54 &640370668
@@ -20909,6 +20941,8 @@ MonoBehaviour:
   posT: 0
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 0
   temporaryExcHdl: 0
 --- !u!65 &654725138
@@ -22762,6 +22796,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!75 &721939216
@@ -23906,6 +23942,8 @@ MonoBehaviour:
   posT: 13
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   rigid: {fileID: 0}
   isParentValue: 0
   aVec: []
@@ -24394,6 +24432,8 @@ MonoBehaviour:
   posT: 0
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 0
   temporaryExcHdl: 0
 --- !u!65 &795459950
@@ -24464,6 +24504,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!75 &795514235
@@ -25423,6 +25465,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!75 &830081830
@@ -27123,6 +27167,8 @@ MonoBehaviour:
   posT: 0
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 0
   temporaryExcHdl: 0
 --- !u!65 &894331264
@@ -43830,6 +43876,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!54 &967892037
@@ -50195,6 +50243,8 @@ MonoBehaviour:
   posT: 0.3
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   rigid: {fileID: 0}
   isParentValue: 0
   aVec: []
@@ -51073,6 +51123,8 @@ MonoBehaviour:
   posT: 0
   sclT: 0
   firstActive: 0
+  isWork: 0
+  bInitSet: 0
   bResetActive: 0
   temporaryExcHdl: 1
 --- !u!1 &1064508951
@@ -51727,6 +51779,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!75 &1096276554
@@ -52220,6 +52274,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!75 &1117787349
@@ -52959,6 +53015,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!75 &1138722377
@@ -53319,6 +53377,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!75 &1144295489
@@ -53548,6 +53608,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!75 &1146831056
@@ -66164,6 +66226,8 @@ MonoBehaviour:
   posT: 20
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   rigid: {fileID: 0}
   isParentValue: 0
   aVec: []
@@ -66301,6 +66365,8 @@ MonoBehaviour:
   posT: 0
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!65 &1281260917
@@ -66569,6 +66635,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!75 &1297967755
@@ -67145,6 +67213,8 @@ MonoBehaviour:
   posT: 0
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   spawnTr:
   - {fileID: 2143816978}
   - {fileID: 1611009201}
@@ -73624,6 +73694,8 @@ MonoBehaviour:
   posT: 0
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 0
   temporaryExcHdl: 0
 --- !u!1 &1371997192
@@ -73677,6 +73749,8 @@ MonoBehaviour:
   posT: 0
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 0
   temporaryExcHdl: 0
 --- !u!65 &1371997195
@@ -75264,6 +75338,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!75 &1450501494
@@ -75714,6 +75790,8 @@ MonoBehaviour:
   posT: 0
   sclT: 0
   firstActive: 0
+  isWork: 0
+  bInitSet: 0
   bResetActive: 0
   temporaryExcHdl: 1
 --- !u!1 &1469125845
@@ -76088,6 +76166,8 @@ MonoBehaviour:
   posT: 0
   sclT: 0
   firstActive: 0
+  isWork: 0
+  bInitSet: 0
   bResetActive: 0
   temporaryExcHdl: 1
 --- !u!1 &1488484342
@@ -77617,6 +77697,7 @@ MonoBehaviour:
   - {fileID: 654725137}
   - {fileID: 2091100784}
   enemys: []
+  playerLoad: 0
 --- !u!1 &1532141309
 GameObject:
   m_ObjectHideFlags: 0
@@ -78597,6 +78678,8 @@ MonoBehaviour:
   posT: 0
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!65 &1566143326
@@ -79803,6 +79886,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!65 &1601602808
@@ -80246,6 +80331,8 @@ MonoBehaviour:
   posT: 6
   sclT: 2
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   rigid: {fileID: 0}
   isParentValue: 0
   aVec: []
@@ -87546,6 +87633,8 @@ MonoBehaviour:
   posT: 0
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   spawnTr:
   - {fileID: 603013125}
   - {fileID: 698955452}
@@ -93185,6 +93274,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!75 &2011958035
@@ -99210,6 +99301,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   rigid: {fileID: 0}
   isParentValue: 1
   aVec:
@@ -99621,6 +99714,8 @@ MonoBehaviour:
   posT: 10
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   rigid: {fileID: 0}
   isParentValue: 0
   aVec: []
@@ -100152,6 +100247,8 @@ MonoBehaviour:
   posT: 7
   sclT: 0
   firstActive: 0
+  isWork: 0
+  bInitSet: 0
   rigid: {fileID: 5390685254645900520}
   isParentValue: 0
   aVec:
@@ -100732,6 +100829,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!75 &2098988153
@@ -104223,6 +104322,8 @@ MonoBehaviour:
   posT: 5
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   rigid: {fileID: 0}
   isParentValue: 0
   aVec: []
@@ -105753,6 +105854,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!75 &6094680824538330234
@@ -106412,6 +106515,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!65 &7377710182498196396
@@ -106804,6 +106909,8 @@ MonoBehaviour:
   posT: 1
   sclT: 0
   firstActive: 1
+  isWork: 0
+  bInitSet: 0
   bResetActive: 1
   temporaryExcHdl: 0
 --- !u!65 &8843517965410912077
@@ -107108,6 +107215,8 @@ MonoBehaviour:
   posT: 23
   sclT: 0
   firstActive: 0
+  isWork: 0
+  bInitSet: 0
   rigid: {fileID: 0}
   isParentValue: 0
   aVec: []

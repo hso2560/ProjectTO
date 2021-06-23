@@ -8,6 +8,8 @@ public abstract class CollisionEventSc : MonoBehaviour
     public Vector3 pos, scl;  
     public float posT, sclT;
     public bool firstActive=true;
+    public bool isWork = false;
+    public bool bInitSet = false;
 
     protected string DOTIdStr = "LI";
     #endregion

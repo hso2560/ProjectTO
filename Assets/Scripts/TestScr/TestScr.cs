@@ -21,11 +21,16 @@ public class TestScr : MonoBehaviour  //테스트용 코드
                 e.InitData(GameManager.Instance.player.transform.position + Vector3.forward * 3, false);
             }
         }
+        /*else if(id==1000)
+        {
+            Debug.Log("u1000");
+        }*/
      }
     public int id;
 
     private void Start()
     {
+        
         if(id==0)
           transform.DOMove(Vector3.up * 5, 3f).SetLoops(-1,LoopType.Yoyo);
         else if (id == 1)
@@ -41,6 +46,41 @@ public class TestScr : MonoBehaviour  //테스트용 코드
             transform.DOMove(Vector3.forward * 2f, 2f);
         }
 
-        
+        //StartCoroutine("TestCo");
+        /*else if(id==1000)
+        {
+            Debug.Log("1000");
+        }*/
     }
+    /*private void Awake()
+    {
+        if (id == 1000)
+        {
+            Debug.Log("a1000");
+        }
+    }
+
+    private void OnEnable()
+    {
+        Debug.Log("oe1000");
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log("odst1000");
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log("od1000");
+    }*/
+    
+    /*IEnumerator TestCo()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+            Debug.Log(Time.time);
+        }
+    }*/
 }
