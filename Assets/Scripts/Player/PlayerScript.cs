@@ -27,6 +27,8 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     public GameObject scanObj;
     public bool bCompulsoryIdle = false;
 
+    //private int walkToHash, runToHash, atkToHash, deadToHash;
+
     private GameObject playerModel, attackCol;
     [SerializeField] private int hp;
     private bool isJumping, isAtk;
@@ -181,7 +183,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
 
     private void RayHit()
     {
-        
+         
         //Debug.DrawRay(mainManager.cam.transform.position, mainManager.cam.transform.forward * rayDist, Color.red);
         if(Physics.Raycast(mainManager.cam.transform.position,mainManager.cam.transform.forward, out RaycastHit hit, rayDist, LayerMask.GetMask("Player")))
         {
@@ -267,6 +269,12 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             {
                 mainManager.cam.camGlich.enabled = true;
                 SoundManager.Instance.PlaySoundEffect(0);
+            }
+            else if (other.CompareTag("Obstacle"))
+            {
+                //SelfMoveObj스크립트가 달려있어도 Obstacle태그가 없으면 안죽음.
+                string cause = other.transform.parent.GetComponent<SelfMoveObs>().deathCause;
+                Die(cause);
             }
         }
     }
