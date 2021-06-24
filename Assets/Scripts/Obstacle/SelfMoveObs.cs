@@ -22,6 +22,8 @@ public class SelfMoveObs : MonoBehaviour //CollisionEventSc 상속받아서 해도 되겠
     [SerializeField] LineRenderer laser;
     [Header("Fire:300 Laser:400")]
     [SerializeField] bool isFire;
+
+    [SerializeField] Color startColor, endColor;
     #endregion 
     
     
@@ -35,6 +37,12 @@ public class SelfMoveObs : MonoBehaviour //CollisionEventSc 상속받아서 해도 되겠
         {
             ws1 = new WaitForSeconds(t);  // 파이어(레이저) 대기 시간
             ws2 = new WaitForSeconds(rotSpeed); //파이어(레이저) 발사 시간
+
+            if (id == 400)
+            {
+                laser.startColor = startColor;
+                laser.endColor = endColor;
+            }
         }
     }
 
@@ -121,11 +129,10 @@ public class SelfMoveObs : MonoBehaviour //CollisionEventSc 상속받아서 해도 되겠
             while (true)
             {
                 yield return ws1;
-                col.gameObject.SetActive(true);
-                fire.Play();
+                fire.gameObject.SetActive(true);
                 yield return ws2;
-                fire.Stop();
-                col.gameObject.SetActive(false);
+                fire.gameObject.SetActive(false);
+                
             }
         }
         else
@@ -134,7 +141,6 @@ public class SelfMoveObs : MonoBehaviour //CollisionEventSc 상속받아서 해도 되겠
             {
                 yield return ws1;
                 laser.gameObject.SetActive(true);
-                //레이저 발사
                 yield return ws2;
                 laser.gameObject.SetActive(false);
             }
