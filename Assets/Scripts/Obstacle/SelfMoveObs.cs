@@ -76,7 +76,10 @@ public class SelfMoveObs : MonoBehaviour //CollisionEventSc 상속받아서 해도 되겠
         {
             transform.DOScale(vec, t).SetLoops(-1, LoopType.Yoyo);
         }
-
+        else if(id==500)
+        {
+            transform.DORotateQuaternion(Quaternion.Euler(vec), t).SetLoops(-1, LoopType.Yoyo).SetEase(_ease[index]);
+        }
         
         //seq.SetLoops(-1, LoopType.Yoyo);
         //seq.AppendInterval

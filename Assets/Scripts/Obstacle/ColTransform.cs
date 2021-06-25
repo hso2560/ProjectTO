@@ -87,6 +87,12 @@ public class ColTransform : CollisionEventSc
             o.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
             Invoke("InvokeFunc", 0.8f);
         }
+        else if(id==220)
+        {
+            seq.Append(o.transform.DOMove(new Vector3(pos.x, pos.y, pos.z), posT));
+            seq.Append(o.transform.DOMove(new Vector3(scl.x, scl.y, scl.z), sclT));
+            seq.Play();
+        }
 
         isWork = true;
     }
