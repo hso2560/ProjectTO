@@ -3433,6 +3433,7 @@ MonoBehaviour:
   loadingScr: {fileID: 0}
   systemTxt: {fileID: 0}
   gameColors: []
+  startMsg: 
 --- !u!4 &834856463
 Transform:
   m_ObjectHideFlags: 0

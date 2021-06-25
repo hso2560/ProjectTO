@@ -77,12 +77,14 @@ public class NetManager : MonoBehaviourPunCallbacks
 
         SpawnPlayer();
         PV.RPC("Chatting", RpcTarget.AllViaServer, "<color=green>'" + p.NickName + "'</color>님이 참가하였습니다.");
+        SetTag("GOALUSER", false);
         RenewalMainUserList();
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
+        string ms = !(bool)GetTag("GOALUSER", otherPlayer) ? "<color=purple>'" + p.NickName + "'</color>님이 탈주했습니다." : "<color=purple>'" + p.NickName + "'</color>님이 멋지게 퇴장하였습니다.";
+        PV.RPC("Chatting", RpcTarget.AllViaServer, ms);
         idToPlayer.Remove(otherPlayer.ActorNumber);
-        PV.RPC("Chatting", RpcTarget.AllViaServer, "<color=purple>'" + p.NickName + "'</color>님이 탈주했습니다.");
         RenewalMainUserList();
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -235,12 +237,41 @@ public class NetManager : MonoBehaviourPunCallbacks
         GameManager.Instance.SceneChange("Lobby");
     }
 
+    public void AllSystemMsg(string msg) => PV.RPC("AllSystemMsgRPC", RpcTarget.AllViaServer, msg);
+
+    [PunRPC]
+    private void AllSystemMsgRPC(string msg)
+    {
+        msgClass = JsonUtility.FromJson<Message>(msg);
+        UIManager.Instance.ShowSystemMsg(msgClass.sValue, 0.5f, msgClass.fValue, 0.5f);
+        Chatting(msgClass.sValue);
+    }
+
     private void OnApplicationQuit()
     {
         PhotonNetwork.Disconnect();
     }
 
 
+
+    #region 태그
+    public void SetTag(string key, object value, Player player = null)
+    {
+        if (player == null) player = PhotonNetwork.LocalPlayer;
+        player.SetCustomProperties(new Hashtable { { key, value } });
+    }
+    public object GetTag(string key, Player player = null)
+    {
+        if (player == null) player = PhotonNetwork.LocalPlayer;
+        return player.CustomProperties[key];
+    }
+    public bool AllhasTag(string key)
+    {
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+            if (PhotonNetwork.PlayerList[i].CustomProperties[key] == null) return false;
+        return true;
+    }
+    #endregion
 
 
     public void DeportBtn()

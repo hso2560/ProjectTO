@@ -39,13 +39,19 @@ public class MainManager : MonoBehaviour
     [SerializeField] private Text lastTxt;
     [SerializeField] private GameObject lastStageMap;
 
+    public Text goalTimeTxt;
+    public GameObject goalTxt, goalBtn;
+    public CanvasGroup goalPanel;
+
     public Vector3 devVec;
 
     Sequence seq1;
+    Message _message;
 
     private void Awake()
     {
         noColor = new Color(0, 0, 0, 0);
+        _message = new Message();
         loadingPanel = UIManager.Instance.LoadingPanel;
         Cursor.lockState = CursorLockMode.Locked;
         deathTxt.text = string.Format("사망: <color=#962323>{0}</color>회", deathCount);
@@ -225,6 +231,43 @@ public class MainManager : MonoBehaviour
     void OffGlich()
     {
         cam.camGlich.enabled = false;
+    }
+
+    public void Goal()
+    {
+        goalPanel.gameObject.SetActive(true);
+        goalPanel.DOFade(1, 0.6f);
+        goalTimeTxt.text = timeTxt.text;
+        goalTxt.transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), 1).SetLoops(-1, LoopType.Yoyo);
+
+        UserInfo uif = GameManager.Instance.savedData.userInfo;
+        if(uif.isClear)
+        {
+            if (uif.bestTime > (int)playTime)
+            {
+                GameManager.Instance.savedData.userInfo.bestTime = (int)playTime;
+            }
+        }
+        else
+        {
+            GameManager.Instance.savedData.userInfo.isClear = true;
+            GameManager.Instance.savedData.userInfo.bestTime = (int)playTime;
+        }
+
+        _message.sValue = $"<color=#0091C5>'{GameManager.Instance.savedData.userInfo.nickName}'</color>님이 골인 지점에 도달하였습니다!";
+        _message.fValue = 5f;
+
+        NetManager.instance.SetTag("GOALUSER", true);
+        NetManager.instance.AllSystemMsg(JsonUtility.ToJson(_message));
+
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    public void BtnOverDot(bool isUp)
+    {
+        Vector3 bv = isUp ? new Vector3(1.3f, 1.3f, 1.3f) : new Vector3(1, 1, 1);
+
+        goalBtn.transform.DOScale(bv, 0.4f);
     }
 }
 

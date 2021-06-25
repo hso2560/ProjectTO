@@ -257,7 +257,14 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
 
             else if(other.tag=="Goal")
             {
-                //°ñ
+                rigid.velocity = Vector3.zero;
+                rigid.angularVelocity = Vector3.zero;
+                ani.SetBool("walk", false);
+
+                isInvinci = true;
+                isDie = true;
+
+                mainManager.Goal();
             }
             else if(other.tag=="Save" && !isDie)
             {
