@@ -15,20 +15,24 @@ public class UIManager : MonoSingleton<UIManager>
     public Text systemTxt;
     public Color[] gameColors;
     private Color noColor;
+    [SerializeField] private string startMsg="";
 
     private void Awake()
     {
         noColor = new Color(0, 0, 0, 0);
     }
 
-    public void LoadingFade(float r=0, float g=0, float b=0, float a=0,float t=1.8f ,bool active=false)
+    public void LoadingFade(float r=0, float g=0, float b=0, float a=0,float t=1.8f ,bool active=false)  //매개변수로 Color타입으로 받아도 됨
     {
         LoadingPanel.GetComponent<Image>().DOColor(new Color(r, g, b, a), t);
         StartCoroutine(ActiveCo(LoadingPanel, active, t+0.1f));
 
-        if (loadingScr != null)
+        if (loadingScr != null) //Main만 있음
         {
             loadingScr.FillImgFade();
+
+            if(startMsg!="")
+               ShowSystemMsg(startMsg, 1, 3.5f, 1);
         }
     }
 
@@ -52,10 +56,11 @@ public class UIManager : MonoSingleton<UIManager>
         GameManager.Instance.savedData.userInfo.nickName = nameInput.text;
     }
 
-    public void ShowSystemMsg(string msg,float fadeInTime=0.7f, float time=2.5f, float fadeOutTime=0.5f ,int index=0)
+    public void ShowSystemMsg(string msg,float fadeInTime=0.7f, float time=2.5f, float fadeOutTime=0.5f ,int index=0, int _fontSize=35)
     {
         systemTxt.color = noColor;
         systemTxt.text = msg;
+        systemTxt.fontSize = _fontSize;
         systemTxt.gameObject.SetActive(true);
 
         Sequence seq = DOTween.Sequence();
