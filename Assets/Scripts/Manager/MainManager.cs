@@ -47,6 +47,7 @@ public class MainManager : MonoBehaviour
 
     Sequence seq1;
     Message _message;
+    private bool bOffLastStage = false;
 
     private void Awake()
     {
@@ -156,11 +157,10 @@ public class MainManager : MonoBehaviour
             isSave = false;
             NetManager.instance.firstPos = NetManager.instance.v;
             saveObj.SetActive(true);
+            bOffLastStage = isLast;
             if(isLast)
             {
-                isLast = false;
-                LastEffect(false);
-                lastStageMap.SetActive(false);
+                bOffLastStage = true;
             }
         }
     }
@@ -183,6 +183,11 @@ public class MainManager : MonoBehaviour
         {
             saveCnt--;
         }
+        if(bOffLastStage)
+        {
+            bOffLastStage = false;
+            ActiveLastStage(false);
+        }
     }
 
     public void PlayerTfSave(GameObject so)
@@ -196,9 +201,7 @@ public class MainManager : MonoBehaviour
 
         if(saveObj==lastSaveObj)
         {
-            isLast = true;
-            LastEffect(true);
-            lastStageMap.SetActive(true);
+            ActiveLastStage(true);
         }    
     }
 
@@ -206,6 +209,13 @@ public class MainManager : MonoBehaviour
     {
         if (isLast) return;
         lastTxt.text = !isReset ? "?????" : "길 없음";
+    }
+
+    private void ActiveLastStage(bool b)
+    {
+        isLast = b;
+        LastEffect(b);
+        lastStageMap.SetActive(b);
     }
 
     public void LastEffect(bool b)
@@ -235,6 +245,7 @@ public class MainManager : MonoBehaviour
 
     public void Goal()
     {
+        isGoal = true;
         goalPanel.gameObject.SetActive(true);
         goalPanel.DOFade(1, 0.6f);
         goalTimeTxt.text = timeTxt.text;
@@ -246,12 +257,14 @@ public class MainManager : MonoBehaviour
             if (uif.bestTime > (int)playTime)
             {
                 GameManager.Instance.savedData.userInfo.bestTime = (int)playTime;
+                GameManager.Instance.savedData.userInfo.bestRecordDate = System.DateTime.Now.ToString();
             }
         }
         else
         {
             GameManager.Instance.savedData.userInfo.isClear = true;
             GameManager.Instance.savedData.userInfo.bestTime = (int)playTime;
+            GameManager.Instance.savedData.userInfo.bestRecordDate = System.DateTime.Now.ToString();
         }
 
         _message.sValue = $"<color=#0091C5>'{GameManager.Instance.savedData.userInfo.nickName}'</color>님이 골인 지점에 도달하였습니다!";

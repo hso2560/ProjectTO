@@ -79,6 +79,8 @@ public class NetManager : MonoBehaviourPunCallbacks
         PV.RPC("Chatting", RpcTarget.AllViaServer, "<color=green>'" + p.NickName + "'</color>님이 참가하였습니다.");
         SetTag("GOALUSER", false);
         RenewalMainUserList();
+
+        GameManager.Instance.savedData.userInfo.playCnt++;
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
@@ -206,6 +208,11 @@ public class NetManager : MonoBehaviourPunCallbacks
         string victim = idToPlayer[msgClass.myAct].NickName;
         
         Chatting($"<color=blue>'{attacker}'</color>님이 '<color=red>{victim}</color>'님을 살해하였습니다.");
+
+        if (id == msgClass.otherAct)
+        {
+            GameManager.Instance.savedData.userInfo.killCnt++;
+        }
     }
 
     public void SendMsg()

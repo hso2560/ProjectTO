@@ -7,10 +7,12 @@ public class ColTransform : CollisionEventSc
     #region 조심
     [SerializeField] Rigidbody rigid;
 
-    [SerializeField] bool isParentValue;
+    [SerializeField] bool isParentValue;  //변수명 잘못지은듯. 헷갈리지말자
+
     [SerializeField] Vector3[] aVec;
     [SerializeField] float[] aPosTime;
     [SerializeField] GameObject[] objs;
+
     private Vector3[] firVecs;
     #endregion
 
@@ -72,6 +74,7 @@ public class ColTransform : CollisionEventSc
         {
             for(int i=0; i<aVec.Length; i++)
             {
+                //objs[i].SetActive(true);
                 objs[i].transform.DOMove(new Vector3(aVec[i].x, aVec[i].y, aVec[i].z), aPosTime[i]).SetId("NoSeqDOT");
             }
         }  
@@ -122,7 +125,7 @@ public class ColTransform : CollisionEventSc
 
         o.SetActive(true);
         
-        if (id <=30)
+        if (id <=30 || id==220)
         {
             o.transform.position = firPos;
             o.transform.localScale = firScl;

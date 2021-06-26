@@ -14,9 +14,10 @@ public class UserInfo
     public bool isClear = false;
     public int bestTime;
     public int killCnt;  //시간 남으면 함
-    public int playCnt;  //시간 남으면 함
+    public int playCnt;  //시간 남으면 
     public string nickName;
-    public string playerRosoName = "Player1"; //지금은 기본값만 쓸거
+    public string playerRosoName = "Player1"; //일단은 기본값만 쓸거
+    public string bestRecordDate;  //시간 남으면
 }
 
 [Serializable]
