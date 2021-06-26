@@ -221,6 +221,7 @@ public class MainManager : MonoBehaviour
         isLast = b;
         LastEffect(b);
         lastStageMap.SetActive(b);
+        LastStage(!b);
     }
 
     public void LastEffect(bool b)

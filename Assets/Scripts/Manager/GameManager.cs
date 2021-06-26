@@ -171,6 +171,10 @@ public class GameManager : MonoSingleton<GameManager>
                 return;
             }
         }
+        else if(scState==ScState.MAIN)
+        {
+            PoolManager.ClearItem<Enemy1>();
+        }
 
         PoolManager.ClearItem<SoundPrefab>();
         Save();
