@@ -32,6 +32,15 @@ public class ObjectManager : MonoBehaviour
         }
     }
 
+    public void EnemysOff()
+    {
+        for (int i = 0; i < enemys.Count; i++)
+        {
+            enemys[i].gameObject.SetActive(true);
+            enemys[i].ResetData();
+        }
+    }
+
     public IEnumerator ObjInitData()
     {
         while (!AllObjSetting()) yield return null;

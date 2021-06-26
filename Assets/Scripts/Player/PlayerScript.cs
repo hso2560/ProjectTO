@@ -80,9 +80,12 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     {
         if (playerId == PhotonNetwork.LocalPlayer.ActorNumber && !isDie && !bCompulsoryIdle)
         {
-            Jump();
-            Attack();
-            _Input();  //테스트모드 전용
+            if (!mainManager.IsGoal)
+            {
+                Jump();
+                Attack();
+                _Input();  //테스트모드 전용
+            }
         }
     }
 
@@ -90,9 +93,12 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     {
         if (playerId == PhotonNetwork.LocalPlayer.ActorNumber && !isDie)
         {
-            Move();
-            GroundCheck();
-            RayHit();
+            if (!mainManager.IsGoal)
+            {
+                Move();
+                GroundCheck();
+                RayHit();
+            }
         }
         rigid.angularVelocity = Vector3.zero;
     }
@@ -234,7 +240,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     {
         if(stream.IsWriting)
         {
-            stream.SendNext(playerId);
+            stream.SendNext(playerId);              //음.....
             stream.SendNext(hp);
             stream.SendNext(isDie);
         }
@@ -250,19 +256,14 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     {
         if (playerId == PhotonNetwork.LocalPlayer.ActorNumber)
         {
-            if (other.tag == "Water")
+            if(other.tag=="Goal")
             {
-                Die("익사");
-            }
-
-            else if(other.tag=="Goal")
-            {
+                mainManager.objManager.EnemysOff();
                 rigid.velocity = Vector3.zero;
                 rigid.angularVelocity = Vector3.zero;
                 ani.SetBool("walk", false);
 
                 isInvinci = true;
-                isDie = true;
 
                 mainManager.Goal();
             }
@@ -270,7 +271,6 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             {
                 NetManager.instance.firstPos = transform.position;
                 mainManager.PlayerTfSave(other.gameObject);
-                UIManager.Instance.ShowSystemMsg("세이브 포인트 - 사망시 해당 위치에서 부활합니다(최대 3번)");
             }
             else if (other.tag == "Glich")
             {
@@ -280,7 +280,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             else if (other.CompareTag("Obstacle"))
             {
                 //SelfMoveObj스크립트가 달려있어도 Obstacle태그가 없으면 안죽음.
-                string cause = other.transform.parent.GetComponent<SelfMoveObs>().deathCause;
+                string cause = other.transform.parent.GetComponent<SelfMoveObs>().deathCause;  //부모에 SelfMoveObj달자
                 Die(cause);
             }
         }
@@ -316,7 +316,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
 
     public void Die(string cause)
     {
-        if (isDie) return;
+        if (isDie || mainManager.IsGoal) return;
 
         hp = 0;
         isDie = true;

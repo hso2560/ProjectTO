@@ -17,6 +17,7 @@ public class MainManager : MonoBehaviour
     public GameObject userListPanel;
     public Color[] gameColors;
     private bool isGoal = false;
+    public bool IsGoal { get { return isGoal; } }
     public GameObject soundPrefab, enemyPrefab;
     public Light mainLight;
 
@@ -48,6 +49,7 @@ public class MainManager : MonoBehaviour
     Sequence seq1;
     Message _message;
     private bool bOffLastStage = false;
+    [SerializeField] GameObject goalParticle;
 
     private void Awake()
     {
@@ -175,18 +177,19 @@ public class MainManager : MonoBehaviour
         //DOTween.KillAll();  모든 다트윈 실행을 끔.
         Cursor.lockState = CursorLockMode.Locked;
 
+        if (bOffLastStage)
+        {
+            bOffLastStage = false;
+            ActiveLastStage(false);
+        }
+
         diePanel.SetActive(false);
         objManager.ObsReset();
         player.Respawn();
 
-        if(isSave)
+        if (isSave)
         {
             saveCnt--;
-        }
-        if(bOffLastStage)
-        {
-            bOffLastStage = false;
-            ActiveLastStage(false);
         }
     }
 
@@ -202,7 +205,9 @@ public class MainManager : MonoBehaviour
         if(saveObj==lastSaveObj)
         {
             ActiveLastStage(true);
-        }    
+        }
+
+        UIManager.Instance.ShowSystemMsg("세이브 포인트 - 사망시 해당 위치에서 부활합니다(최대 3번)");
     }
 
     public void LastStage(bool isReset)
@@ -248,7 +253,7 @@ public class MainManager : MonoBehaviour
         isGoal = true;
         goalPanel.gameObject.SetActive(true);
         goalPanel.DOFade(1, 0.6f);
-        goalTimeTxt.text = timeTxt.text;
+        goalTimeTxt.text = "걸린 시간: " + timeTxt.text;
         goalTxt.transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), 1).SetLoops(-1, LoopType.Yoyo);
 
         UserInfo uif = GameManager.Instance.savedData.userInfo;
@@ -274,6 +279,9 @@ public class MainManager : MonoBehaviour
         NetManager.instance.AllSystemMsg(JsonUtility.ToJson(_message));
 
         Cursor.lockState = CursorLockMode.Confined;
+
+        goalParticle.SetActive(true);
+        LastEffect(false);
     }
 
     public void BtnOverDot(bool isUp)

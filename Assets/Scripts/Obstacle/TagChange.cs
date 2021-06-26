@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TagChange : MonoBehaviour
-{
-    public short id;
+{   
     [SerializeField] string targetTag;
-
+    
     private void OnCollisionEnter(Collision collision)
     {
         if(tag!=targetTag)

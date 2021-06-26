@@ -8,6 +8,7 @@ public class CamMove : MonoBehaviour
     public Transform rotTarget;
     public GlitchEffect camGlich;
     public PlayerScript player;
+    public MainManager mainManager;
 
     public float xSpeed = 220f, ySpeed = 100f;
     public float x, y;
@@ -38,7 +39,7 @@ public class CamMove : MonoBehaviour
     void Update()
     {
         if (target != null)
-            if(!player.isDie && !player.bCompulsoryIdle)
+            if(!player.isDie && !player.bCompulsoryIdle && !mainManager.IsGoal)
                 Move();
     }
 
