@@ -112,6 +112,10 @@ public class MainManager : MonoBehaviour
             Cursor.lockState = !bCursor ? CursorLockMode.Confined : CursorLockMode.Locked;
             bCursor = !bCursor;
         }
+        /*else if (Input.GetKeyDown(KeyCode.M) && NetManager.instance.IsDev)
+        {
+            mainCam.DOShakePosition(3f, 10);
+        }*/
 
         userListPanel.SetActive(Input.GetKey(KeyCode.Tab));
     }

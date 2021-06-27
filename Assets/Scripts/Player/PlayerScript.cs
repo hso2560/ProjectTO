@@ -112,6 +112,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         {
             transform.position = mainManager.devVec;
         }
+        
     }
 
     private void Move()
