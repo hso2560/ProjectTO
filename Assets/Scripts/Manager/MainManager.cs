@@ -130,7 +130,7 @@ public class MainManager : MonoBehaviour
         if (player.scanObj != null)
         {
             seq1 = DOTween.Sequence()
-                .Append(rayText.DOColor(new Color(0, 0, 0, 0), 0.3f))
+                .Append(rayText.DOColor(noColor, 0.3f))
                 .AppendCallback(() =>
                 {
                     rayText.text = "";
@@ -160,10 +160,6 @@ public class MainManager : MonoBehaviour
             NetManager.instance.firstPos = NetManager.instance.v;
             saveObj.SetActive(true);
             bOffLastStage = isLast;
-            if(isLast)
-            {
-                bOffLastStage = true;
-            }
         }
     }
 
