@@ -20,6 +20,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     [SerializeField] private GameObject[] bodys;
     [SerializeField] private GameObject[] weapons;
     [SerializeField] private float atkCool=1f, atkColTime=0.5f;  //공격 쿨, 공격 콜라이더 박스가 활성화되어있는 시간
+    //[SerializeField] private LayerMask WhatIsGrounds;             //Ground, Wall, Player
     public int damage=50;
     public int playerId;
     public bool isDie;
