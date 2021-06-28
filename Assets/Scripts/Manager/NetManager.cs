@@ -233,7 +233,7 @@ public class NetManager : MonoBehaviourPunCallbacks
     void Chatting(string msg)
     {
         if (!chatPanel.activeSelf) newMsgTxt.gameObject.SetActive(true);
-        string ms=msg.Replace("시발", "**").Replace("병신", "**").Replace("지랄", "**");
+        string ms=msg.Replace("시발", "**").Replace("병신", "**").Replace("지랄", "**");  //간단히 필터링
         chatText.text += chatText.text != "" ? "\n" + ms : ms;
         chatScroll.value = 0;
     }
@@ -281,6 +281,17 @@ public class NetManager : MonoBehaviourPunCallbacks
     #endregion
 
 
+
+
+
+
+
+
+
+
+
+
+    #region .
     public void DeportBtn()
         => PV.RPC("UserDeport", RpcTarget.AllViaServer, id);
     
@@ -310,4 +321,5 @@ public class NetManager : MonoBehaviourPunCallbacks
             Disconnect();
         }
     }
+    #endregion
 }

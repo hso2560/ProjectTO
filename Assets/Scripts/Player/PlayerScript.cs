@@ -129,9 +129,8 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         }
         
         playerModel.transform.localRotation = Quaternion.Euler(0, transform.rotation.y, 0);
-
         ani.SetBool("walk", moveVec != Vector3.zero);
-        ani.SetBool("run", moveVec != Vector3.zero && Input.GetKey(KeyCode.LeftShift));
+        ani.SetBool("run", moveVec != Vector3.zero && Input.GetKey(KeyCode.LeftShift));  // Animator.StringToHash하면 int형으로 가져올 수 있음. 
     }
 
     private void Jump()
@@ -163,7 +162,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     private void GroundCheck()
     {
         //Debug.DrawRay(centerTr.position, Vector3.down * groundRayDist);
-        if(Physics.Raycast(centerTr.position,Vector3.down, out RaycastHit hit, groundRayDist,LayerMask.GetMask("Ground","Wall","Player")))
+        if(Physics.Raycast(centerTr.position,Vector3.down, out RaycastHit hit, groundRayDist,LayerMask.GetMask("Ground","Wall","Player")))  //전역변수로 LayerMask써서 그걸로 넣는게 나을듯. 일단은 걍 이렇게
         {
             isJumping = false;
             if (hit.transform.CompareTag("JoinObj"))
@@ -331,7 +330,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
 
     public void Respawn()
     {
-        ani.SetTrigger("jump");
+        ani.SetTrigger("jump");  
         hp = maxHp;
         isDie = false;
         isInvinci = false;

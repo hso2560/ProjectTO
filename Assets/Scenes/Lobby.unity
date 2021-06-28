@@ -2256,7 +2256,7 @@ MonoBehaviour:
   bestTxt: {fileID: 2131342332}
   testText: {fileID: 1817555235}
   soundPref: {fileID: 74366833669634868, guid: d97c18c1767ea794990b3c7f039d1a19, type: 3}
-  isTestMode: 1
+  isTestMode: 0
 --- !u!1 &519237136
 GameObject:
   m_ObjectHideFlags: 0
