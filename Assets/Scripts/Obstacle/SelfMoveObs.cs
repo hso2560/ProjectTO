@@ -3,10 +3,12 @@ using UnityEngine;
 using System.Collections;
 
 
-public class SelfMoveObs : MonoBehaviour //CollisionEventSc 상속받아서 해도 되겠지만 이미 해버렸으니 귀찮으니 걍 이대로
+public class SelfMoveObs : MonoBehaviour 
 {
     public bool isObstacle=true;
+    //배열로 만들면 편하게 언어에 따라서 글자 나오게 할 수 있겠지만 이미 전에 이걸로 해버려서 이렇게 함..
     public string deathCause="칼빵";
+    public string deathCause_en= "Knife";
 
     #region 조심히 건들
     [SerializeField] int id;

@@ -45,6 +45,8 @@ public class GameManager : MonoSingleton<GameManager>
     //public GameObject settingsPanel;
     [SerializeField] private int uiSoundIdx;
 
+    public Dropdown languageDd;
+
     private void Awake()
     {
         saveData = new SaveData();
@@ -82,9 +84,10 @@ public class GameManager : MonoSingleton<GameManager>
             if (saveData.userInfo.isFirstStart)
             {
                 saveData.userInfo.isFirstStart = false;
-                PopupPanel("닉네임을 설정해주세요.");
+                PopupPanel("Please set your nickname.\n닉네임을 설정해주세요.");
             }
             lobbyManager.SetBestScore(saveData.userInfo.isClear, saveData.userInfo.bestTime);
+            languageDd.value = (int)saveData.option.language;
         }
 
         gameToggles[0].isOn = saveData.option.isFullScr;
@@ -93,6 +96,10 @@ public class GameManager : MonoSingleton<GameManager>
         Screen.SetResolution(1280, 720, saveData.option.isFullScr);
 
         bgmAudio.volume = saveData.option.bgmSize;
+
+        UIManager.Instance.LanguagePatch(saveData.option.language);
+
+        
     }
 
     public void Init()
@@ -100,6 +107,10 @@ public class GameManager : MonoSingleton<GameManager>
         if (scState == ScState.LOBBY)
         {
             UIManager.Instance.LoadingFade();
+        }
+        else if(scState==ScState.MAIN)
+        {
+            
         }
     }
 
@@ -167,7 +178,7 @@ public class GameManager : MonoSingleton<GameManager>
         {
             if (UIManager.Instance.nameInput.text.Trim() == "")
             {
-                PopupPanel("닉네임이 공백일 수 없습니다.");
+                PopupPanel("닉네임이 공백일 수 없습니다.\nNickname can't be blank.");
                 return;
             }
         }
@@ -263,6 +274,14 @@ public class GameManager : MonoSingleton<GameManager>
         {
             saveData.option.soundEffect = gameSliders[num].value;
         }
+    }
+
+    public void ChangeLangDropdown()
+    {
+        saveData.option.language = (Language)languageDd.value;
+
+        UIManager.Instance.LanguagePatch(saveData.option.language);
+        lobbyManager.SetBestScore(saveData.userInfo.isClear,saveData.userInfo.bestTime);
     }
 
     public void GameQuit() => Application.Quit();

@@ -46,6 +46,8 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     private InputField chatInput;
     #endregion
 
+    private int langInt;
+
     private void Start()  
     {
         if(playerId==PhotonNetwork.LocalPlayer.ActorNumber)
@@ -75,6 +77,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         mainManager.cam.rotTarget = transform;
         mainManager.cam.player = this;
         chatInput = NetManager.instance.chatInput;
+        langInt = (int)GameManager.Instance.savedData.option.language;
     }
 
     private void Update()
@@ -219,7 +222,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
 
             if(hp<=0&&playerId==PhotonNetwork.LocalPlayer.ActorNumber)
             {
-                Die("살해 당함");
+                Die(langInt==0? "Murdered" : "살해 당함");
 
                 messageClass.otherAct = messageClass.myAct;
                 messageClass.myAct = playerId;
@@ -281,7 +284,11 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             else if (other.CompareTag("Obstacle"))
             {
                 //SelfMoveObj스크립트가 달려있어도 Obstacle태그가 없으면 안죽음.
-                string cause = other.transform.parent.GetComponent<SelfMoveObs>().deathCause;  //부모에 SelfMoveObj달자
+                //string cause = other.transform.parent.GetComponent<SelfMoveObs>().deathCause;
+
+                SelfMoveObs smo = other.transform.parent.GetComponent<SelfMoveObs>();  //부모에 SelfMoveObj달자
+                string cause = langInt == 0 ? smo.deathCause_en : smo.deathCause;
+                
                 Die(cause);
             }
         }
@@ -304,12 +311,13 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         {
             if (collision.gameObject.tag == "Rock")
             {
-                Die("압사");
+                Die(langInt==0? "Pressure" : "압사");
             }
             else if (collision.transform.CompareTag("Obstacle"))
             {
                 //SelfMoveObj스크립트가 달려있어도 Obstacle태그가 없으면 안죽음.
-                string cause = collision.transform.parent.GetComponent<SelfMoveObs>().deathCause;
+                SelfMoveObs smo = collision.transform.parent.GetComponent<SelfMoveObs>();  //부모에 SelfMoveObj달자
+                string cause = langInt == 0 ? smo.deathCause_en : smo.deathCause;
                 Die(cause);
             }
         }

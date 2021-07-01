@@ -27,9 +27,19 @@ public class LobbyManager : MonoBehaviour
 
     public void SetBestScore(bool isClear, float bestTime)
     {
-        if (isClear)
-            bestTxt.text = string.Format("최고기록: {0}시간 {1}분 {2}초", (int)bestTime / 3600, ((int)bestTime / 60) % 60, (int)bestTime % 60);
-        else
-            bestTxt.text = "최고기록: 클리어 기록 없음";
+        if (GameManager.Instance.savedData.option.language == Language.Korean)
+        {
+            if (isClear)
+                bestTxt.text = string.Format("최고기록: {0}시간 {1}분 {2}초", (int)bestTime / 3600, ((int)bestTime / 60) % 60, (int)bestTime % 60);
+            else
+                bestTxt.text = "최고기록: 클리어 기록 없음";
+        }
+        else if(GameManager.Instance.savedData.option.language == Language.English)
+        {
+            if (isClear)
+                bestTxt.text = string.Format("Highest Record: {0}h {1}m {2}s", (int)bestTime / 3600, ((int)bestTime / 60) % 60, (int)bestTime % 60);
+            else
+                bestTxt.text = "Highest Record: There is no clear record.";
+        }
     }
 }

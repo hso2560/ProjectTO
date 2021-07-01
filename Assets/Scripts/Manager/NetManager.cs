@@ -48,6 +48,12 @@ public class NetManager : MonoBehaviourPunCallbacks
         TestInformTxt.gameObject.SetActive(isDev);
         DevPanel.SetActive(false);
     }
+
+    private void Start()
+    {
+        LangPatch(GameManager.Instance.savedData.option.language);
+    }
+
     public override void OnConnectedToMaster()
     {
         msgClass = new Message();
@@ -156,6 +162,20 @@ public class NetManager : MonoBehaviourPunCallbacks
         else if(Input.GetKeyDown(KeyCode.R) && !chatInput.isFocused)
         {
             player.Die("자살");
+        }
+    }
+
+    public void LangPatch(Language lang)
+    {
+        if (lang == Language.English)
+        {
+            newMsgTxt.text = "New Message!";
+            sendBtn.transform.GetChild(0).GetComponent<Text>().text = "Send";
+        }
+        else if(lang==Language.Korean)
+        {
+            newMsgTxt.text = "새로운 메시지!";
+            sendBtn.transform.GetChild(0).GetComponent<Text>().text = "전송";
         }
     }
 

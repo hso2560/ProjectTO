@@ -43,6 +43,7 @@ public class MainManager : MonoBehaviour
     public Text goalTimeTxt;
     public GameObject goalTxt, goalBtn;
     public CanvasGroup goalPanel;
+    private int langInt;
 
     public Vector3 devVec;
 
@@ -57,7 +58,6 @@ public class MainManager : MonoBehaviour
         _message = new Message();
         loadingPanel = UIManager.Instance.LoadingPanel;
         Cursor.lockState = CursorLockMode.Locked;
-        deathTxt.text = string.Format("사망: <color=#962323>{0}</color>회", deathCount);
         CreatePool();
     }
 
@@ -76,7 +76,9 @@ public class MainManager : MonoBehaviour
 
     private void InitData()
     {
+        langInt = (int)GameManager.Instance.savedData.option.language;
         lastStageMap.SetActive(false);
+        deathTxt.text = string.Format(langInt == 0 ? "Death: <color=#962323>{0}</color>" : "사망: <color=#962323>{0}</color>회", deathCount);
 
         Transform tr = GameManager.Instance.enemyPoolParent;
         for(int i=0; i<enemySpawnCount; i++)
@@ -147,7 +149,7 @@ public class MainManager : MonoBehaviour
     public void Die(string cause)
     {
         diePanel.SetActive(true);
-        diePanel.transform.GetChild(0).GetComponent<Text>().text = "사인: " + cause;
+        diePanel.transform.GetChild(0).GetComponent<Text>().text = langInt==0? "Cause: "+cause : "사인: " + cause;
         diePanel.GetComponent<Image>().DOColor(gameColors[0], 0.8f);
         diePanel.transform.GetChild(0).GetComponent<Text>().DOColor(gameColors[1], 0.7f);
         diePanel.transform.GetChild(1).DOScale(new Vector3(1, 1, 1), 1);
@@ -156,7 +158,7 @@ public class MainManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
 
         deathCount++;
-        deathTxt.text = string.Format("사망: <color=#962323>{0}</color>회", deathCount);
+        deathTxt.text = string.Format(langInt == 0 ? "Death: <color=#962323>{0}</color>" : "사망: <color=#962323>{0}</color>회", deathCount);
 
         if (isSave && saveCnt == 0)
         {
@@ -254,7 +256,7 @@ public class MainManager : MonoBehaviour
         isGoal = true;
         goalPanel.gameObject.SetActive(true);
         goalPanel.DOFade(1, 0.6f);
-        goalTimeTxt.text = "걸린 시간: " + timeTxt.text;
+        goalTimeTxt.text = langInt==0? "Time spent: "+timeTxt.text :"걸린 시간: " + timeTxt.text;
         goalTxt.transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), 1).SetLoops(-1, LoopType.Yoyo);
 
         UserInfo uif = GameManager.Instance.savedData.userInfo;

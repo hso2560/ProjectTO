@@ -3449,3 +3449,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathCause: "\uAD34\uC0DD\uBA85\uCCB4"
+  deathCause_en: Monster

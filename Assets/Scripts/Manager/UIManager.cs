@@ -9,14 +9,23 @@ public class UIManager : MonoSingleton<UIManager>
 {
     public GameObject LoadingPanel;
     public Image RedPanel;
-    public Text[] lobbyTexts;
+    public Text[] lobbyTexts;  //중간에 있는 버튼들(메인씬에선 설정에서의 중간버튼들)
     public InputField nameInput;
     public LoadingScript loadingScr;
 
     public Text systemTxt;
     public Color[] gameColors;
     private Color noColor;
-    [SerializeField] private string startMsg="";
+    [SerializeField] private string[] startMsg;
+
+
+    [SerializeField] private string[] lobbyTxtsStr;  //중간에 있는 버튼들(메인씬에선 설정에서의 중간버튼들)의 텍스트
+
+    public Text[] UITxts;
+    [SerializeField] private string[] UITxtsStr;
+
+    public Text[] UIcvsWldSpcTxts;
+    [SerializeField] private string[] cvsWStxtStr;
 
     private void Awake()
     {
@@ -32,8 +41,8 @@ public class UIManager : MonoSingleton<UIManager>
         {
             loadingScr.FillImgFade();
 
-            if(startMsg!="")
-               ShowSystemMsg(startMsg, 1, 3.5f, 1);
+            if(startMsg.Length!=0)
+               ShowSystemMsg(startMsg[(int)GameManager.Instance.savedData.option.language], 1, 3.5f, 1);
         }
     }
 
@@ -86,5 +95,32 @@ public class UIManager : MonoSingleton<UIManager>
         seq.AppendCallback(() => { RedPanel.gameObject.SetActive(false); });
 
         seq.Play();
+    }
+
+    public void LanguagePatch(Language lang)
+    {
+        int i;
+        for(i=0; i<lobbyTexts.Length; i++)
+        {
+            lobbyTexts[i].text = lobbyTxtsStr[i + lobbyTexts.Length*(int)lang];
+        }
+
+        for(i=0; i<UITxts.Length; i++)
+        {
+            UITxts[i].text = UITxtsStr[i + UITxts.Length * (int)lang];
+        }
+        for(i=0; i<UIcvsWldSpcTxts.Length; i++)
+        {
+            UIcvsWldSpcTxts[i].text = cvsWStxtStr[i + UIcvsWldSpcTxts.Length * (int)lang];
+        }
+
+        /*if(lang==Language.English)
+        {
+
+        }
+        else if(lang==Language.Korean)
+        {
+
+        }*/
     }
 }

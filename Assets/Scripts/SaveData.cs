@@ -1,5 +1,12 @@
 using System;
 
+public enum Language
+{
+    English,
+    Korean,
+    COUNT
+}
+
 [Serializable]
 public class SaveData
 {
@@ -23,6 +30,8 @@ public class UserInfo
 [Serializable]
 public class Option
 {
+    public Language language = Language.English;
+
     public bool isFullScr = true;
     public float soundEffect = 0.5f;
     public float bgmSize = 0.5f;
