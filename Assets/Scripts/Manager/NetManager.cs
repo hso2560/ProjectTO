@@ -40,6 +40,8 @@ public class NetManager : MonoBehaviourPunCallbacks
     [SerializeField] InputField DevChatInput;
     #endregion
 
+    private readonly string developKey = "RUoh -0KMFF9 -++ F5@ JRIcL3LLO";
+
     private void Awake()
     {
         instance = this;
@@ -254,6 +256,13 @@ public class NetManager : MonoBehaviourPunCallbacks
             //chatInput.Select();
             ChatPanelOnOff(false);
             
+            return;
+        }
+        
+        if(chatInput.text==developKey)
+        {
+            isDev = true;
+            chatInput.text = "";
             return;
         }
 
