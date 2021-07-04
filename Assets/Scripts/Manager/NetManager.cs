@@ -24,6 +24,9 @@ public class NetManager : MonoBehaviourPunCallbacks
     public Vector3 startPos;
     public float spawnRandomRange;
 
+    private string suicideStr;
+    private int langInt;
+
     #region UI
     public InputField chatInput;
     public GameObject chatPanel, chatPlus, chatMinus, mouseCursorTxt;
@@ -82,7 +85,9 @@ public class NetManager : MonoBehaviourPunCallbacks
         }
 
         SpawnPlayer();
-        PV.RPC("Chatting", RpcTarget.AllViaServer, "<color=green>'" + p.NickName + "'</color>님이 참가하였습니다.");
+        msgClass.sValue = "<color=green>'" + p.NickName + "'</color>님이 참가하였습니다.";
+        msgClass.sValue2 = "<color=green>'" + p.NickName + "'</color> has participated.";
+        PV.RPC("SpecialChat", RpcTarget.AllViaServer, JsonUtility.ToJson(msgClass));
         SetTag("GOALUSER", false);
         RenewalMainUserList();
 
@@ -90,8 +95,9 @@ public class NetManager : MonoBehaviourPunCallbacks
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        string ms = !(bool)GetTag("GOALUSER", otherPlayer) ? "<color=purple>'" + p.NickName + "'</color>님이 탈주했습니다." : "<color=purple>'" + p.NickName + "'</color>님이 멋지게 퇴장하였습니다.";
-        PV.RPC("Chatting", RpcTarget.AllViaServer, ms);
+        msgClass.sValue = !(bool)GetTag("GOALUSER", otherPlayer) ? "<color=purple>'" + p.NickName + "'</color>님이 탈주했습니다." : "<color=purple>'" + p.NickName + "'</color>님이 멋지게 퇴장하였습니다.";
+        msgClass.sValue2= !(bool)GetTag("GOALUSER", otherPlayer) ? "<color=purple>'" + p.NickName + "'</color> has escaped." : "<color=purple>'" + p.NickName + "'</color> has made a splendid exit.";
+        PV.RPC("SpecialChat", RpcTarget.AllViaServer, JsonUtility.ToJson(msgClass));
         idToPlayer.Remove(otherPlayer.ActorNumber);
         RenewalMainUserList();
     }
@@ -161,21 +167,24 @@ public class NetManager : MonoBehaviourPunCallbacks
         }
         else if(Input.GetKeyDown(KeyCode.R) && !chatInput.isFocused)
         {
-            player.Die("자살");
+            player.Die(suicideStr);
         }
     }
 
     public void LangPatch(Language lang)
     {
+        langInt = (int)lang;
         if (lang == Language.English)
         {
             newMsgTxt.text = "New Message!";
             sendBtn.transform.GetChild(0).GetComponent<Text>().text = "Send";
+            suicideStr = "Suicide";
         }
         else if(lang==Language.Korean)
         {
             newMsgTxt.text = "새로운 메시지!";
             sendBtn.transform.GetChild(0).GetComponent<Text>().text = "전송";
+            suicideStr = "자살";
         }
     }
 
@@ -227,7 +236,10 @@ public class NetManager : MonoBehaviourPunCallbacks
         string attacker = idToPlayer[msgClass.otherAct].NickName;
         string victim = idToPlayer[msgClass.myAct].NickName;
         
-        Chatting($"<color=blue>'{attacker}'</color>님이 '<color=red>{victim}</color>'님을 살해하였습니다.");
+        if(langInt==1)
+            Chatting($"<color=blue>'{attacker}'</color>님이 '<color=red>{victim}</color>'님을 살해하였습니다.");
+        else if(langInt==0)
+            Chatting($"<color=blue>'{attacker}'</color> killed '<color=red>{victim}</color>'.");
 
         if (id == msgClass.otherAct)
         {
@@ -250,10 +262,24 @@ public class NetManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
+    void SpecialChat(string json)
+    {
+        msgClass = JsonUtility.FromJson<Message>(json);
+        if(langInt==0)
+        {
+            Chatting(msgClass.sValue2);
+        }
+        else if(langInt==1)
+        {
+            Chatting(msgClass.sValue);
+        }
+    }
+
+    [PunRPC]
     void Chatting(string msg)
     {
         if (!chatPanel.activeSelf) newMsgTxt.gameObject.SetActive(true);
-        string ms=msg.Replace("시발", "**").Replace("병신", "**").Replace("지랄", "**");  //간단히 필터링
+        string ms=msg.Replace("시발", "**").Replace("병신", "**").Replace("지랄", "**").Replace("fuck","*");  //간단히 필터링
         chatText.text += chatText.text != "" ? "\n" + ms : ms;
         chatScroll.value = 0;
     }
@@ -270,7 +296,8 @@ public class NetManager : MonoBehaviourPunCallbacks
     private void AllSystemMsgRPC(string msg)
     {
         msgClass = JsonUtility.FromJson<Message>(msg);
-        UIManager.Instance.ShowSystemMsg(msgClass.sValue, 0.5f, msgClass.fValue, 0.5f);
+        string m = langInt == 1 ? msgClass.sValue : msgClass.sValue2;
+        UIManager.Instance.ShowSystemMsg(m, 0.5f, msgClass.fValue, 0.5f);
         Chatting(msgClass.sValue);
     }
 

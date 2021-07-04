@@ -109,18 +109,22 @@ public class UIManager : MonoSingleton<UIManager>
         {
             UITxts[i].text = UITxtsStr[i + UITxts.Length * (int)lang];
         }
-        for(i=0; i<UIcvsWldSpcTxts.Length; i++)
+        
+        if(GameManager.Instance.scState==ScState.MAIN)
         {
-            UIcvsWldSpcTxts[i].text = cvsWStxtStr[i + UIcvsWldSpcTxts.Length * (int)lang];
+            for (i = 0; i < UIcvsWldSpcTxts.Length; i++)
+            {
+                UIcvsWldSpcTxts[i].text = cvsWStxtStr[i + UIcvsWldSpcTxts.Length * (int)lang];
+            }
         }
 
-        /*if(lang==Language.English)
+       /* if(lang==Language.English)
         {
 
         }
         else if(lang==Language.Korean)
         {
-
+            
         }*/
     }
 }

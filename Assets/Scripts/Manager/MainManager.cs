@@ -52,6 +52,8 @@ public class MainManager : MonoBehaviour
     private bool bOffLastStage = false;
     [SerializeField] GameObject goalParticle;
 
+    public string[] l_systemMsg;
+
     private void Awake()
     {
         noColor = new Color(0, 0, 0, 0);
@@ -209,13 +211,13 @@ public class MainManager : MonoBehaviour
             ActiveLastStage(true);
         }
 
-        UIManager.Instance.ShowSystemMsg("세이브 포인트 - 사망시 해당 위치에서 부활합니다(최대 3번)");
+        UIManager.Instance.ShowSystemMsg(l_systemMsg[0 + (l_systemMsg.Length/(int)Language.COUNT) * langInt]);
     }
 
     public void LastStage(bool isReset)
     {
         if (isLast) return;
-        lastTxt.text = !isReset ? "?????" : "길 없음";
+        lastTxt.text = !isReset ? "?????" : (langInt==0? "No way" : "길 없음");
     }
 
     private void ActiveLastStage(bool b)
@@ -276,6 +278,7 @@ public class MainManager : MonoBehaviour
         }
 
         _message.sValue = $"<color=#0091C5>'{GameManager.Instance.savedData.userInfo.nickName}'</color>님이 골인 지점에 도달하였습니다!";
+        _message.sValue2 = $"<color=#0091C5>'{GameManager.Instance.savedData.userInfo.nickName}'</color> has reached the goal spot!";
         _message.fValue = 5f;
 
         NetManager.instance.SetTag("GOALUSER", true);
@@ -307,6 +310,7 @@ public class Message
     public float fValue;
     public bool bValue;
     public string sValue;
+    public string sValue2;
 
     public Vector3 v;
 }
