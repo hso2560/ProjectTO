@@ -36,6 +36,7 @@ public class MainManager : MonoBehaviour
     public bool isSave = false;
 
     public GameObject ExhaustPile;
+    public GameObject blurPanel;
     public bool isLast = false;
     [SerializeField] private Text lastTxt;
     [SerializeField] private GameObject lastStageMap;
@@ -232,8 +233,12 @@ public class MainManager : MonoBehaviour
     {
         if (b)
         {
+            blurPanel.SetActive(true);
+            Sequence seq0 = DOTween.Sequence();
+            seq0.Append(mainCam.DOFieldOfView(1, 0.2f)).Append(mainCam.DOFieldOfView(60, 0.2f)).AppendCallback(()=> { blurPanel.SetActive(false); }).Play();
+
             GameManager.Instance.bgmAudio.DOPitch(-1.3f, 3); 
-            mainCam.DOShakePosition(0.5f, 2);
+            mainCam.DOShakePosition(0.5f, 2f);
             mainLight.DOIntensity(0.2f, 3);  
             mainLight.DOColor(gameColors[2], 0.5f);
             SoundManager.Instance.PlaySoundEffect(0);
