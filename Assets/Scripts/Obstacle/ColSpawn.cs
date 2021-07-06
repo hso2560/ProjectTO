@@ -12,7 +12,7 @@ public class ColSpawn : CollisionEventSc
 
     public override void CollisionFunc()  
     {
-       
+        if (isWork) return;
 
         if(id==0)
         {

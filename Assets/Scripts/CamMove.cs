@@ -53,7 +53,11 @@ public class CamMove : MonoBehaviour
         position = rotation * rOffset + target.position + offset;
 
         transform.position = position;
-        transform.rotation = rotation;
-        rotTarget.rotation = Quaternion.Euler(0, x, 0);
+
+        if (!player.IsRewind)
+        {
+            transform.rotation = rotation;
+            rotTarget.rotation = Quaternion.Euler(0, x, 0);
+        }
     }
 }

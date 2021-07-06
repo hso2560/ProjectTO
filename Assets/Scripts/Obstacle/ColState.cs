@@ -23,7 +23,7 @@ public class ColState : CollisionEventSc
 
     public override void CollisionFunc()
     {
-        
+        if (isWork) return;
 
         if (id == 10)
         {

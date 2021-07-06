@@ -43,7 +43,7 @@ public class MainManager : MonoBehaviour
 
     public Text goalTimeTxt;
     public GameObject goalTxt, goalBtn;
-    public CanvasGroup goalPanel;
+    public CanvasGroup goalPanel, rewindPanel;
     private int langInt;
 
     public Vector3 devVec;

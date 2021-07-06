@@ -42,6 +42,7 @@ public class ColTransform : CollisionEventSc
 
     public override void CollisionFunc()
     {
+        if (isWork) return;
         
         seq = DOTween.Sequence().SetId(DOTIdStr); 
         
@@ -120,6 +121,7 @@ public class ColTransform : CollisionEventSc
                 DOTween.Kill("NoSeqDOT");
             }
 
+            isWork = false;
             return;
         }
 

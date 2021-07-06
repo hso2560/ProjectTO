@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.Rendering;
+using DG.Tweening;
 
 public class PlayerScript : MonoBehaviourPun, IPunObservable
 {
@@ -46,7 +47,18 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     private InputField chatInput;
     #endregion
 
+    private CamMove cam;
     private int langInt;
+    private Vector3 playerScale;
+
+    #region 아직은 아님
+    private bool isBenefit = false;
+    private bool isRewind = false;
+    public bool IsRewind { get { return isRewind; } }
+    private List<TrmInfo> trInfos = new List<TrmInfo>();
+    private TrmInfo formerInfo;
+    [SerializeField] private int saveTrmMaxCnt = 600;
+    #endregion
 
     private void Start()  
     {
@@ -67,17 +79,20 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         hp = maxHp;
         attackCol = transform.GetChild(2).gameObject;
         messageClass = new Message();
+        playerScale = transform.localScale;
     }
 
     void Init()
     {
         gameObject.AddComponent<AudioListener>();
         mainManager = GameManager.Instance.mainManager;
-        mainManager.cam.target = centerTr;
-        mainManager.cam.rotTarget = transform;
-        mainManager.cam.player = this;
+        cam = mainManager.cam;
+        cam.target = centerTr;
+        cam.rotTarget = transform;
+        cam.player = this;
         chatInput = NetManager.instance.chatInput;
         langInt = (int)GameManager.Instance.savedData.option.language;
+        isBenefit = GameManager.Instance.savedData.userInfo.isClear;  //일단 빌드 할 때는 주석
     }
 
     private void Update()
@@ -86,9 +101,13 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         {
             if (!mainManager.IsGoal)
             {
-                Jump();
-                Attack();
+                if (!isRewind)
+                {
+                    Jump();
+                    Attack();
+                }
                 _Input();  //테스트모드 전용
+                Benefit();
             }
         }
     }
@@ -99,7 +118,10 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         {
             if (!mainManager.IsGoal)
             {
-                Move();
+                if (!isRewind)
+                {
+                    Move();
+                }
                 GroundCheck();
                 RayHit();
             }
@@ -117,10 +139,61 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             transform.position = mainManager.devVec;
         }
         
+        if(Input.GetKeyDown(KeyCode.X) && isBenefit)
+        {
+            isRewind = true;
+
+            mainManager.rewindPanel.DOKill();
+            mainManager.rewindPanel.DOFade(1, 0.4f);
+            if (!mainManager.isLast) GameManager.Instance.bgmAudio.pitch = -1;
+            else GameManager.Instance.bgmAudio.pitch = 1.3f;
+        }
+        if(Input.GetKeyUp(KeyCode.X) && isBenefit)
+        {
+            isRewind = false;
+
+            mainManager.rewindPanel.DOKill();
+            mainManager.rewindPanel.DOFade(0, 0.3f);
+            if (!mainManager.isLast) GameManager.Instance.bgmAudio.pitch = 1;
+            else GameManager.Instance.bgmAudio.pitch = -1.3f;
+        }
+    }
+
+    void Benefit()
+    {
+        if (!isBenefit) return;
+
+        if (!isRewind) Record();
+        else Rewind();
+    }
+    void Record()
+    {
+        if(trInfos.Count>saveTrmMaxCnt)
+        {
+            trInfos.RemoveAt(0);
+        }
+
+        trInfos.Add(new TrmInfo(transform.position, cam.transform.rotation));
+    }
+    void Rewind()
+    {
+        if(trInfos.Count==0)
+        {
+            trInfos.Add(new TrmInfo(transform.position, cam.transform.rotation));
+            return;
+        }
+
+        formerInfo = trInfos[trInfos.Count - 1];
+
+        transform.position = formerInfo.position;
+        cam.transform.rotation = formerInfo.rotation;
+        transform.rotation = Quaternion.Euler(0, formerInfo.rotation.eulerAngles.y, 0);
+
+        trInfos.RemoveAt(trInfos.Count - 1);
     }
 
     private void Move()
-    { 
+    {
         if(!isJumping)
            moveVec = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
 
@@ -132,7 +205,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
             rigid.AddForce(force, ForceMode.VelocityChange);
         }
         
-        playerModel.transform.localRotation = Quaternion.Euler(0, transform.rotation.y, 0);
+        //playerModel.transform.localRotation = Quaternion.Euler(0, transform.rotation.y, 0);
         ani.SetBool("walk", moveVec != Vector3.zero);
         ani.SetBool("run", moveVec != Vector3.zero && Input.GetKey(KeyCode.LeftShift));  // Animator.StringToHash하면 int형으로 가져올 수 있음. 
     }
@@ -327,6 +400,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     {
         if (isDie || mainManager.IsGoal) return;
 
+        trInfos.Clear();
         hp = 0;
         isDie = true;
         ani.SetTrigger("death");
@@ -344,5 +418,6 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         isDie = false;
         isInvinci = false;
         transform.position = NetManager.instance.firstPos;
+        transform.localScale = playerScale;
     }
 }

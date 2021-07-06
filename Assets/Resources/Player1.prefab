@@ -163,6 +163,7 @@ MonoBehaviour:
   scanObj: {fileID: 0}
   bCompulsoryIdle: 0
   hp: 0
+  saveTrmMaxCnt: 600
 --- !u!114 &8954424846482769738
 MonoBehaviour:
   m_ObjectHideFlags: 0
