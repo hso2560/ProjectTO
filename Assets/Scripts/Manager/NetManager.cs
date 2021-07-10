@@ -118,7 +118,7 @@ public class NetManager : MonoBehaviourPunCallbacks
         v = new Vector3(startPos.x + Random.Range(-spawnRandomRange, spawnRandomRange), 1, startPos.z + Random.Range(-spawnRandomRange, spawnRandomRange));
         firstPos = v;
 
-        player = PhotonNetwork.Instantiate(GameManager.Instance.savedData.userInfo.playerRosoName,
+        player = PhotonNetwork.Instantiate(GameManager.Instance.savedData.userInfo.playerResoName,
             v,Quaternion.identity).GetComponent<PlayerScript>();
 
         player.playerId = id;

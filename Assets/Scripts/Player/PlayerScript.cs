@@ -58,6 +58,8 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
     private List<TrmInfo> trInfos = new List<TrmInfo>();
     private TrmInfo formerInfo;
     [SerializeField] private int saveTrmMaxCnt = 600;
+
+    private readonly int devID = 25504;
     #endregion
 
     private void Start()  
@@ -92,7 +94,7 @@ public class PlayerScript : MonoBehaviourPun, IPunObservable
         cam.player = this;
         chatInput = NetManager.instance.chatInput;
         langInt = (int)GameManager.Instance.savedData.option.language;
-        isBenefit = GameManager.Instance.savedData.userInfo.isClear;  //일단 빌드 할 때는 주석
+        isBenefit = (GameManager.Instance.savedData.userInfo.isClear && GameManager.Instance.savedData.userInfo.devId == devID);
     }
 
     private void Update()

@@ -23,6 +23,8 @@ public class LobbyManager : MonoBehaviour
     private void Start()
     {
         titleTxt.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 2).SetLoops(-1, LoopType.Yoyo);
+        titleTxt.DOFade(0.65f, 5).SetLoops(-1, LoopType.Yoyo);
+        
     }
 
     public void SetBestScore(bool isClear, float bestTime)
@@ -42,4 +44,37 @@ public class LobbyManager : MonoBehaviour
                 bestTxt.text = "Highest Record: There is no clear record.";
         }
     }
+
+    #region 주석
+    /*private void Update()
+    {
+        titleTxt.ForceMeshUpdate();
+        TMP_TextInfo textInfo = titleTxt.textInfo;
+
+        for(int i=0; i<textInfo.characterCount; ++i)
+        {
+            TMP_CharacterInfo charInfo = textInfo.characterInfo[i];  //var로 가져와도 됨
+
+            if(!charInfo.isVisible)
+            {
+                continue;
+            }
+
+            Vector3[] verts = textInfo.meshInfo[charInfo.materialReferenceIndex].vertices;
+
+            for(int j=0; j<4; ++j)
+            {
+                Vector3 orig = verts[charInfo.vertexIndex+j];
+                verts[charInfo.vertexIndex + j] = orig + new Vector3(0, Mathf.Sin(Time.time * 2f + orig.x * 0.01f) * 10f, 0);
+            }
+        }
+
+        for(int i=0; i<textInfo.meshInfo.Length; ++i)
+        {
+            TMP_MeshInfo meshInfo = textInfo.meshInfo[i];
+            meshInfo.mesh.vertices = meshInfo.vertices;
+            titleTxt.UpdateGeometry(meshInfo.mesh, i);
+        }
+    }*/
+    #endregion
 }
