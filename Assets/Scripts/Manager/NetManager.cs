@@ -74,7 +74,7 @@ public class NetManager : MonoBehaviourPunCallbacks
     public override void OnCreateRoomFailed(short returnCode, string message) => CreateRoom();
     /*public override void OnDisconnected(DisconnectCause cause)
     {
-
+              //"연결이 끊겼습니다" 메시지 띄우면 좋음
     }*/
     public override void OnJoinedRoom()
     {
@@ -119,7 +119,7 @@ public class NetManager : MonoBehaviourPunCallbacks
         firstPos = v;
 
         player = PhotonNetwork.Instantiate(GameManager.Instance.savedData.userInfo.playerResoName,
-            v,Quaternion.identity).GetComponent<PlayerScript>();
+                 v, Quaternion.identity).GetComponent<PlayerScript>();
 
         player.playerId = id;
         GameManager.Instance.mainManager.player = player;

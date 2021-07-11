@@ -39,7 +39,7 @@ public class CamMove : MonoBehaviour
     void Update()
     {
         if (target != null)
-            if(!player.isDie && !player.bCompulsoryIdle && !mainManager.IsGoal)
+            if(!player.isDie && !mainManager.IsGoal)
                 Move();
     }
 
@@ -54,7 +54,7 @@ public class CamMove : MonoBehaviour
 
         transform.position = position;
 
-        if (!player.IsRewind)
+        if (!player.IsRewind && !player.bCompulsoryIdle)
         {
             transform.rotation = rotation;
             rotTarget.rotation = Quaternion.Euler(0, x, 0);

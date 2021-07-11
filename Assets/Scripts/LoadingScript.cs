@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -38,4 +37,6 @@ public class LoadingScript : MonoBehaviour
         fillBack.DOColor(noColor, 0.5f);
         fillImg.DOColor(noColor, 0.5f);
     }
+
+    //팁 텍스트 넣으면 좋음, 몇 초 동안 로딩 시 인터넷 연결 확인해달라는 메시지 띄우면 좋음
 }
